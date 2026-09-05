@@ -1,6 +1,6 @@
 ---
 title: What your repository needs
-description: The six rules a repository must meet for PivoCloud to build and run it: a Dockerfile, the EXPOSE port contract, binding 0.0.0.0, one HTTP port per app, explicit migrations, and an ephemeral filesystem.
+description: "The six rules a repository must meet for PivoCloud to build and run it: a Dockerfile, the EXPOSE port contract, binding 0.0.0.0, one HTTP port per app, explicit migrations, and an ephemeral filesystem."
 last_verified: 2026-09-05
 ---
 
