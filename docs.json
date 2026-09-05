@@ -1,0 +1,14 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "PivoCloud",
+  "colors": {
+    "primary": "#3B82F6"
+  },
+  "navigation": {
+    "pages": ["index"]
+  },
+  "contextual": {
+    "options": ["copy", "view", "mcp", "claude", "chatgpt"]
+  }
+}
