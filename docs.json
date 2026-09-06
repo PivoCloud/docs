@@ -6,7 +6,21 @@
     "primary": "#3B82F6"
   },
   "navigation": {
-    "pages": ["index"]
+    "groups": [
+      {
+        "group": "Get started",
+        "pages": ["index"]
+      },
+      {
+        "group": "Apps",
+        "pages": [
+          "apps/deployment-contract",
+          "apps/connect-github",
+          "apps/deploy",
+          "apps/environment-variables"
+        ]
+      }
+    ]
   },
   "contextual": {
     "options": ["copy", "view", "mcp", "claude", "chatgpt"]

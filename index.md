@@ -1,123 +1,86 @@
 ---
-title: What your repository needs
-description: "The six rules a repository must meet for PivoCloud to build and run it: a Dockerfile, the EXPOSE port contract, binding 0.0.0.0, one HTTP port per app, explicit migrations, and an ephemeral filesystem."
-last_verified: 2026-09-05
+title: How do I start using PivoCloud?
+description: "Sign up, verify your email, complete your profile and claim the 1,200 DA starting credit, then follow three steps to a running app: check your repository, connect GitHub, deploy it."
+last_verified: 2026-09-06
 ---
 
-## The deployment contract
+## Get started
 
+PivoCloud builds your app from your own Dockerfile, runs it on infrastructure in
+Algeria, and bills you in dinars. This page takes you from a new account to a
+deployed app.
 
-Six rules. Meet them and your app deploys. Most deploy failures are one of the
-first two.
+### 1. Sign up and verify the email
 
-### 1. A Dockerfile
+Register in the PivoCloud console with an email address and a password. The
+submit button is `Create account`.
 
-PivoCloud builds from your Dockerfile. There is no build auto-detection, no
-buildpack, and no framework guessing.
+The panel that follows says `Registration successful!` and asks you to check
+your email for a verification link. Click that link before you do anything
+else. Signing in is gated on the email being verified, so an account whose link
+has not been clicked cannot log in at all. If the message never arrives, the
+same panel carries a `Resend verification` link that sends it again.
 
-This is deliberate, and it is the answer to "which Node/Python/Go versions do
-you support": **whichever your base image pins.** The runtime is yours to
-choose, not ours to bless, so nothing breaks under you when we upgrade.
+### 2. Complete your profile and claim the credit
 
-By default it builds a file named `Dockerfile` at the root of the repository.
-Two optional per-app settings move that, on the creation form and on the app's
-settings page afterwards:
+A new account starts with a wallet balance of zero. The 1,200 DA is not granted
+automatically at signup. You claim it, and a person approves the claim.
 
-- **Root directory** is the build context, the directory Docker can see.
-  Default: the repository root. Nothing above it exists as far as the build is
-  concerned, so `COPY ../shared` cannot work.
-- **Dockerfile path** is the file to build, **relative to the root directory**,
-  not to the repository root. Default: `Dockerfile`.
+Two steps, in this order.
 
-Leave both blank and nothing changes. Set them and a repository with no
-Dockerfile at its root deploys fine, and two apps can build two different
-Dockerfiles out of one repository. See
-[monorepo-two-apps](https://github.com/PivoCloud/example-monorepo-two-apps).
+**Fill in your profile.** On the `Profile` page, fill `First name`, `Last name`
+and `Phone number`, then submit `Save profile`. All three are required before a
+claim is possible. While any of them is empty, the button on the dashboard
+banner reads `Complete Profile` and brings you to this page.
 
-When the resolved path is wrong, the deploy fails with *"No Dockerfile at
-`<path>` (build context: `<dir>`)"*, and the message then lists the Dockerfiles
-it did find in your repository. Read that list first: it usually shows you
-exactly which of the two settings is off.
+`Phone number` has to be an Algerian mobile: ten digits beginning `05`, `06` or
+`07`, in the shape the field's own placeholder shows, `e.g. 0555 12 34 56`.
+International notation for the same number is accepted, so there is nothing to
+guess: a leading `+213` is understood, and spaces and hyphens between the digits
+are ignored. Anything else is refused with
+`Enter a valid Algerian mobile number (05, 06, or 07)`, and the profile stays
+incomplete until it is fixed.
 
-### 2. Listen on the port you declare with `EXPOSE`
+**Claim the credit.** Once the profile is complete, the dashboard banner's
+button reads `Claim Now`. The `Wallet` page carries the same action on its
+`Free Credits` card, where the button carries the amount instead and reads
+`Claim 1,200 DA`. Either one works, so click it once.
 
-**PivoCloud does not set a `PORT` environment variable.** It probes the port
-your image declares with `EXPOSE`, so that is the port your process has to be
-listening on.
+Then expect a wait. The approval is not automatic: someone at PivoCloud reviews
+the claim by hand, so the credit does not appear the moment you click. While the
+claim is pending, the dashboard banner hides itself entirely and the dashboard
+shows nothing about it. The `Wallet` page in the sidebar is the only place the
+pending claim is visible. Look there. A quiet dashboard does not mean the claim
+failed.
 
-Write it so the same image is correct everywhere. Read `PORT` if something set
-it, because Render, Railway and Heroku all do, and fall back to the value you
-declared with `EXPOSE`:
+### 3. What 1,200 DA buys
 
-```js
-// Dockerfile says: EXPOSE 8080
-const port = process.env.PORT || 8080;
-app.listen(port, "0.0.0.0");
-```
+The credit covers one month of `Lite` hosting for one app, at 1,200 DA per app
+per month, or one month of a `Starter` database at 1,200 DA per month. The full
+catalogue, including the larger app plans and database tiers, is on the
+[pricing page](https://pivocloud.com/pricing).
 
-Do not hardcode a value that differs from `EXPOSE`, and do not set `ENV PORT`
-in the Dockerfile: a variable baked into the image is one more place for the
-two numbers to drift apart.
+### 4. The three things to do first
 
-When this is wrong, the deploy fails with *"the container started but your app
-did not respond on the PORT environment variable"*. Read that message as **"we
-could not reach your app on the port it declared"**, because it is emitted for
-almost every boot failure and it names a variable we do not actually set. If
-you see it, check `EXPOSE` against the port in your startup log first, then
-read the container logs.
+In this order. The failure that costs a new customer their first hour is a
+repository that cannot build, so the check comes before everything else.
 
-### 3. Bind `0.0.0.0`, not `localhost`
+**1. Check that your repository meets the deployment contract.** PivoCloud
+builds from the Dockerfile in your repository and reads the first `EXPOSE` line
+in it to know which port to reach your app on. Six rules decide whether a
+repository deploys, and most first deploys that fail, fail on the first two.
+Read [what your repository needs](/apps/deployment-contract) before you create
+an app, and fix anything it turns up while you still have an empty account.
 
-A server bound to `127.0.0.1` inside a container is reachable by nothing
-outside it.
+**2. Connect your GitHub account.** PivoCloud pulls your code through the
+PivoCloud GitHub App, which you install once and point at the repositories you
+want it to see. Private repositories work through that connection, and so does
+deploying on every push.
+See [connecting GitHub](/apps/connect-github).
 
-### 4. One HTTP port per app
-
-An app exposes exactly one HTTP port. If your project is a backend plus a
-frontend, you have two choices:
-
-- **Serve the built frontend from the backend.** One repo, one Dockerfile, one
-  container, one billed service. See `node-express-vite`.
-- **Deploy them as two apps, out of one repository.** Two Dockerfiles, two
-  billed services, one repo: give each app its own root directory and it builds
-  its own Dockerfile. Sometimes the right call, especially mid-migration when
-  you would rather not change application code at the same time as changing
-  host. See
-  [monorepo-two-apps](https://github.com/PivoCloud/example-monorepo-two-apps).
-
-A worker with no HTTP surface does not fit the app model. Neither do services
-that must scale independently.
-
-### 5. Nothing runs your migrations
-
-No release phase, no automatic `migrate` step. If your schema needs migrating,
-do it explicitly, and make it opt-in so a container restart cannot surprise
-you:
-
-```sh
-if [ "$RUN_MIGRATIONS" = "true" ]; then
-  npx prisma migrate deploy
-fi
-exec "$@"
-```
-
-`node-express-vite` and the API in `monorepo-two-apps` ship this pattern in
-their entrypoint.
-
-### 6. The filesystem is ephemeral
-
-Containers are replaced on every deploy, and on an environment-variable change.
-Anything written to local disk is gone. There is no persistent disk product.
-
-Uploads belong in object storage (Cloudinary, S3-compatible, anything with an
-API). Sessions and caches belong in your database or a managed store, not on
-disk.
-
-## Working examples
-
-Three repositories you can deploy on PivoCloud as they are, each one showing a
-different shape of the contract above.
-
-- [example-node-express-vite](https://github.com/PivoCloud/example-node-express-vite): Express API serving a built Vite frontend. **One service, one bill.**
-- [example-vite-static-nginx](https://github.com/PivoCloud/example-vite-static-nginx): A built Vite frontend served by nginx, as its own service.
-- [example-monorepo-two-apps](https://github.com/PivoCloud/example-monorepo-two-apps): An API and a frontend in one repository, deployed as two apps. **Two Dockerfiles, no Dockerfile at the root.**
+**3. Deploy it.** Create the app, pick the repository and the branch, choose the
+subdomain your app answers on, and watch the build. If your app needs API keys,
+database URLs or any other configuration, set them as environment variables on
+the app before or after the first deploy; changing one replaces the container,
+so the new value is live within a deploy.
+See [deploying your first app](/apps/deploy).
