@@ -17,7 +17,9 @@
           "apps/deployment-contract",
           "apps/connect-github",
           "apps/deploy",
-          "apps/environment-variables"
+          "apps/environment-variables",
+          "apps/troubleshooting",
+          "apps/manage"
         ]
       }
     ]

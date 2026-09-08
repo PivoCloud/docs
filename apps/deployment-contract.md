@@ -1,7 +1,7 @@
 ---
 title: What your repository needs
 description: "The six rules a repository must meet for PivoCloud to build and run it: a Dockerfile, the EXPOSE port contract, binding 0.0.0.0, one HTTP port per app, explicit migrations, and an ephemeral filesystem."
-last_verified: 2026-09-06
+last_verified: 2026-09-07
 ---
 
 ## The deployment contract
@@ -34,10 +34,11 @@ Dockerfile at its root deploys fine, and two apps can build two different
 Dockerfiles out of one repository. See
 [example-monorepo-two-apps](https://github.com/PivoCloud/example-monorepo-two-apps).
 
-When the resolved path is wrong, the deploy fails with *"No Dockerfile at
-`<path>` (build context: `<dir>`)"*, and the message then lists the Dockerfiles
-it did find in your repository. Read that list first: it usually shows you
-exactly which of the two settings is off.
+When the resolved path is wrong, the deploy fails. The message names the path it
+resolved, the directory it built from, and the Dockerfiles it did find in your
+repository. Read that list first: it usually shows you exactly which of the two
+settings is off. [Why did my deploy fail](/apps/troubleshooting) quotes the
+wording, in both of the forms this failure takes.
 
 ### 2. Listen on the port you declare with `EXPOSE`
 
@@ -72,9 +73,9 @@ Three consequences are worth knowing before your first deploy:
   falls back to the same port `8000` a missing line falls back to. A line
   naming two ports takes the first of them.
 
-When this is wrong, the deploy fails with *"The container started but your app
-did not respond on the PORT environment variable. Please ensure your app listens
-on the port provided via the PORT environment variable."*
+When this is wrong, the deploy fails with a two-sentence message about the
+`PORT` environment variable. [Why did my deploy fail](/apps/troubleshooting)
+quotes it word for word.
 
 Read the first sentence as **"we could not reach your app on the port it
 declared"**, and ignore the second: no such variable is set, so there is no

@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-09-06
+last_verified: 2026-09-07
 ---
 
 ## Deploy your first app
@@ -118,7 +118,9 @@ So an API living in `backend/` with a `Dockerfile` beside it wants
 `backend/Dockerfile`, which would resolve to `backend/backend/Dockerfile`. The
 form prints the resolved pair back to you as you type, in this shape:
 
-    Builds backend/Dockerfile with build context backend.
+```
+Builds backend/Dockerfile with build context backend.
+```
 
 Read that line before you submit. It is the cheapest way to catch the doubled
 prefix.
@@ -205,22 +207,20 @@ The first deploy starts on its own. After that, the button on the app page reads
 Two messages account for most first failures, and both are worth reading
 literally.
 
-*"No Dockerfile at `<path>` (build context: `<dir>`)"*, followed by a list of
-the Dockerfiles that were actually found in your repository. One of your two
-build settings is off. Compare the path in the message against the list
+The first says the build found nothing to build at the path your two settings
+resolved to, and then lists the Dockerfiles it did find in your repository. One
+of the two settings is off. Compare the path in the message against the list
 underneath it, and check `Root directory` first.
 
-*"The container started but your app did not respond on the PORT environment
-variable. Please ensure your app listens on the port provided via the PORT
-environment variable."*
+The second message reports that your container started but nothing answered on
+the port PivoCloud probed.
 
-Read the first sentence as **"we could not reach your app on the port it
-declared"**, and ignore the second: no such variable is set, so there is no
-value for your app to listen on. It is printed for nearly every boot failure,
-not only for port mistakes. Check your `EXPOSE` line against the port in your
-own startup log, then read the container logs. If your Dockerfile has no
-`EXPOSE` line at all, PivoCloud probed port `8000`, so there is nothing for you
-to compare and the fix is to declare the line.
+Check your `EXPOSE` line against the port in your own startup log, then read the
+container logs. If your Dockerfile has no `EXPOSE` line at all, PivoCloud probed
+port `8000`, so there is nothing for you to compare and the fix is to declare
+the line.
 
-Both are explained at greater length, with the fixes, on
-[what your repository needs](/apps/deployment-contract).
+Both messages, and every other one PivoCloud prints when a deploy does not work,
+are on [why did my deploy fail](/apps/troubleshooting) with what each one really
+means. The contract your repository has to satisfy, including the whole `EXPOSE`
+rule, is on [what your repository needs](/apps/deployment-contract).
