@@ -21,6 +21,10 @@
           "apps/troubleshooting",
           "apps/manage"
         ]
+      },
+      {
+        "group": "Databases",
+        "pages": ["databases/connect", "databases/recovery"]
       }
     ]
   },
