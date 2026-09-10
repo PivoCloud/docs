@@ -19,12 +19,17 @@
           "apps/deploy",
           "apps/environment-variables",
           "apps/troubleshooting",
-          "apps/manage"
+          "apps/manage",
+          "apps/custom-domains"
         ]
       },
       {
         "group": "Databases",
         "pages": ["databases/connect", "databases/recovery"]
+      },
+      {
+        "group": "Billing",
+        "pages": ["billing/credit-and-charges"]
       }
     ]
   },

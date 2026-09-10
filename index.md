@@ -57,8 +57,8 @@ failed.
 
 The credit covers one month of `Lite` hosting for one app, at 1,200 DA per app
 per month, or one month of a `Starter` database at 1,200 DA per month. The full
-catalogue, including the larger app plans and database tiers, is on the
-[pricing page](https://pivocloud.com/pricing).
+catalogue, including the larger app plans and database tiers, is on
+[what does it cost, and when am I charged](/billing/credit-and-charges).
 
 ### 4. The three things to do first
 
