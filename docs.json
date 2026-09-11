@@ -30,6 +30,10 @@
       {
         "group": "Billing",
         "pages": ["billing/credit-and-charges"]
+      },
+      {
+        "group": "What's new",
+        "pages": ["whats-new/2026-09"]
       }
     ]
   },
