@@ -32,6 +32,14 @@
         "pages": ["billing/credit-and-charges"]
       },
       {
+        "group": "API",
+        "pages": ["api/personal-access-tokens"]
+      },
+      {
+        "group": "API reference",
+        "openapi": "openapi.yaml"
+      },
+      {
         "group": "What's new",
         "pages": ["whats-new/2026-09"]
       }
@@ -39,5 +47,12 @@
   },
   "contextual": {
     "options": ["copy", "view", "mcp", "claude", "chatgpt"]
+  },
+  "api": {
+    "openapi": "openapi.yaml",
+    "playground": {
+      "display": "interactive",
+      "proxy": false
+    }
   }
 }

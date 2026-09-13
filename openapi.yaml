@@ -1,0 +1,394 @@
+openapi: 3.1.0
+
+info:
+  title: PivoCloud API
+  version: "1.0.0"
+  description: >-
+    Start an export of one of your databases and download the result, using a
+    personal access token you create in the PivoCloud console.
+
+servers:
+  - url: https://api.pivocloud.com
+    description: The PivoCloud API.
+
+security:
+  - personalAccessToken: []
+
+paths:
+  /api/v1/dbs/{id}/export:
+    post:
+      operationId: createExport
+      summary: Start a database export
+      description: |
+        Starts a fresh export of one of your databases and returns a signed
+        download URL straight away.
+
+        The export itself runs after this request returns, so the link is not
+        ready at the moment you receive it: it answers 503 while the export is
+        still being prepared, then serves the archive once it finishes. A
+        script can therefore request an export and poll that one link, without
+        asking for a status anywhere else. See the download endpoint for the
+        request that does this safely.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The identifier of the database to export.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: >-
+            The export was accepted, and the response carries the download URL
+            for it.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignedExportResponse"
+        "400":
+          description: >-
+            The database identifier in the path is not a valid identifier. The
+            reply carries the code INVALID_REQUEST.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: >-
+            No usable access token reached the API. Send a personal access
+            token as a bearer token. The reply carries the code UNAUTHORIZED.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: >-
+            No database with that identifier is available to you. A database
+            that does not exist and a database that belongs to someone else
+            answer in exactly the same way, on purpose, so this reply is not a
+            sign that something is broken. The reply carries the code
+            NOT_FOUND.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: >-
+            Too many requests. The reply carries one of three codes, and they
+            mean different things. A reply with the code cooldown_active means
+            this database was exported recently, and the wait is the whole
+            cooldown window. A reply with the code export_in_flight means an
+            export is already running, the wait is short, and the right move is
+            to poll the link the earlier request already returned rather than
+            sit out a cooldown. A reply with the code RATE_LIMIT_EXCEEDED is
+            the general limit on how often you may call the API at all, and is
+            not about this database: it applies to every endpoint here, so any
+            request can meet it. Read the wait from the Retry-After header
+            rather than assuming one, and treat a code you do not recognise as
+            a wait rather than as a failure.
+          headers:
+            Retry-After:
+              description: >-
+                How long to wait, in seconds, before asking again. This is the
+                value to use, and it differs between the three codes above.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: >-
+            Something went wrong on our side and the export was not started.
+            The reply carries the code INTERNAL_ERROR.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/v1/dbs/{id}/exports/{eid}/download:
+    get:
+      operationId: downloadExport
+      summary: Download a finished export
+      description: |
+        Downloads the archive produced by an export. The link is the one the
+        export request returned, signature and expiry included, so it needs no
+        token of its own. Request it verbatim rather than rebuilding it.
+
+        The export is still being prepared when the link is first handed to
+        you, so the first requests answer 503 and carry a short JSON reply
+        instead of an archive. Always pass `--fail` and `--retry`. Without
+        them, curl saves that JSON reply into your output file and reports
+        success, and you are left with a small text file named like a backup:
+
+        ```bash
+        curl --fail --retry 30 -o backup.sql.gz "$URL"
+        ```
+
+        `--fail` stops the reply body being saved when the answer is not an
+        archive, and `--retry` makes curl wait for the interval in the
+        Retry-After header and ask again until the archive is ready. Compare
+        the file you saved against the X-Export-SHA256 header before you rely
+        on it.
+      security: []
+      x-mint:
+        metadata:
+          playground: simple
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The identifier of the database the export belongs to.
+          schema:
+            type: string
+            format: uuid
+        - name: eid
+          in: path
+          required: true
+          description: The identifier of the export to download.
+          schema:
+            type: string
+            format: uuid
+        - name: exp
+          in: query
+          required: true
+          description: >-
+            The moment the link stops working, as a Unix timestamp in seconds.
+            It is part of what the signature covers. Use the value the export
+            request returned.
+          schema:
+            type: integer
+            format: int64
+        - name: sig
+          in: query
+          required: true
+          description: >-
+            The signature that authorises this download. Use the value the
+            export request returned.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The export archive, gzip compressed.
+          headers:
+            X-Export-SHA256:
+              description: >-
+                The SHA-256 checksum of the archive, in lowercase hexadecimal.
+                Compare it with the checksum of the file you saved to confirm
+                the download arrived whole and unaltered.
+              schema:
+                type: string
+          content:
+            application/gzip:
+              schema:
+                type: string
+                format: binary
+        "206":
+          description: >-
+            The part of the archive you asked for, when the request carried a
+            Range header. This is what `curl -C -` uses to resume a download
+            that was cut off part way through a large dump. The
+            X-Export-SHA256 header still describes the WHOLE archive, not the
+            part in this reply, so check it against the finished file rather
+            than against what arrives here. A request asking for several ranges
+            at once is answered as one multipart/byteranges reply instead,
+            which is rarely what you want for a backup.
+          headers:
+            Content-Range:
+              description: >-
+                Which bytes of the archive this reply carries, and how large
+                the whole archive is.
+              schema:
+                type: string
+            X-Export-SHA256:
+              description: >-
+                The SHA-256 checksum of the whole archive, in lowercase
+                hexadecimal, exactly as on a 200.
+              schema:
+                type: string
+          content:
+            application/gzip:
+              schema:
+                type: string
+                format: binary
+            multipart/byteranges:
+              schema:
+                type: string
+                format: binary
+        "401":
+          description: >-
+            The link cannot be used: its signature is missing or does not
+            match, or the link has passed the moment recorded in its exp value.
+            The reply carries the code SIGNED_URL_INVALID or
+            SIGNED_URL_EXPIRED. Request a fresh export to get a fresh link.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: >-
+            There is no such export to serve. An export that does not exist, an
+            export belonging to a different database, and an export that failed
+            all answer in exactly the same way. The reply carries the code
+            NOT_FOUND.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "410":
+          description: >-
+            The archive has passed its own retention time and is gone. That is
+            a different clock from the one inside the link, so a link can still
+            be valid while the archive behind it has already been removed. The
+            reply carries the code EXPORT_EXPIRED. Start a new export.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "416":
+          description: >-
+            The Range header asked for bytes that are not in the archive, which
+            usually means the file you are resuming onto is already at least as
+            large as the archive itself. This is the one reply on this endpoint
+            that is plain text rather than the JSON error envelope, so do not
+            try to read a code out of it. The Content-Range header gives the
+            archive's real size; start the download again from the beginning.
+          headers:
+            Content-Range:
+              description: >-
+                The size of the whole archive, written as `bytes */SIZE`.
+              schema:
+                type: string
+          content:
+            text/plain:
+              schema:
+                type: string
+        "429":
+          description: >-
+            You have called the API too often. This is the general limit on how
+            often you may call the API at all, counted per caller across every
+            endpoint here, rather than anything about this export. The reply
+            carries the code RATE_LIMIT_EXCEEDED. Wait for the interval in the
+            Retry-After header and ask again; the `--retry` in the command
+            above already does this for you.
+          headers:
+            Retry-After:
+              description: >-
+                How long to wait, in seconds, before asking again.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: >-
+            The export finished, but its archive could not be read. The reply
+            carries the code INTERNAL_ERROR.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "503":
+          description: >-
+            The export is still being prepared, which is the ordinary answer to
+            the first requests after an export is started. Wait for the
+            interval in the Retry-After header and ask again. The reply is JSON
+            rather than an archive, so a client that saves whatever it receives
+            will save this instead of your backup.
+          headers:
+            Retry-After:
+              description: >-
+                How long to wait, in seconds, before asking for the archive
+                again. It is a short polling interval, not a cooldown.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExportPendingResponse"
+
+components:
+  securitySchemes:
+    personalAccessToken:
+      type: http
+      scheme: bearer
+      description: >-
+        A personal access token. Create one in the API tokens section of your
+        profile page in the PivoCloud console. The token is shown once, when
+        you create it.
+
+  schemas:
+    SignedExportResponse:
+      type: object
+      description: >-
+        The reply to an export request. Both fields are always present.
+      required:
+        - url
+        - expires_at
+      properties:
+        url:
+          type: string
+          format: uri
+          description: >-
+            The download link for this export, complete with its signature and
+            expiry. Store it as it is and request it as it is.
+        expires_at:
+          type: string
+          format: date-time
+          description: >-
+            The moment the download link stops working. Links are short-lived,
+            minutes rather than days, so read this value rather than taking a
+            horizon from any example you have seen. A link requested after this
+            moment answers 401 with the code SIGNED_URL_EXPIRED, which is the
+            link having lapsed rather than anything wrong with the request.
+
+    ErrorResponse:
+      type: object
+      description: >-
+        The reply to a request that did not succeed. Every field is always
+        present. Read `code` in a script and show `error` to a person.
+      required:
+        - success
+        - error
+        - code
+      properties:
+        success:
+          type: boolean
+          description: Always false on this reply.
+        error:
+          type: string
+          description: A short sentence describing what went wrong.
+        code:
+          type: string
+          description: >-
+            A short machine readable label for the reason, stable across
+            wording changes. This is the field to branch on.
+
+    ExportPendingResponse:
+      type: object
+      description: >-
+        The reply sent while an export is still being prepared. It carries the
+        same fields as an ordinary error reply plus the export's own state, so
+        a client can tell waiting apart from failing.
+      required:
+        - success
+        - error
+        - code
+        - status
+      properties:
+        success:
+          type: boolean
+          description: Always false on this reply.
+        error:
+          type: string
+          description: A short sentence explaining that the export is not ready.
+        code:
+          type: string
+          description: Always `export_pending` on this reply.
+        status:
+          type: string
+          description: >-
+            The export's own state while it is being prepared, either `pending`
+            or `running`.
