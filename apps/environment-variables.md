@@ -1,7 +1,7 @@
 ---
 title: How do I set environment variables for my app?
 description: "Paste a .env file into the PivoCloud console, see which five key names are refused and why, what the console keeps from your file and what it drops, what saving actually changes, and how your running app reads the values."
-last_verified: 2026-09-06
+last_verified: 2026-09-23
 ---
 
 ## Environment variables
@@ -133,8 +133,14 @@ with the app does not, and belongs in object storage instead.
 
 ### What saving actually does
 
-Saving replaces the running container. It does not build a new image, and
-knowing that changes what you wait for.
+**Before your app's first deploy there is no container to replace, so saving
+only stores the variables.** The console shows
+`Saved. They will be used at your first deploy.` and the first deploy starts
+with them already in place. `Apply now` after attaching or detaching a
+database behaves the same way before the first deploy.
+
+Once your app has deployed, saving replaces the running container. It does
+not build a new image, and knowing that changes what you wait for.
 
 PivoCloud starts a second container from the existing image, hands it your new
 variables, waits for it to answer a health check, moves traffic across, and only

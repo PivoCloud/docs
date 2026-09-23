@@ -1,7 +1,7 @@
 ---
 title: What does each button on my app page do?
 description: "Every control on a deployed app in the PivoCloud console, in the order the console shows them, with what each one does and what each one does to your bill before you press it. Plus the two separate places your logs appear."
-last_verified: 2026-09-07
+last_verified: 2026-09-23
 ---
 
 ## Manage your app
@@ -97,11 +97,18 @@ Last in the `More actions` menu, on its own below a divider. It opens a
 confirmation naming your app and warning that the action cannot be undone. Your
 container, your image, your deployment logs and the app's own record all go.
 
-**What it does to your bill, and nothing in the console states this:** billing
-ends immediately, and the paid remainder of the current period is **not**
-refunded. Both halves are true at once. You stop being charged from the moment
-you delete, and the days you have already paid for are not credited back to your
+**What it does to your bill, and the confirmation now says so:** billing ends
+immediately, and the paid remainder of the current period is **not** refunded.
+Both halves are true at once. You stop being charged from the moment you
+delete, and the days you have already paid for are not credited back to your
 wallet.
+
+A new app starts with no paid period of its own. So if you delete an app and
+create a new one afterwards, even with the same name and the same repository,
+its first deploy charges the full plan price again. That is a second payment
+for a plan you already paid for once. If an app's deploy failed, fix the cause
+and press `Deploy` again from the app page instead of deleting and re-creating
+it.
 
 If what you want is to stop paying for an app you may come back to, `Stop` is
 the control for that, not `Delete`. A stopped app is not charged, and the paid

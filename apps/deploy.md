@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-09-07
+last_verified: 2026-09-23
 ---
 
 ## Deploy your first app
@@ -193,14 +193,18 @@ Creating the app takes you to its page, which is organised as five tabs:
   is where a failing build tells you why.
 - `Domains` carries the address your app answers on, with its certificate state,
   and is where you change the subdomain before the first deploy.
-- `Environment` is where you add or change environment variables afterwards.
-  Saving a change replaces the running container rather than rebuilding the
-  image, so it is fast. See [environment variables](/apps/environment-variables).
+- `Environment` is where you add or change environment variables. Before the
+  first deploy, saving only stores them: there is no container yet to
+  replace. Saving a change afterwards replaces the running container rather
+  than rebuilding the image, so it is fast. See
+  [environment variables](/apps/environment-variables).
 - `Overview` carries the app's status and which repository it came from.
 - `Billing` carries what this app costs and what it has cost.
 
-The first deploy starts on its own. After that, the button on the app page reads
-`Redeploy` and rebuilds from your deploy branch on demand.
+The first deploy starts when you press `Deploy` on the app page. It does not
+begin on its own, so add your environment variables first if your app needs
+them at startup. After that, the button on the app page reads `Redeploy` and
+rebuilds from your deploy branch on demand.
 
 ### If the first deploy fails
 
