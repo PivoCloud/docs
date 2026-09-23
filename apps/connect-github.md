@@ -1,7 +1,7 @@
 ---
 title: How do I connect GitHub to PivoCloud?
 description: "Install the PivoCloud GitHub App, see exactly which repositories PivoCloud can read and why, including private and organisation-owned ones, and change that set from GitHub whenever you need to."
-last_verified: 2026-09-06
+last_verified: 2026-09-23
 ---
 
 ## Connect GitHub
@@ -119,6 +119,16 @@ again.
 Not on this page. The picker lives on the create-app form: a control labelled
 `Pick a repository`, with a `Search repositories…` field inside it once it
 opens. Everything on this page decides what that picker contains.
+
+The same picker appears on an app's settings page too, reached from the
+`Edit` button on the app page. There it shows the repository that app
+deploys from. If the installation can no longer read that repository, the
+picker still shows its name, with this line underneath:
+
+`This repository is not in the list your GitHub connection can read. Give the PivoCloud GitHub App access to it on GitHub, then reload this page.`
+
+See [changing which repositories are visible](#changing-which-repositories-are-visible)
+above to fix that.
 
 For the rest of that form, the branch, the build settings, the plan and the
 subdomain, see [deploying your first app](/apps/deploy).

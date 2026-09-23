@@ -177,6 +177,16 @@ through the App, which is why most people never open it. Prefer the App
 connection where you can: it is what makes deploying on every push possible, and
 it means no token of yours has to live here.
 
+When the repository was picked through the App, the form does not ask for a
+token at all. Under `Private repository` it shows this line instead:
+
+`Access to this repository goes through your GitHub connection. No token is needed.`
+
+An app that still holds a token saved from before it moved onto the App
+connection shows one more line next to a `Remove token` button:
+
+`A token saved earlier is still stored but is not used for this app.`
+
 ### Migrations
 
 Nothing runs your migrations. There is no release phase and no automatic
