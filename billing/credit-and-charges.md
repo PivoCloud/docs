@@ -1,7 +1,7 @@
 ---
 title: What does it cost, and when am I charged?
 description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, what every app plan and database tier costs, when a charge happens and how long a paid period runs, why your price stays fixed, and what happens if your balance runs out."
-last_verified: 2026-09-10
+last_verified: 2026-09-25
 ---
 
 ## Credit and charges
@@ -55,6 +55,22 @@ on the page waiting.
 If a promotion is running, the approval email and your top-up history show the
 extra credit as a separate bonus line. Nothing announces one in advance, so
 treat it as a surprise rather than as something to count on.
+
+The amount credited can differ from the amount you asked for. This happens when
+the transfer that arrived is not the amount you requested. In that case the
+`Amount` in your history shows what was actually credited, and a line under the
+row reads, for example, `Requested 2,000 DA, credited 1,900 DA.` followed by a
+note from the PivoCloud team explaining why. The approval email names the amount
+credited too. Any bonus is computed on the amount credited.
+
+#### Balance adjustments
+
+Sometimes the PivoCloud team changes your balance directly, for example to
+refund a charge or to correct a mistake. Every such change appears on the
+`Wallet` page, under the top-up history, in a section called
+`Balance adjustments`. Each row shows the `Date`, the `Amount` (a plus sign when
+credit was added) and a `Note` explaining the reason. The section only appears
+once there is at least one adjustment on your account.
 
 ### When you are charged
 
