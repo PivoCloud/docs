@@ -67,10 +67,11 @@ from now.
 because it is the one field with a decision in it.
 
 **`Plan`.** How much machine your app gets, and what it costs per month. `Lite`
-is the entry plan at 1,200 DA per app per month, which is exactly what the
-starting credit covers for a first month. The list shows each plan next to its
-monthly price, and once you pick a paid plan the form tells you what creating
-the app will charge and what your balance becomes.
+is the entry plan. The list shows each plan next to its monthly price, and once
+you pick a paid plan the form tells you what creating the app will charge and
+what your balance becomes. If you claimed a starting credit, it is spent like any
+other credit on your balance. What each plan costs, and so how far your balance
+goes, is on [what does it cost, and when am I charged](/billing/credit-and-charges).
 
 **The repository.** If GitHub is not connected yet, the form shows a
 `Connect GitHub` button and the line `You'll be taken to GitHub to authorize the

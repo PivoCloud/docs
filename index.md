@@ -1,7 +1,7 @@
 ---
 title: How do I start using PivoCloud?
-description: "Sign up, verify your email, complete your profile and claim the 1,200 DA starting credit, then follow three steps to a running app: check your repository, connect GitHub, deploy it."
-last_verified: 2026-09-06
+description: "Sign up, verify your email, complete your profile and claim the starting credit when it is offered, then follow three steps to a running app: check your repository, connect GitHub, deploy it."
+last_verified: 2026-09-26
 ---
 
 ## Get started
@@ -23,8 +23,12 @@ same panel carries a `Resend verification` link that sends it again.
 
 ### 2. Complete your profile and claim the credit
 
-A new account starts with a wallet balance of zero. The 1,200 DA is not granted
-automatically at signup. You claim it, and a person approves the claim.
+A new account starts with a wallet balance of zero. When PivoCloud is offering a
+starting credit, it is not granted automatically at signup. You claim it, and a
+person approves the claim. The amount is shown on the dashboard banner and on
+the `Wallet` page. When no starting credit is offered, neither of them mentions
+one, and you add credit by top-up instead
+([what does it cost, and when am I charged](/billing/credit-and-charges)).
 
 Two steps, in this order.
 
@@ -43,22 +47,23 @@ incomplete until it is fixed.
 
 **Claim the credit.** Once the profile is complete, the dashboard banner's
 button reads `Claim Now`. The `Wallet` page carries the same action on its
-`Free Credits` card, where the button carries the amount instead and reads
-`Claim 1,200 DA`. Either one works, so click it once.
+`Free Credits` card, where the button reads `Claim` followed by the amount.
+Either one works, so click it once.
 
 Then expect a wait. The approval is not automatic: someone at PivoCloud reviews
 the claim by hand, so the credit does not appear the moment you click. While the
-claim is pending, the dashboard banner hides itself entirely and the dashboard
-shows nothing about it. The `Wallet` page in the sidebar is the only place the
-pending claim is visible. Look there. A quiet dashboard does not mean the claim
-failed.
+claim is waiting, the dashboard shows this line in place of the banner:
 
-### 3. What 1,200 DA buys
+`Your free credit claim is being reviewed. We'll add it to your wallet once approved.`
 
-The credit covers one month of `Lite` hosting for one app, at 1,200 DA per app
-per month, or one month of a `Starter` database at 1,200 DA per month. The full
-catalogue, including the larger app plans and database tiers, is on
-[what does it cost, and when am I charged](/billing/credit-and-charges).
+The `Free Credits` card on the `Wallet` page shows the same claim as
+`Pending Review`. There is nothing more to do until it is decided.
+
+### 3. What the credit buys
+
+The starting credit is spent like any other credit on your balance. What each
+app plan and database tier costs per month, and so how far the credit goes, is
+on [what does it cost, and when am I charged](/billing/credit-and-charges).
 
 ### 4. The three things to do first
 

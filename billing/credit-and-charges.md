@@ -1,7 +1,7 @@
 ---
 title: What does it cost, and when am I charged?
-description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, what every app plan and database tier costs, when a charge happens and how long a paid period runs, why your price stays fixed, and what happens if your balance runs out."
-last_verified: 2026-09-25
+description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, what every app plan and database tier costs, when a charge happens and how long a paid period runs, why your price stays fixed, and what happens if your balance runs out."
+last_verified: 2026-09-26
 ---
 
 ## Credit and charges
@@ -19,8 +19,26 @@ nothing else to set up and no card kept on file anywhere.
 `Wallet` with the balance beside it, and the same page carries the `Top Up`
 button and the history of every top-up you have asked for.
 
-A new account starts at zero. There is a starting credit you claim once, and
-[how do I start using PivoCloud](/index) covers claiming it and what it buys.
+A new account starts at zero. When PivoCloud is offering a starting credit, you
+claim it once, and [how do I start using PivoCloud](/index) covers claiming it.
+The amount is shown on the dashboard and on the `Wallet` page when the offer is
+available, so this page does not quote a figure for it.
+
+#### A starting credit claim that is waiting
+
+A claim is reviewed by a person at PivoCloud, so the credit does not appear the
+moment you claim it. While it waits, your dashboard shows one line saying that
+your starting credit claim is being reviewed and that the credit will be added to
+your wallet once it is approved.
+
+There is nothing to press on that line and nothing else to do. The `Free Credits`
+card on the `Wallet` page shows the same claim as `Pending Review`. The line
+stays until the claim is decided, even if you closed the offer banner earlier.
+
+Once the claim is approved, the credit is on your balance and the line goes
+away. If it is not approved, the `Free Credits` card on the `Wallet` page shows
+`Claim not approved` with the reason, and the reason is also sent to you by
+email. While the offer is available, the same card carries `Claim Again`.
 
 ### Adding credit
 
