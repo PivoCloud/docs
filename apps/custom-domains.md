@@ -1,7 +1,7 @@
 ---
 title: How do I put my own domain on my app?
 description: "Add your own domain to a PivoCloud app: the order that works, the CNAME case for a subdomain, the A record case for the root of your domain, what each status means, and what to do when the check says your DNS is not pointing here yet."
-last_verified: 2026-09-10
+last_verified: 2026-09-27
 ---
 
 ## Your own domain on an app
@@ -25,6 +25,27 @@ Your plan has to allow custom domains. They are available on Starter and above.
 You do not have to work out whether yours qualifies: the `Domains` tab on your
 app tells you. The console shows a decision the server made, so what you see
 there is what the server will enforce when you press the button.
+
+### If your plan does not include custom domains
+
+When your plan does not allow custom domains, the `Domains` tab says they are
+available on Starter and higher, or by invitation. An upgrade is one way in. An
+invitation is the other, and you can ask for one from the same place.
+
+If the app has no custom domain yet, the tab shows a `Request an invitation`
+button. Pressing it sends the request with the app and its plan already
+attached. There is nothing else to fill in.
+
+The tab then shows that the request was made, on which day, and that we will
+get back to you. One request per account is kept every 7 days: pressing the
+button again inside that week does not send a second one.
+
+Nobody is told automatically when an invitation is granted. The `Domains` tab
+simply lets you add a domain the next time it loads. An invitation covers every
+app on your account, not only the one you asked from.
+
+If an invitation is later withdrawn, the domains you already added keep
+working. Only adding a new one is stopped.
 
 ### The order, and why it is this way round
 
