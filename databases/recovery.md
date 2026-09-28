@@ -1,7 +1,7 @@
 ---
 title: How do I get my data back
 description: "What PivoCloud keeps of your PostgreSQL database, how to take a backup or an export yourself, how to download and check an export, what a restore really produces and what it costs, how far back each plan lets you go, and what survives losing the machine."
-last_verified: 2026-09-09
+last_verified: 2026-09-27
 ---
 
 ## Backups, exports and restores
@@ -205,6 +205,14 @@ and how far back your 30 reach depends on how often they were taken.
 
 This is the figure every plan has, Starter included, and it is what a
 self-serve restore restores from.
+
+**A nightly backup can be skipped to protect storage.** If the database
+server is short of storage when your nightly backup is due, that night's
+backup is not taken. Your backup history then shows it as failed, with this
+message: "Skipped to protect storage on the database server. Your most recent backup is kept."
+Your most recent successful backup and every other kept backup stay as they
+were; nothing is deleted to make room. The next night's backup runs as usual.
+If you see this message two nights in a row, contact support.
 
 Separately from both of those, a copy of your database is taken off the
 platform every 24 hours. What that copy protects is a different thing, and the
