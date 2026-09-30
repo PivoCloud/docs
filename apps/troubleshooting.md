@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-09-07
+last_verified: 2026-09-30
 ---
 
 ## Find the sentence you were shown, then read what it really means
@@ -394,6 +394,42 @@ This message is also emitted for almost any failure to start, not only for a
 port mistake. If your `EXPOSE` line and your listening port already agree, your
 app is crashing on boot instead, and the reason is in the container logs.
 
+## A platform update interrupted your deploy
+
+PivoCloud updates itself from time to time. If that happens while your deploy is
+running, PivoCloud lets the deploy finish first whenever it can. When it cannot,
+your deploy starts again from the beginning, once, on its own. It is the same
+deploy, so it keeps its place in your deployment history and you do not need to
+press anything.
+
+If you saw this line in your build log, nothing is needed from you:
+
+```text
+A platform update interrupted this deploy. It starts again from the beginning (attempt 2 of 2). You do not need to do anything.
+```
+
+**Only if the update interrupts the deploy a second time in a row does it stop.**
+The deploy then fails, and this sentence is its error message. You read it under
+`Deployment Failed` on the `Deployment logs` tab of your app page. If your app
+has no running version, the red panel at the top of the page also carries it in
+its technical details. If the version you had before is still running, your app
+stays running and no red panel appears. The sentence is not added to the log
+lines below it.
+
+```text
+A platform update interrupted this deploy twice, so it was stopped. Your code did not cause this. Redeploy to try again.
+```
+
+**Your code did not cause this, and there is nothing to fix in it.** Do not
+change your Dockerfile or your settings because of this message. Press
+`Redeploy` and the deploy starts fresh.
+
+The red panel does not offer a cause for this failure, and that is deliberate.
+The panels for a clone, a Dockerfile or a build problem describe something you
+can change, and none of them applies here.
+
+What this does to your credit is in the next section.
+
 ## When Redeploy or the other buttons refuse
 
 Pressing `Redeploy` can come back seven different ways. **This is the list for
@@ -457,3 +493,10 @@ looks wrong and is not: **the next deploy that succeeds charges again.** The
 refund cancels the month you paid for, so the paid month starts when your app
 actually runs rather than when you first tried. A wallet showing a debit, then a
 credit, then a second debit for the same app is one month paid for, not two.
+
+**A deploy that a platform update interrupts twice follows the same rule, with
+one difference.** If your previous version is still running when the deploy
+stops, your app keeps running, and nothing is refunded and nothing is charged
+again. If nothing was running, the deploy counts as a failed deploy and the
+refund described above applies. The single automatic restart of an interrupted
+deploy never charges you a second time.
