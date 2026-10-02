@@ -1,7 +1,7 @@
 ---
 title: How do I put my own domain on my app?
 description: "Add your own domain to a PivoCloud app: the order that works, the CNAME case for a subdomain, the A record case for the root of your domain, what each status means, and what to do when the check says your DNS is not pointing here yet."
-last_verified: 2026-09-27
+last_verified: 2026-10-02
 ---
 
 ## Your own domain on an app
@@ -74,6 +74,16 @@ identity, so it is different for every app.
 At your DNS provider, create a `CNAME` record whose name is the subdomain and
 whose value is what you copied.
 
+The value is your app's own address. For an app with an address under
+`pivocloud.app` it is that address, for example `shop.pivocloud.app`. For an app
+created earlier it is its address under `apps.pivocloud.com`. Either way, copy it
+from the `Domains` tab and do not work it out yourself.
+
+For an app with an address under `pivocloud.app`, the check accepts a record only
+if it leads to that app's own address, directly or through other `CNAME` records
+of yours. A record that points anywhere else, including straight at a PivoCloud
+address that is not your app's, is not accepted for that app.
+
 ### Case two: the root of your domain, using an A record
 
 This is the case where a name such as `example.com` cannot carry a `CNAME`,
@@ -83,8 +93,10 @@ The record type is `A`. The value to copy is the one the `Domains` tab shows
 next to the apex row for that domain, again with a copy control beside it.
 
 That row appears only where PivoCloud has an address to give for the
-environment your app runs in. If you do not see it, the root case is not
-available to you and the `CNAME` case is the one to use: point a subdomain at
+environment your app runs in. It is never shown for an app with an address under
+`pivocloud.app`, so for those apps the root case is not available. If you do not
+see it, the root case is not available to you and the `CNAME` case is the one to
+use: point a subdomain at
 your app and, if you want the root to reach it too, use whatever redirect your
 DNS provider offers at the root.
 
@@ -137,6 +149,15 @@ things to look at, in this order:
   is sometimes an hour or more.
 
 If all three are right, leave it alone. The automatic re-check keeps running.
+
+Two other messages can appear when you add or verify a domain:
+
+- `That name belongs to PivoCloud. Use a domain you own.` A name inside
+  PivoCloud's own domains cannot be used as a custom domain. Use a name you
+  own.
+- `We could not check this domain right now. Please try again in a moment.` The
+  check could not read your app for a moment. Nothing is wrong with your record,
+  and the automatic re-check tries again by itself.
 
 ### The cap
 

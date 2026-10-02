@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-09-23
+last_verified: 2026-10-02
 ---
 
 ## Deploy your first app
@@ -148,9 +148,12 @@ The two rules a first name most often trips print their own message:
 `Can't start or end with a hyphen.` and
 `Subdomains can't start with "app-". That prefix is used for automatic URLs.`
 
-Leaving it blank is a perfectly good choice. Do that and PivoCloud builds a
-hostname from the app's own id, and shows it to you before you submit in the
-shape `app-4f3c1a2b…`. You can pick a real name later.
+Where the name is optional, leaving it blank is a perfectly good choice. Do that
+and PivoCloud builds a hostname from the app's own id, and shows it to you before
+you submit in the shape `app-4f3c1a2b…`. You can pick a real name later. Where
+the name is required, which is the case for an address under `pivocloud.app`
+described next, the field is marked as required and the form will not submit
+without it.
 
 As you type, a small verdict appears beside the field. It reads `Checking…`
 while the console asks, then one of `Available`, `Taken`, `Reserved`, `Invalid`
@@ -161,9 +164,43 @@ true a second ago, not what will be true when you submit: a name can show
 `Available` and still be refused if someone else creates it first. Nothing holds
 a subdomain for you until the app exists.
 
-Until the first deploy you can still change it. The console says so where the
-address is shown: `This URL starts working the first time you deploy. You can
-change it until then without using up a certificate.`
+Until the first deploy you can still change it on an address that can be
+changed. The console says so where the address is shown: `This URL starts working
+the first time you deploy. You can change it until then without using up a
+certificate.`
+
+### Your app's address
+
+The address shown on your app's page is the one your app answers on, and it never
+changes by itself. Apps created before PivoCloud began giving out addresses under
+`pivocloud.app` keep their `apps.pivocloud.com` address, and it keeps working.
+As this rolls out, a new app gets an address under `pivocloud.app` instead. The
+form and the app page always show you which one you have, so read the address
+there rather than assuming it.
+
+An address under `pivocloud.app` follows four rules:
+
+- **The name is required.** There is no generated fallback. The field starts
+  filled from your app name, and you can edit it. If the name is taken, the
+  verdict beside the field says so and you choose another.
+- **Some names are reserved** for PivoCloud's own use. When you type one, the
+  verdict beside the field says it is on the reserved list and asks you to try
+  another name.
+- **A name you stop using stays yours.** After you delete an app, nobody else on
+  PivoCloud can ever take its name, so old links and webhooks cannot be picked up
+  by a stranger. You can use the name again for a new app on your own account.
+- **The address cannot be renamed.** The app page shows it without a change
+  control. If you need a different name, create a new app with it.
+
+PivoCloud makes your address reachable before it shows it to you, so the link on
+your app's page works as soon as you see it. If PivoCloud cannot set the address
+up when you press `Create App`, no app is created and the form shows this
+sentence, with everything you typed still in place:
+
+`We couldn't set up your address. Try again in a few minutes.`
+
+Press `Create App` again after a few minutes. If it keeps failing, contact
+support and quote that sentence.
 
 ### Deploying without the GitHub App
 
@@ -203,7 +240,8 @@ Creating the app takes you to its page, which is organised as five tabs:
 - `Deployments` carries the build log. Watch it here on the first deploy: this
   is where a failing build tells you why.
 - `Domains` carries the address your app answers on, with its certificate state,
-  and is where you change the subdomain before the first deploy.
+  and, for an address that can be changed, is where you change the subdomain
+  before the first deploy.
 - `Environment` is where you add or change environment variables. Before the
   first deploy, saving only stores them: there is no container yet to
   replace. Saving a change afterwards replaces the running container rather
