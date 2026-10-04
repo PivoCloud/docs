@@ -114,6 +114,10 @@ If what you want is to stop paying for an app you may come back to, `Stop` is
 the control for that, not `Delete`. A stopped app is not charged, and the paid
 time you have left waits for you.
 
+If your app was on a `pivocloud.app` address, that address stops answering
+within a few minutes of the delete. The name stays yours, and nobody else can
+take it (see the note on names you stop using in [Deploy](deploy.md)).
+
 ### Where your logs are
 
 There is no `Logs` control. Open the `Deployments` tab and you get two sub-tabs,
