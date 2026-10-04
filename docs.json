@@ -36,6 +36,10 @@
         "pages": ["api/personal-access-tokens"]
       },
       {
+        "group": "Agents",
+        "pages": ["agents/connect"]
+      },
+      {
         "group": "API reference",
         "openapi": "openapi.yaml"
       },
