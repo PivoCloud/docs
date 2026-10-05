@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-10-02
+last_verified: 2026-10-04
 ---
 
 ## Deploy your first app
@@ -254,6 +254,59 @@ The first deploy starts when you press `Deploy` on the app page. It does not
 begin on its own, so add your environment variables first if your app needs
 them at startup. After that, the button on the app page reads `Redeploy` and
 rebuilds from your deploy branch on demand.
+
+### Reading the deployment history
+
+The history on the `Deployments` tab lists your recent deployments, newest first.
+It shows the 10 most recent. Its columns are `Status`, `Timestamp`, `Type`,
+`Commit` and `Duration`.
+
+**Type.** Each row says what happened to your app:
+
+- `Deploy` built your repository and started a new version.
+- `Env vars updated` replaced the running container with one that has your new
+  variables. Nothing was rebuilt.
+- `Restarted` started your app again from the version it last built, for
+  example after a stop or a plan change. If that version is no longer on the
+  server, PivoCloud rebuilds it from your repository instead. The row still says
+  `Restarted`, and it shows the commit that rebuild used.
+- Any other row reads `Other`.
+- `Stopped` stopped your app.
+- `Domain configured` and `Subdomain configured` changed the address your app
+  answers on.
+
+**Commit.** For a deploy, the row shows the short commit, its message and its
+branch. Clicking the short commit opens it on GitHub. The link is built from the
+repository your app is connected to now, so it may not open a commit that
+belongs to a repository you connected earlier. `Env vars updated` and
+`Restarted` rows show the commit that was already running, not a new one. The
+one exception is a `Restarted` row that had to rebuild, as described above.
+
+Two texts stand in when there is no commit to show. `Commit not recorded` means
+PivoCloud has no commit for that row. It appears on a deploy that has not cloned
+your repository yet, on a deploy that failed before the clone finished (a wrong
+repository URL, for example), and on rows from before PivoCloud recorded commits.
+`No code change` marks a row that runs no code, such as a stop or a domain
+change.
+
+**Live and Latest.** `Live` marks the deployment your app serves right now.
+`Latest` marks the newest deploy, env var change or restart, but only when it is
+not the live one. `Latest` can be a deploy that is still in progress. A domain
+change or a stop is never marked `Latest`.
+
+The two differ when a newer deploy failed or is still building. While a build is
+broken, your previous version keeps serving, so it stays `Live` and the failed
+attempt shows as `Latest`. A stopped app has no `Live` row, and it gets one again
+when you start it.
+
+A deploy that builds but then fails its health check leaves no `Live` row. The
+previous version was already replaced when the new one started, so no row can
+claim to be what runs now. The same is true while a deploy is starting. Fix the
+problem and deploy again.
+
+Because the list shows only the 10 most recent deployments, a live deployment
+older than those has no `Live` row in the list. The card above the history still
+names the commit your app runs now.
 
 ### If the first deploy fails
 

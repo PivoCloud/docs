@@ -137,7 +137,9 @@ to see. A crash on startup is in `Runtime logs`, not in the build output. A
 build that failed leaves `Runtime logs` empty, because nothing ever ran.
 
 Below both, a `Deployment History` section lists your recent deployments so you
-can see which attempt is which.
+can see which attempt is which. Each row shows its commit, and the history marks
+which deployment is live. How to read it is on
+[how do I deploy my first app](/apps/deploy#reading-the-deployment-history).
 
 **What it does to your bill:** nothing. Reading either log costs nothing and
 changes nothing about your app.
