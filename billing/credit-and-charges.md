@@ -1,7 +1,7 @@
 ---
 title: What does it cost, and when am I charged?
 description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, what every app plan and database tier costs, when a charge happens and how long a paid period runs, why your price stays fixed, and what happens if your balance runs out."
-last_verified: 2026-09-26
+last_verified: 2026-10-05
 ---
 
 ## Credit and charges
@@ -111,9 +111,10 @@ for twice. Your app's `Billing` tab shows its `Monthly price` and a
 
 That tab also carries the `Auto-renewal` switch, and this is the page that
 covers it. Turn it off and the app stops renewing: at the end of the period you
-have already paid for, it expires instead of opening another one. Turning it
-back on needs a period that is still running, so an app that has none has the
-switch disabled until you deploy it again.
+have already paid for, it expires instead of opening another one. You can turn
+it back on at any time, including on an app that has already expired: switch it
+on, make sure the wallet can pay for the plan, then use `Redeploy` to bring the
+app back.
 
 Two things this page deliberately does not repeat. What each button on a running
 app does to your bill, control by control, is on
