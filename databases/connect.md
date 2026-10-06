@@ -41,6 +41,26 @@ The same string is what your PivoCloud apps receive when you attach this
 database to them, so an app running here and a script running on your laptop
 are talking to the database the same way.
 
+### Your database's address
+
+The hostname in the connection string is your database's address. Databases
+created before PivoCloud began giving out the shorter form keep the address they
+have, and it keeps working. Once the shorter form is enabled for your database,
+a new database gets an address like `k7m2x9qp4t.pivodb.com`: a short random code
+under `pivodb.com`. The console always shows you which one a database has, so
+read the connection string there rather than assuming a shape.
+
+Both forms keep working and both connect the same way. Use the hostname
+exactly as shown, never an IP address, and keep `sslmode=require` as in the
+string above.
+
+One thing to know if your application looks the address up once at startup and
+keeps the result. PivoCloud sometimes moves a database to another server, which
+happens rarely. The address stays the same when that happens, but a connection
+your application already holds ends. Make sure your application
+reconnects, and looks the address up again when it does, instead of reusing the
+first result for as long as it runs.
+
 ### The database name is always the same
 
 Every PostgreSQL database on PivoCloud is named `pivodb`. That name is fixed
@@ -376,7 +396,7 @@ certificate.
 
 ### Two things break a pin
 
-**Your database being rebuilt.** If PivoCloud has to recreate your database
+**Your database being rebuilt or moved.** If PivoCloud has to recreate or move your database
 somewhere else, your hostname is kept and the certificate is generated again, so
 the fingerprint changes and a pinned client stops connecting. The fix is step 1
 and step 3 again: read the certificate and replace your saved `server.crt`. It

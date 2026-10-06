@@ -1,7 +1,7 @@
 ---
 title: How do I call the API with a token?
 description: "How to create a personal access token in the PivoCloud console, how to send it with a request that starts a database export, what the reply carries, and what to do when the API answers that you should wait rather than starting one."
-last_verified: 2026-09-13
+last_verified: 2026-10-05
 ---
 
 ## Calling the PivoCloud API with a personal access token
@@ -11,6 +11,14 @@ databases, and download the result. This page covers that in three parts, in
 the order you meet them. Creating a token in the console. Sending a request
 with it and reading what comes back. And what to do when the API answers that
 you should wait rather than starting an export.
+
+### What these tokens are for
+
+These tokens do one thing: they pull exports of your own databases. They are not the
+credential for an AI agent or a CI job that reads the status of your apps. For that,
+create a read-only key under `Integrations`, in the `AI agents` section, as described in
+[How do I see, change and cut off my AI agents?](/agents/manage). `Revoke all` in that
+section leaves these tokens working.
 
 ### Create the token
 

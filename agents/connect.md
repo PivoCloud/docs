@@ -204,7 +204,9 @@ all three only read.
   as good news.
 - `list_env_vars` lists the names of the env vars set on an app, and says whether
   each one is yours or comes from the database attached to the app. It lists names
-  only. A stopped database adds no names, because it adds nothing to the app.
+  only. A stopped database adds no names, because it adds nothing to the app. If you
+  chose the app for this connection but not its database, the list leaves out the
+  names the database adds and says that a database is attached.
 - `get_deployment` follows one deploy, the newest one unless the agent names another.
   It tells the agent which stage the deploy is in, how long it has run against its
   time limit, and when to ask again. When the deploy failed, it gives the same reason
@@ -212,6 +214,13 @@ all three only read.
 
 The time limit of a deploy covers the whole deploy: getting your code, the build, and
 the start check. It is not only the length of the build.
+
+**A database you did not choose is not described.** When an app depends on a database
+that is not in the connection's choice, the answer says only that the app depends on a
+database that was not shared. It does not say whether that database runs, and it never
+blames it. The check is marked `not_shared` in the list of checks, so the missing
+answer is never read as good news. Choose the database for the connection as well to
+include it.
 
 **An answer never carries a value or a log line.** The agent gets names, codes and
 PivoCloud's own sentences. It does not get the text of an error, the message of your
@@ -327,3 +336,7 @@ the address is exactly `https://api.pivocloud.com/mcp`, then try again in a minu
 after you connected, or you signed in to a different PivoCloud account than the one
 that owns them (check `Signed in as` on the page), or the account has no apps or
 databases yet. Connect again, choosing what the agent can use.
+
+## Change or cut off a connection
+
+To see your connected agents, change what one can do, or cut one off, see [How do I see, change and cut off my AI agents?](/agents/manage).
