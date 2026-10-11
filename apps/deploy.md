@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-10-04
+last_verified: 2026-10-07
 ---
 
 ## Deploy your first app
@@ -238,7 +238,11 @@ Creating the app takes you to its page, which is organised as five tabs:
 `Overview`, `Deployments`, `Environment`, `Domains` and `Billing`.
 
 - `Deployments` carries the build log. Watch it here on the first deploy: this
-  is where a failing build tells you why.
+  is where a failing build tells you why. If your build prints the value of one
+  of your environment variables, the log shows `•••REDACTED•••` in its place.
+  This cannot be undone for a deploy already stored. If PivoCloud could not load
+  your app's values, the log shows `Build output is hidden because PivoCloud could
+  not load this app's values to blank them. Deploy again to see it.` Deploy again.
 - `Domains` carries the address your app answers on, with its certificate state,
   and, for an address that can be changed, is where you change the subdomain
   before the first deploy.
