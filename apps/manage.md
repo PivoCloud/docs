@@ -1,7 +1,7 @@
 ---
 title: What does each button on my app page do?
 description: "Every control on a deployed app in the PivoCloud console, in the order the console shows them, with what each one does and what each one does to your bill before you press it. Plus the two separate places your logs appear."
-last_verified: 2026-09-23
+last_verified: 2026-10-12
 ---
 
 ## Manage your app
@@ -141,6 +141,12 @@ can see which attempt is which. Each row shows its commit, and the history marks
 which deployment is live. How to read it is on
 [how do I deploy my first app](/apps/deploy#reading-the-deployment-history).
 
+A restart, a stop and a start also appear there, as `Restarted`, `Stopped` and `Started`,
+and the row says who asked. `by you` means you pressed the button in the console. For an
+AI agent the row says `by`, the agent's name in quotes and the connection's name in
+parentheses. If you revoked that connection since, the line ends with `(revoked)`.
+What an agent can do to an app is on [What can an agent with Operate do?](/agents/operate).
+
 **What it does to your bill:** nothing. Reading either log costs nothing and
 changes nothing about your app.
 
@@ -162,7 +168,7 @@ would fix it, and it is the whole of the explanation you are given.
 It is a timing refusal and nothing more. Open the `Deployments` tab, wait for
 the running deploy to finish, then delete.
 
-`Stop`, `Restart` and `Change plan` are refused the same way while another
+`Stop`, `Start`, `Restart` and `Change plan` are refused the same way while another
 change to the app is still in flight, and there the message does tell you to try
 again in a moment. Wait a few seconds and press the control again.
 

@@ -646,15 +646,14 @@ If `Redeploy` appears to do nothing at all, a deploy is already running: open th
 
 **The same in-progress refusal is worded two ways, depending on which control
 you pressed.** From `Redeploy` you get the sentence in the table. From `Stop`,
-`Restart` or `Change plan` you get
+`Start`, `Restart` or `Change plan` you get
 `A deployment is in progress for this app. Try again in a moment.` instead. The
 two sentences are the same condition and the same advice: wait a moment, then
 try again.
 
-`Start` is not in that list. The platform has no dedicated sentence for pressing
-`Start` while a deploy is running, so do not go looking for one. If `Start`
-comes back with a failure and a deploy is running, open the `Deployments` tab,
-wait for that deploy to finish, then press `Start` again.
+`Start` answers the in-progress sentence too, while a deploy, a restart or a stop
+is still running for the app. Wait for that job to finish (the `Deployments` tab
+shows a deploy), then press `Start` again.
 
 ### A first deploy that fails with a trigger failure is usually about credit
 

@@ -37,7 +37,7 @@
       },
       {
         "group": "Agents",
-        "pages": ["agents/connect", "agents/manage"]
+        "pages": ["agents/connect", "agents/manage", "agents/operate"]
       },
       {
         "group": "API reference",

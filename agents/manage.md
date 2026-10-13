@@ -1,7 +1,7 @@
 ---
 title: How do I see, change and cut off my AI agents?
 description: "See every AI agent connected to your PivoCloud account, change what each one can do, rename or revoke a connection, cut every agent off at once, and create a read-only key for a CI job that cannot sign in through the browser."
-last_verified: 2026-10-06
+last_verified: 2026-10-12
 ---
 
 {/* launch: remove this notice when the agent endpoint is switched on in production */}
@@ -41,6 +41,20 @@ you connected: the levels, and which apps and databases.
   completely, revoke it instead.
 
 Press `Save changes`. The agent uses its new access on its next call.
+
+## A frozen connection
+
+An agent with `Operate` can make 10 changes (restarts, stops and starts) in one hour. When
+it tries to make more, PivoCloud freezes that connection and emails you once. The connection
+shows an amber `Frozen` label, a line saying when it was frozen, and a `Lift freeze` button.
+Frozen connections are listed first. Every call the agent makes is refused until you act,
+and the freeze never ends by itself. Your other connections keep working. See
+[What can an agent with Operate do?](/agents/operate).
+
+- Press `Lift freeze` and confirm. PivoCloud asks for your password. The agent can act again
+  on its next call, and its count of changes starts again from zero.
+- If you did not expect these changes, press `Revoke` instead. Revoking asks you to confirm,
+  but never asks for your password.
 
 ## Rename a connection
 
@@ -99,7 +113,7 @@ the key learns only that the app has a database it cannot see. It is not told wh
 that database runs, and the names the database adds to the app are left out of the
 list. Choose the database for the key as well to include them.
 
-A key never reads logs. It never changes, restarts, deletes or orders anything, and it
+A key never reads logs. It never changes, restarts, stops, starts, deletes or orders anything, and it
 never spends money. It works only on the PivoCloud MCP endpoint, and it is refused
 everywhere else, including the API for database exports.
 
@@ -151,6 +165,19 @@ No key exists, so there is nothing to revoke. Press `Create key` again.
 
 **"You already have 10 active keys. Revoke one before creating another."**
 Revoke a key you no longer use, then create the new one.
+
+**"Freeze lifted. The agent can act again on its next call."**
+The freeze is gone and the count of changes starts again from zero.
+
+**"Lifting a freeze needs your password."**
+The password panel opens with this line when you confirm `Lift freeze`. Type your password
+and the freeze is lifted.
+
+**"This connection is not frozen any more."**
+Someone, or another tab, lifted it first. The list is read again.
+
+**"We could not lift the freeze. The agent stays frozen. Try again."**
+The lift did not go through, so the agent is still refused. Press `Lift freeze` again.
 
 **"Your session has ended. Nothing changed. Sign in again, then try again."**
 Your sign-in expired. Sign in again, then repeat the change. The password panel says the

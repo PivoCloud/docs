@@ -1,7 +1,7 @@
 ---
 title: How do I connect my AI agent to PivoCloud?
 description: "Add PivoCloud to Claude Code, Codex or OpenCode, sign in through your browser with no key to copy, and choose which apps and databases your agent can see and what it can do."
-last_verified: 2026-10-07
+last_verified: 2026-10-12
 ---
 
 {/* launch: remove this notice when the agent endpoint is switched on in production */}
@@ -145,16 +145,18 @@ agent asked for. `Read` is marked `Always on`. A level the agent asked for is ma
 `Requested` and stays off unless you turn it on. A level the agent did not ask for
 cannot be turned on.
 
-Today only `Read` does anything. A connected agent can list the apps and databases
-you chose and read the details of each one. It can list the names of an app's env
-vars, ask PivoCloud why an app is not working, follow a deploy while it runs, and
-read the recent log lines of an app (see "Logs your agent can read"). It never
-sees an env var value through the env var tools and it never changes anything. It
-can do nothing else.
+`Read` lets a connected agent list the apps and databases you chose and read the
+details of each one. It can list the names of an app's env vars, ask PivoCloud why an
+app is not working, follow a deploy while it runs, and read the recent log lines of an
+app (see "Logs your agent can read"). It never sees an env var value through the env
+var tools.
 
-`Operate` and `Spend` are permissions you can grant now that later releases will use.
-The permission page already describes what they are for, but no agent action uses
-them yet, so turning them on changes nothing today.
+`Operate` lets the agent restart, stop and start the apps you chose, and nothing else.
+It is off until you switch it on for the connection. See
+[What can an agent with Operate do?](/agents/operate).
+
+`Spend` is a permission you can grant now that no agent action uses yet, so turning it
+on changes nothing today.
 
 For the apps and databases you can pick `All apps and databases, including future
 ones`, or `Only these` and tick the ones you want. Apps and databases you create
@@ -378,6 +380,8 @@ are quoted here word for word.
 > Spending money always becomes a link. A human opens that link in the PivoCloud console and approves it there. You cannot approve a payment yourself.
 >
 > No agent can delete an app, a database or a domain, and none of these tools does.
+>
+> With the Operate level, restart_app, stop_app and start_app act on one app and answer at once with a job; check progress with get_app. Do not send an accepted request again unless the connection dropped before the answer. When an answer tells you to try again, wait the time it gives. When it says do not retry, do not retry.
 
 ## How long a connection lasts
 
