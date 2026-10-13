@@ -4,9 +4,6 @@ description: "See every AI agent connected to your PivoCloud account, change wha
 last_verified: 2026-10-12
 ---
 
-{/* launch: remove this notice when the agent endpoint is switched on in production */}
-Agent connections are not open on PivoCloud yet.
-
 ## Where it is
 
 Open `Integrations` in the console and scroll to the section called `AI agents`. It

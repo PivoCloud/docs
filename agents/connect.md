@@ -4,9 +4,6 @@ description: "Add PivoCloud to Claude Code, Codex or OpenCode, sign in through y
 last_verified: 2026-10-12
 ---
 
-{/* launch: remove this notice when the agent endpoint is switched on in production */}
-Agent connections are not open on PivoCloud yet.
-
 ## Connect your AI agent
 
 Your AI agent connects to PivoCloud at one address, `https://api.pivocloud.com/mcp`.

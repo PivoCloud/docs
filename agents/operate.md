@@ -4,8 +4,8 @@ description: "What an AI agent with the Operate level can restart, stop and star
 last_verified: 2026-10-12
 ---
 
-{/* launch: remove this notice when the agent endpoint is switched on in production */}
-Agent connections are not open on PivoCloud yet.
+{/* launch: remove this notice when restart, stop and start for agents is deployed to production */}
+Restarting, stopping and starting apps from your agent is not open on PivoCloud yet. Your agent can already connect and read.
 
 ## What Operate allows
 
