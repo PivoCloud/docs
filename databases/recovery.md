@@ -1,7 +1,7 @@
 ---
 title: How do I get my data back
 description: "What PivoCloud keeps of your PostgreSQL database, how to take a backup or an export yourself, how to download and check an export, what a restore really produces and what it costs, how far back each plan lets you go, and what survives losing the machine."
-last_verified: 2026-09-27
+last_verified: 2026-10-14
 ---
 
 ## Backups, exports and restores
@@ -74,6 +74,15 @@ you pinned the old database's certificate, pin the new one as well. The
 A restore is a job you watch rather than a click that returns. The new database
 appears in your list immediately and stays in a restoring state until it is
 ready to accept connections.
+
+If a platform recovery interrupts a restore before the new database is ready,
+the new database shows as failed with this message:
+
+> This database was interrupted by a platform recovery before it was ready. The charge was refunded to your wallet. Please start it again from your backup.
+
+The charge for that restore is returned to your wallet automatically, and you
+do not need to do anything to get it. To get the database, start the restore
+again from the same backup.
 
 **A restore cannot be run over the existing database**, and asking for that is
 refused. Every restore produces a new database. If what you want is your
