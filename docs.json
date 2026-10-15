@@ -15,6 +15,7 @@
         "group": "Apps",
         "pages": [
           "apps/deployment-contract",
+          "apps/symlinks",
           "apps/connect-github",
           "apps/deploy",
           "apps/environment-variables",

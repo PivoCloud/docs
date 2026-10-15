@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-10-05
+last_verified: 2026-10-15
 ---
 
 ## Find the sentence you were shown, then read what it really means
@@ -337,10 +337,59 @@ error, a command that returned non-zero. PivoCloud has no opinion about what
 your build does, so it has nothing to add. Read the build log from the bottom
 upwards. The last command that ran before the failure is the one to look at.
 
+If your repository uses symlinks, special files or a `.dockerignore`, read
+[Can my repository contain symlinks?](/apps/symlinks) for how PivoCloud treats
+them during the build.
+
 One case reaches this panel that is not an error in your Dockerfile at all. If
 `Dockerfile path` points at something that exists but is not a file, the log
 carries the `is not a regular file` wording rather than a build error. That is a
 settings mistake, and `PivoCloud could not find a Dockerfile to build` covers it.
+
+**When the build could not start, or your code could not be sent to it,** the
+failure message shows one of these sentences instead of a build error. The
+build log shows the same sentence without the leading `docker build failed:`.
+
+PivoCloud could not hand your code to the build. This is on PivoCloud's side:
+
+```text
+docker build failed: failed to start docker build: PivoCloud could not start the build of your code. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+PivoCloud could not package your repository for the build:
+
+```text
+docker build failed: failed to create build context: PivoCloud could not package your repository for the build. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+A file in your repository changed while PivoCloud was packaging it:
+
+```text
+docker build failed: failed to create build context: A file in your repository changed while PivoCloud was packaging it for the build. Redeploy to try again.
+```
+
+PivoCloud could not use your `.dockerignore` file:
+
+```text
+docker build failed: failed to create build context: PivoCloud could not use your .dockerignore file. Check that each line is a valid pattern, fix it, and redeploy.
+```
+
+The build lost its connection to the PivoCloud build service:
+
+```text
+docker build failed: The Docker build session failed during this build: The build lost its connection to the PivoCloud build service. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+The connection to the build was lost while its output was being read:
+
+```text
+docker build failed: failed to start docker build: The connection to the build was lost while its output was being read. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+**What to do:** redeploy. For the `.dockerignore` message, open that file, check
+that every line is a valid pattern, fix the line that is not, and redeploy. If
+any of the other messages comes back on a second try, contact PivoCloud support
+and give them the deployment id.
 
 ### The build ran out of time {#build_timeout}
 
@@ -589,9 +638,36 @@ PivoCloud did not give it something it needed, such as a public address, or
 because PivoCloud's own build step could not start the build before your code
 was built. The answer then says that the cause is on PivoCloud's side and that
 nothing in your code needs to change. It still has the code `unknown`, and the
-facts it lists include which failure it was. Contact PivoCloud support and give
-them the deployment id from the answer. Do not expect `Redeploy` to help, because
-a cause on PivoCloud's side can repeat on every attempt.
+facts it lists include which failure it was. Redeploy once. If the same message
+comes back, the cause is on PivoCloud's side: contact PivoCloud support and give
+them the deployment id from the answer.
+
+One such failure shows in the failure message when PivoCloud could not open the
+connection it needs to fetch your base image. The message does not start with
+a build error, so it is filed here:
+
+```text
+docker build failed: Could not open the Docker build session, so the build cannot resolve its base image. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+**Hidden details.** PivoCloud blanks your app's values (for example the values
+of your environment variables) out of everything it shows you about a deploy. When
+it could not load those values, it cannot tell which words to blank, so it hides
+the whole message instead. A failed deploy then shows this:
+
+```text
+This deploy failed, and its details are hidden because PivoCloud could not load this app's values to blank them. Deploy again to see the reason.
+```
+
+And a line in the deploy log reads:
+
+```text
+This deploy message is hidden because PivoCloud could not load this app's values to blank them. Deploy again to see it.
+```
+
+Nothing is wrong with your code because of these two messages. The details were
+hidden because PivoCloud could not load the app's values to blank them, so deploy
+again to see the reason.
 
 ## A platform update interrupted your deploy {#deploy_interrupted_by_platform}
 
