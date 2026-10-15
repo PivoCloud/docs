@@ -1,7 +1,7 @@
 ---
 title: How do I put my own domain on my app?
-description: "Add your own domain to a PivoCloud app: the order that works, the CNAME case for a subdomain, the A record case for the root of your domain, what each status means, and what to do when the check says your DNS is not pointing here yet."
-last_verified: 2026-10-02
+description: "Add your own domain to a PivoCloud app: the order that works, the CNAME case for a subdomain, the A record (and, for some apps, TXT record) case for the root of your domain, what each status means, and what to do when the check says your DNS is not pointing here yet."
+last_verified: 2026-10-13
 ---
 
 ## Your own domain on an app
@@ -87,18 +87,31 @@ address that is not your app's, is not accepted for that app.
 ### Case two: the root of your domain, using an A record
 
 This is the case where a name such as `example.com` cannot carry a `CNAME`,
-because most DNS providers do not allow one at the root of a domain.
+because most DNS providers do not allow one at the root of a domain. For a root
+domain the `Domains` tab leads with the A record, not with a `CNAME`, and adds a
+line saying that this is a root domain.
 
 The record type is `A`. The value to copy is the one the `Domains` tab shows
-next to the apex row for that domain, again with a copy control beside it.
+next to `A record` for that domain, again with a copy control beside it.
 
-That row appears only where PivoCloud has an address to give for the
-environment your app runs in. It is never shown for an app with an address under
-`pivocloud.app`, so for those apps the root case is not available. If you do not
-see it, the root case is not available to you and the `CNAME` case is the one to
-use: point a subdomain at
-your app and, if you want the root to reach it too, use whatever redirect your
-DNS provider offers at the root.
+For an app with an address under `pivocloud.app`, the root case needs a second
+record, and only appears when it is available for your app. The tab then shows
+an `A` record and a `TXT` record. The `TXT` record has the name
+`_pivocloud.<your domain>` and, as its value, your app's own address. It is how
+the check knows the domain belongs to your app and not to someone else who points
+at the same address. Create both records. A `TXT` record you just added can take
+up to an hour to be seen.
+
+If the tab shows no `A` record for a root domain, the root case is not
+available for your app. The tab then shows the `CNAME` row and a line suggesting
+a subdomain such as `www.example.com`. Use a subdomain and, if you want the root
+to reach it too, use whatever redirect your DNS provider offers at the root.
+
+A root domain points at the server your app runs on. A subdomain with a `CNAME`
+record never needs changing, so `CNAME` is the record we recommend whenever you
+have the choice. If you use an `A` record, the value the `Domains` tab shows is
+the current one, so copy it from there again rather than trusting a value you
+saved earlier.
 
 ### What happens next, and what you will see
 
@@ -149,6 +162,50 @@ things to look at, in this order:
   is sometimes an hour or more.
 
 If all three are right, leave it alone. The automatic re-check keeps running.
+
+A root domain can show a more specific reason under the domain. Each one names
+the record to set, and none of them names a server:
+
+- A domain that points at a PivoCloud address your app does not use. For a root
+  domain the message reads:
+
+  ```text
+  This domain points at a PivoCloud server this app does not run on. Set its A record to <ip> and try again.
+  ```
+
+  and for a subdomain it reads:
+
+  ```text
+  This domain points at a PivoCloud server this app does not run on. Set a CNAME record to <your app's address> and try again.
+  ```
+
+  Change the record to the value in the message, which is also the value the
+  `Domains` tab shows for that domain.
+
+- The A record is right but the `TXT` record is missing or names another app.
+  The message reads:
+
+  ```text
+  The A record is right. Add the TXT record <name> with the value <value> so we know this domain belongs to this app, then try again.
+  ```
+
+  Add that `TXT` record exactly as written. The name and the value are the ones
+  shown in the `TXT record` row on the `Domains` tab. It can take up to an hour
+  to be seen, so give it time before you change anything else.
+
+- A root domain whose records do not match for any other reason. The message
+  reads:
+
+  ```text
+  <your domain> is a root domain, so it needs an A record set to <ip>. Most DNS providers do not allow a CNAME record at the root.
+  ```
+
+  For an app with an address under `pivocloud.app` it asks for the `A` record
+  and the `TXT` record together instead, for example
+  `<your domain> is a root domain, so it needs an A record set to <ip>`
+  followed by the `TXT` record name and value to set. Set the records the
+  message names. If your DNS provider will not let you set an `A` record at the
+  root, use a subdomain and the `CNAME` case instead.
 
 Two other messages can appear when you add or verify a domain:
 

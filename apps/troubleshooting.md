@@ -526,6 +526,12 @@ can something outside your code, such as the container being stopped or a
 restart of the machine it ran on. The answer gives the time of that check. It is
 the last recorded check, not a call made at the moment you asked.
 
+A crash your app recovers from by itself is recorded too. When your app's process
+exits and PivoCloud starts it again straight away, the app's health history
+(click the status badge on the app page) shows Container exited unexpectedly at
+the time of the crash, then Container recovered after the next health check,
+usually within a minute.
+
 **What to do:** open the app's logs in the console to see whether the app exited
 because of an error. If it did, fix that in your app and press `Redeploy`. If the
 logs show nothing wrong, press `Redeploy` anyway, because the container may have

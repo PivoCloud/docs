@@ -1,7 +1,7 @@
 ---
 title: How do I set environment variables for my app?
 description: "Paste a .env file into the PivoCloud console, see which five key names are refused and why, what the console keeps from your file and what it drops, what saving actually changes, and how your running app reads the values."
-last_verified: 2026-09-23
+last_verified: 2026-10-14
 ---
 
 ## Environment variables
@@ -24,6 +24,16 @@ The panel has two modes, `Editor` and `.env text`.
 `Editor` gives you one row per variable, which is what you want for changing a
 single value. `.env text` gives you the whole set as one file, which is what you
 want if you already have a `.env` and would rather paste it than retype it.
+
+While the panel loads your variables, `Add env var`, the rows, `.env text` and the
+save button stay greyed out. That way nothing you type is overwritten by the load,
+and no save goes out against a set the console has not read yet. If loading
+fails, the panel says `Environment variables could not be loaded.` with a
+`Try again` button, and nothing is editable until a load succeeds. If the app
+no longer exists, the panel says `This app was not found.` instead, with no
+`Try again` button, because trying again cannot help. If only the
+history fails to load, `Recent changes could not be loaded.` shows under
+`Recent changes` and editing works as usual.
 
 ### Pasting a .env file
 
