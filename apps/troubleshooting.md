@@ -1,24 +1,39 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-10-15
+last_verified: 2026-10-16
 ---
 
-## Find the sentence you were shown, then read what it really means
+## What the red panel shows
 
-A failed deploy puts two different sentences in front of you about the same
-failure, and they are not the same words. A red panel at the top of the app page
-carries a short explanation written for a human. The build log underneath it
-carries the sentence PivoCloud wrote at the moment the deploy stopped, which is
-longer and names your own paths.
+When a deploy fails, a red panel at the top of the app page explains what
+happened. It holds two sentences and a link:
 
-Both are quoted here for every failure. Whichever one you copied, searching this
-page for it takes you to the right entry.
+- the first sentence says what happened;
+- the second says what to do next;
+- the link, `What this means and what to do`, opens this page at the entry for
+  that failure.
 
-**If the red panel and the log disagree, believe the log.** The explanation in
-the red panel is worked out from the text of the log, and it can land on the
-wrong one. The log is a record of what happened. The panel is an interpretation
-of it.
+When the cause is on PivoCloud's side, or PivoCloud could not identify it, the
+panel also shows a line that begins `Reference:`. That is a short code you give
+to PivoCloud support, and it is explained under
+`PivoCloud has no recorded cause`. A cause you can fix yourself, such as a
+missing Dockerfile or a repository PivoCloud cannot read, carries no reference,
+because support has nothing to add to what the panel already tells you.
+
+The same explanation appears wherever the console reports the failure: on the
+`Deployment logs` tab under `Deployment Failed`, and in the message under your
+variables after a save that failed. A deploy that a newer push replaced is
+cancelled rather than failed, and shows no red panel.
+
+The build log underneath is the build's own output. PivoCloud shows it in full
+and blanks only the values of your app's variables. It is the place to look for
+what your own Dockerfile did, and this page does not try to explain it line by
+line.
+
+Every sentence the panel can show is quoted below, word for word, under the
+failure it belongs to. Search this page for the sentence you were shown and it
+takes you to the right entry.
 
 ## What is on this page, and what is not
 
@@ -26,6 +41,10 @@ This page is the index of the messages that **stop a deploy**: the ones that
 leave your app undeployed and put a red panel on the app page, plus the ones
 that refuse a deploy before it starts. It is an index of those. It is not an
 index of everything PivoCloud can tell you.
+
+The messages shown when another action on your app fails, such as saving
+variables or stopping the app, are under
+`When saving variables or another app action fails`.
 
 The page also explains the answers your AI agent can give when you ask it why an
 app is not working. Those are in the section
@@ -44,27 +63,6 @@ There is no second set of sentences from the build to look for.
 address.** These do not fail the deploy at all. Your app is up; only its address
 is not configured yet. They appear in the app's public URL panel on the
 `Overview` tab, not in the deployment logs, and this page does not cover them.
-
-## When PivoCloud cannot tell you why
-
-The red panel reads:
-
-```text
-Deployment failed. Please check the logs below for details.
-```
-
-This is what you get when PivoCloud did not recognise the failure from the log
-text. It has nothing specific to say, so it says nothing specific.
-
-**The sentence that does say something is hidden for this one.** Under the red
-panel there is a `Technical details` toggle. Click it to open it, and inside is
-the sentence PivoCloud wrote when the deploy stopped. That is the one to read,
-and the one to paste into a search or into a chat with your assistant.
-
-**And one case where there is nothing to read at all.** If the failed deploy
-recorded no message, no red panel appears. The app shows as failed with no
-explanation beside it. Open the `Deployments` tab, pick the attempt that failed,
-and read its build log directly.
 
 ## Before the build starts: Redeploy refused because of the repository
 
@@ -116,24 +114,21 @@ The repository could not be found. Please verify the URL and ensure the reposito
 The owner or the repository name does not resolve. Check the spelling of both,
 and check the repository has not been renamed or deleted.
 
-Two more sentences arrive in the same place. They are quoted here only up to the
-point where they change subject, because the platform writes them with a
-punctuation mark this documentation does not use. The rest of each one is given
-below in plain words.
+Two more sentences arrive in the same place.
 
 ```text
-Token rejected
-```
-
-The token was read and GitHub refused it. Check it has not expired and that it
-grants `Contents: read-only` on **this** repository, not on a different one.
-
-```text
-Could not reach GitHub
+Could not reach GitHub. Check your connection and try again.
 ```
 
 PivoCloud could not reach GitHub at all. Nothing is wrong with your repository
 or your token. Wait a minute and press `Redeploy` again.
+
+```text
+Token rejected. Check that it has Contents: read-only access to this repository.
+```
+
+The token was read and GitHub refused it. Check it has not expired and that it
+grants `Contents: read-only` on **this** repository, not on a different one.
 
 ## The clone
 
@@ -142,12 +137,16 @@ or your token. Wait a minute and press `Redeploy` again.
 The red panel reads:
 
 ```text
-Failed to clone the repository. Please verify the URL is correct and the repository is public.
+PivoCloud could not clone the app's repository, so the latest deploy did not start.
 ```
 
-**Read the second half of that sentence loosely.** Your repository does not have
-to be public. PivoCloud deploys private repositories, and
-`The repository is private, or PivoCloud cannot read it` says how.
+```text
+Check the repository URL and name in the app settings, and if they are right, wait a minute and use Redeploy, because a clone can also fail on a temporary network problem.
+```
+
+Your repository does not have to be public. PivoCloud deploys private
+repositories, and `The repository is private, or PivoCloud cannot read it` says
+how.
 
 Three different build-log sentences produce this same red panel:
 
@@ -169,9 +168,9 @@ carrying the raw exit code, and its cause is in the lines above it in the build
 log.
 
 **What the agent's answer says.** All three give the same answer,
-`clone_failed`, and it lists which one it was. It tells you to check the
-repository URL and name, and if they are right, to wait a minute and press
-`Redeploy`, because a clone can also fail on a temporary network problem.
+`clone_failed`, and it lists which one it was. It gives the same advice as the
+panel: check the repository URL and name, and if they are right, wait a minute
+and press `Redeploy`.
 
 **A badly formed URL lands in the second one.** If your repository URL is not
 merely wrong but malformed, the clone fails in a way that is reported as a
@@ -184,7 +183,11 @@ else.
 The red panel reads:
 
 ```text
-This repository appears to be private or inaccessible. Provide a Fine-Grained Personal Access Token (Contents: read-only) to deploy private repositories.
+PivoCloud cannot read the app's repository, so the latest deploy did not start.
+```
+
+```text
+Fix the repository access in the app settings, by reconnecting the GitHub App or attaching a valid token, then use Redeploy.
 ```
 
 The build log for the same failure reads:
@@ -217,11 +220,15 @@ commit one to your repository.
 The red panel reads:
 
 ```text
-The repository URL does not appear to be a valid public GitHub HTTPS URL.
+The app's repository URL is not a valid GitHub address, so the latest deploy did not start.
 ```
 
-The word "public" in that sentence is not a requirement. What PivoCloud could
-not do is read the URL as a GitHub HTTPS address.
+```text
+Correct the repository URL in the app settings, then use Redeploy.
+```
+
+What PivoCloud could not do is read the URL as a GitHub HTTPS address. Your
+repository does not have to be public.
 
 The build log sentence that pairs with this panel is:
 
@@ -252,10 +259,14 @@ specific, and they are the ones to act on. They are quoted under
 The red panel reads:
 
 ```text
-We couldn't find a Dockerfile in the repository root. Please ensure your repo contains a Dockerfile.
+PivoCloud could not use a Dockerfile at the path the app is set to build, so the build never started.
 ```
 
-The build log says the same thing with your own paths in it, and this is the
+```text
+Add a Dockerfile at that path or correct the Dockerfile path in the app settings, then use Redeploy.
+```
+
+The build log names the path itself, with your own paths in it, and this is the
 version worth reading. It begins with `No Dockerfile at ` followed by the file
 it looked for, then ` (build context: ` followed by the directory it looked
 inside, so a whole instance reads like
@@ -267,9 +278,8 @@ that is not a file, a directory of that name for example, the log says
 instead. Same cause, different mistake: the first means nothing is there, the
 second means something is there and it cannot be built.
 
-Read the red panel's wording loosely. It says "repository root", but PivoCloud
-does not require a Dockerfile at your repository root at all. What failed is the
-path it actually resolved, which is the one printed in the log.
+PivoCloud does not require a Dockerfile at your repository root. What failed is
+the path it actually resolved, which is the one printed in the log.
 
 **Two settings decide that path, and one of them is wrong.** `Root directory` is
 the directory the build can see, and it defaults to your repository root.
@@ -314,10 +324,9 @@ If the Dockerfile you expected is not in the list, check whether it sits deeper
 than that or inside one of those generated directories. Then set
 `Dockerfile path` to it directly instead of waiting for the list to name it.
 
-One more place this sentence turns up. The failure recorded against the
-deployment itself is the same text with `docker build failed: ` in front of it,
-so if you copied it from there rather than from the log, everything above still
-applies.
+PivoCloud also records this sentence against the deploy with
+`docker build failed: ` in front of it, so if support quotes it that way,
+everything above still applies.
 
 **What to do:** fix whichever of the two settings is wrong, then redeploy. The
 button on the app page reads `Redeploy`. Nothing else needs changing and you do
@@ -328,78 +337,58 @@ not need to push a commit for the new settings to take effect.
 The red panel reads:
 
 ```text
-The Docker build failed. Please check the logs below for details.
+The latest build of this app failed, so the new version never started.
 ```
 
-**This panel is deliberately empty of detail.** The build ran and something
-inside your own Dockerfile failed: a package that would not install, a compile
-error, a command that returned non-zero. PivoCloud has no opinion about what
-your build does, so it has nothing to add. Read the build log from the bottom
-upwards. The last command that ran before the failure is the one to look at.
+```text
+Read the build logs in the console, fix what stops the build, then use Redeploy.
+```
+
+**This panel stays general on purpose.** The build ran and something inside your
+own Dockerfile failed: a package that would not install, a compile error, a
+command that returned non-zero. PivoCloud has no opinion about what your build
+does, so it has nothing to add. Read the build log from the bottom upwards. The
+last command that ran before the failure is the one to look at.
 
 If your repository uses symlinks, special files or a `.dockerignore`, read
 [Can my repository contain symlinks?](/apps/symlinks) for how PivoCloud treats
 them during the build.
 
-One case reaches this panel that is not an error in your Dockerfile at all. If
-`Dockerfile path` points at something that exists but is not a file, the log
-carries the `is not a regular file` wording rather than a build error. That is a
-settings mistake, and `PivoCloud could not find a Dockerfile to build` covers it.
-
-**When the build could not start, or your code could not be sent to it,** the
-failure message shows one of these sentences instead of a build error. The
-build log shows the same sentence without the leading `docker build failed:`.
-
-PivoCloud could not hand your code to the build. This is on PivoCloud's side:
+**One build message is yours to fix and lands here too.** When PivoCloud cannot
+use your `.dockerignore` file, the build log shows this sentence, and PivoCloud
+records it with `docker build failed: ` in front of it:
 
 ```text
-docker build failed: failed to start docker build: PivoCloud could not start the build of your code. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+failed to create build context: PivoCloud could not use your .dockerignore file. Check that each line is a valid pattern, fix it, and redeploy.
 ```
 
-PivoCloud could not package your repository for the build:
+Open that file, check that every line is a valid pattern, fix the line that is
+not, and redeploy.
 
-```text
-docker build failed: failed to create build context: PivoCloud could not package your repository for the build. Redeploy to try again. If the same message comes back, contact PivoCloud support.
-```
-
-A file in your repository changed while PivoCloud was packaging it:
-
-```text
-docker build failed: failed to create build context: A file in your repository changed while PivoCloud was packaging it for the build. Redeploy to try again.
-```
-
-PivoCloud could not use your `.dockerignore` file:
-
-```text
-docker build failed: failed to create build context: PivoCloud could not use your .dockerignore file. Check that each line is a valid pattern, fix it, and redeploy.
-```
-
-The build lost its connection to the PivoCloud build service:
-
-```text
-docker build failed: The Docker build session failed during this build: The build lost its connection to the PivoCloud build service. Redeploy to try again. If the same message comes back, contact PivoCloud support.
-```
-
-The connection to the build was lost while its output was being read:
-
-```text
-docker build failed: failed to start docker build: The connection to the build was lost while its output was being read. Redeploy to try again. If the same message comes back, contact PivoCloud support.
-```
-
-**What to do:** redeploy. For the `.dockerignore` message, open that file, check
-that every line is a valid pattern, fix the line that is not, and redeploy. If
-any of the other messages comes back on a second try, contact PivoCloud support
-and give them the deployment id.
+The other build messages, about starting the build or sending your code to it,
+are on PivoCloud's side, and the panel treats them that way. They are under
+`PivoCloud has no recorded cause`, with the advice to redeploy once.
 
 ### The build ran out of time {#build_timeout}
 
-The red panel reads:
+The red panel names the limit your build was held to:
 
 ```text
-Your build ran out of time and was stopped. Redeploy to continue: the build resumes from the layers already cached, so each attempt gets further.
+The latest build ran out of time after 30 minutes, so the new version never started.
 ```
 
-The build log carries the same fact with the limit in it:
+```text
+Use Redeploy in the console to continue, because the build restarts from the layers it already built.
+```
+
+When PivoCloud cannot read the limit, the first sentence leaves the number out:
+
+```text
+The latest build ran out of time, so the new version never started.
+```
+
+The build log carries the same fact. It writes the limit as `30m0s`, which means
+30 minutes:
 
 ```text
 Build timed out after 30m0s, the current build limit on this platform. Redeploy to continue: the build restarts from the layers already cached, so it gets further each time.
@@ -430,19 +419,24 @@ cached, and copy your source in as late as possible.
 
 ### The container started but your app did not answer {#app_not_answering}
 
+The red panel reads:
+
 ```text
-The container started but your app did not respond on the PORT environment variable. Please ensure your app listens on the port provided via the PORT environment variable.
+The app started, but it did not give a successful answer to PivoCloud's start check.
 ```
 
-**This is the one failure where the red panel and the build log say exactly the
-same thing, word for word.** There is one sentence here, not two. Do not go
-looking for a second, different one in the log.
+```text
+Open the app's logs in the console to see why it did not answer the start check, then use Redeploy.
+```
 
-**Read the first sentence, and disregard the second.** The first is true: your
-container started and PivoCloud could not reach your app on the port it
-declared. The second is wrong. **PivoCloud sets no `PORT` variable**, so there
-is no value being provided for your app to listen on. The port PivoCloud probes
-is the one your Dockerfile declares with `EXPOSE`.
+The build log can carry a longer sentence written by the build step:
+
+```text
+The container started but your app did not respond on its port. PivoCloud sets no PORT variable. It probes the port in the first EXPOSE line of your Dockerfile, so make sure your app listens on that port on all interfaces (0.0.0.0).
+```
+
+The port PivoCloud probes is the one your Dockerfile declares with `EXPOSE`.
+Your container started and PivoCloud could not reach your app on that port.
 
 That is a contract with a few sharp edges: which `EXPOSE` line is read, what
 happens when there is no `EXPOSE` line at all, and why `ENV PORT` in the
@@ -461,6 +455,260 @@ state of your app, for example on an attempt made before this was recorded.
 is not certain, and asking again later may give a better one. If PivoCloud
 recorded that your app had exited at the start check, the answer is
 [the app exited right after it started](#crashed_on_start) instead of this one.
+
+## When another action on your app fails
+
+Saving variables, stopping or starting the app, changing its address, setting up
+custom domains and deleting it all run in the background after you press the
+button. When one of them fails, the console shows the same kind of explanation
+as for a deploy: two sentences and a link to this entry, and a reference when
+the cause is on PivoCloud's side or could not be identified.
+
+That reference is the same one a failed deploy shows. What it is and what to send
+with it are explained under `PivoCloud has no recorded cause`.
+
+### When saving variables or another app action fails {#app_action_failed}
+
+Your variables are saved first and applied to the running app afterwards, so
+most of the messages below begin `Your variables are saved`. That first sentence
+is good news: nothing you typed was lost. What failed is the step that makes the
+running app use them.
+
+#### After you save variables
+
+**The new container did not become healthy.**
+
+```text
+Your variables are saved, but the new container did not become healthy.
+```
+
+```text
+Your app was rolled back and is serving its previous configuration. Check your app logs, then save again.
+```
+
+The new container started with your new variables but did not pass PivoCloud's health check in time. PivoCloud put your previous container back, so visitors still reach your app. Look at your app logs for why it does not start with the new values, fix that, and save again.
+
+**The new container could not be started.**
+
+```text
+Your variables are saved, but a new container could not be started.
+```
+
+```text
+Nothing about your app changed. If this app has never been deployed successfully, there is no image to start yet: check its Git connection (a private repository needs an access token), then press Deploy (or Redeploy) on the app page.
+```
+
+The most common cause is an app that has never deployed successfully, so there is no built version to start with the new variables yet. Fix the repository connection if it needs it, then press `Deploy` or `Redeploy`. Your variables will be used by that deploy.
+
+**PivoCloud could not read your variables back.**
+
+```text
+Your variables are saved, but the platform could not read them back to apply them.
+```
+
+```text
+Nothing about your app changed. Try again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Nothing about your app changed. The cause is on PivoCloud's side. Try again, and if it fails again, give support the reference.
+
+**PivoCloud could not read which port your running app uses.**
+
+```text
+Your variables are saved, but the platform could not read which port your running app uses.
+```
+
+```text
+Nothing about your app changed. Try again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Nothing about your app changed. The cause is on PivoCloud's side. Try again, and if it fails again, give support the reference.
+
+**PivoCloud could not resolve the app's address.**
+
+```text
+Your variables are saved, but the platform could not resolve this app's address.
+```
+
+```text
+Nothing about your app needs to change. Contact PivoCloud support and give them the reference shown with this message.
+```
+
+This is a problem on PivoCloud's side and it repeats on every attempt, so saving again will not help. Give support the reference.
+
+**PivoCloud could not run the apply step.**
+
+```text
+Your variables are saved, but the platform could not run the apply step.
+```
+
+```text
+This is a platform configuration problem, not a problem with your variables. Contact PivoCloud support and give them the reference shown with this message.
+```
+
+This is a platform configuration problem, not a problem with your variables. Give support the reference.
+
+**Traffic did not switch over to the new container.**
+
+```text
+Your variables are saved, but traffic did not switch over to the new container.
+```
+
+```text
+Your app is still reachable on its previous container. Try again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Your app is still reachable on its previous container, with its previous variables. Save again, and if it fails again, give support the reference.
+
+**Your app did not start listening in time.**
+
+```text
+Your variables are saved, but your app did not start listening on a port in time.
+```
+
+```text
+Your app was left as it was. PivoCloud sets no PORT variable. Check that your app listens on the port its Dockerfile declares with EXPOSE, on all interfaces, then save again.
+```
+
+[What your repository needs](/apps/deployment-contract) explains how the port is chosen.
+
+**Another apply was already running.**
+
+```text
+Your variables are saved. Another apply was already in progress.
+```
+
+```text
+Wait for that apply to finish, then check your variables.
+```
+
+Two saves overlapped. Wait for the first to finish, then check that your variables are what you expect.
+
+**The apply did not complete, for a reason PivoCloud did not name.**
+
+```text
+Your variables are saved, but the apply did not complete.
+```
+
+```text
+Contact PivoCloud support and give them the reference shown with this message.
+```
+
+Give support the reference. It lets them find what happened without asking you to describe it.
+
+#### Stopping, starting, moving or deleting the app
+
+**Deleting the app.**
+
+```text
+PivoCloud could not finish deleting this app.
+```
+
+```text
+Contact PivoCloud support and give them the reference shown with this message.
+```
+
+The deletion started and did not finish. Give support the reference so they can finish it.
+
+**Setting up custom domains.**
+
+```text
+PivoCloud could not finish setting up this app's custom domains.
+```
+
+```text
+Open the app's Domains tab to check them, then try again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Open the `Domains` tab to check your domains, then try again. If it fails again, give support the reference.
+
+**Moving the app to a new address.**
+
+```text
+PivoCloud could not move this app to its new address.
+```
+
+```text
+Try the change again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Try the change again, and if it fails again, give support the reference.
+
+**Starting the app again.**
+
+```text
+PivoCloud could not start this app again with its current settings.
+```
+
+```text
+Try again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Check the app's state in the console and try again. If it fails again, give support the reference.
+
+**Stopping the app.**
+
+```text
+PivoCloud could not stop this app.
+```
+
+```text
+Try Stop again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Try `Stop` again, and if it fails again, give support the reference.
+
+#### When the cause is on PivoCloud's side
+
+These four apply to any of the actions above.
+
+**A problem on PivoCloud's side that repeats.**
+
+```text
+This action on your app did not complete because of a problem on PivoCloud's side.
+```
+
+```text
+Nothing about your app needs to change. Contact PivoCloud support and give them the reference shown with this message.
+```
+
+Do not try again: the cause is on PivoCloud's side and a retry will fail the same way. Give support the reference.
+
+**A reason PivoCloud could not identify.**
+
+```text
+This action on your app did not complete for a reason PivoCloud could not identify.
+```
+
+```text
+Contact PivoCloud support and give them the reference shown with this message.
+```
+
+Give support the reference.
+
+**A platform update interrupted the action twice.**
+
+```text
+A platform update interrupted this action on your app twice, so it was stopped, and your app did not cause this.
+```
+
+```text
+Nothing about your app needs to change. If the console still offers this action, do it again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+PivoCloud updates itself from time to time and restarts an interrupted action once on its own. When the update interrupts it a second time, the action is stopped. Your app did not cause this. Do the action again if the console still offers it, and if it fails again, give support the reference.
+
+**A platform recovery interrupted the action.**
+
+```text
+A platform recovery interrupted this action on your app, and your app did not cause this.
+```
+
+```text
+Check your app's current state in the console. If the console still offers this action, do it again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Sometimes PivoCloud has to recover its own systems. An action that was in progress at that moment is set aside, and the message cannot say how far it got. Look at your app in the console to see where it stands, do the action again if the console still offers it, and if it fails again, give support the reference.
 
 ## What your AI agent can tell you about an app
 
@@ -633,27 +881,127 @@ its latest deploy, and lists every signal it could not read.
 **What to do:** open the app in the console and read its deployment history and
 its logs.
 
-**When the cause is on PivoCloud's side.** A deploy can also fail because
-PivoCloud did not give it something it needed, such as a public address, or
-because PivoCloud's own build step could not start the build before your code
-was built. The answer then says that the cause is on PivoCloud's side and that
-nothing in your code needs to change. It still has the code `unknown`, and the
-facts it lists include which failure it was. Redeploy once. If the same message
-comes back, the cause is on PivoCloud's side: contact PivoCloud support and give
-them the deployment id from the answer.
+**The reference.** When the cause is on PivoCloud's side, or PivoCloud could not
+identify it, the red panel carries a line that begins `Reference:`, and your
+agent's answer names the same code. It looks like `d-` followed by 8 letters and
+digits, for example `d-3f9a1c2e`. It points at the one deploy or action that failed, so
+support can find it without asking you to describe it. A cause you can fix
+yourself, such as a missing Dockerfile, has no reference. A deploy that a
+platform update interrupted twice carries one.
 
-One such failure shows in the failure message when PivoCloud could not open the
-connection it needs to fetch your base image. The message does not start with
-a build error, so it is filed here:
+When you contact PivoCloud support, send three things: the reference, the name of
+your app, and roughly when the failure happened. You do not need to copy
+anything from the build log. The reference gives nobody access to your app. It
+only tells support which deploy to look at.
+
+#### What the red panel says for a deploy that lands here
+
+Four panels share this entry. Read the first sentence to find yours.
+
+**A reason PivoCloud could not identify.** The deploy failed with text that
+PivoCloud does not recognise, so it does not guess a cause:
+
+```text
+This deploy failed for a reason PivoCloud could not identify.
+```
+
+```text
+Redeploy to try again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Redeploy once. If the same message comes back, contact PivoCloud support with the
+reference.
+
+**A problem on PivoCloud's side that repeats on every attempt.** PivoCloud did
+not give the deploy something it needed, such as a public address. Redeploying
+will not help:
+
+```text
+The latest deploy failed because of a problem on PivoCloud's side, and nothing in your code caused it.
+```
+
+```text
+Nothing in your code needs to change, and this cause repeats on every attempt. Contact PivoCloud support and give them the reference shown with this message.
+```
+
+Nothing in your code needs to change. Contact PivoCloud support with the
+reference.
+
+**A problem on PivoCloud's side that may pass.** PivoCloud's own build step
+could not start the build, or could not send your code to it, before your code
+was built. The build log shows one of these sentences, and PivoCloud records each
+with `docker build failed: ` in front of it. The panel shows the same two
+sentences for all of them:
+
+```text
+The latest deploy failed because of a problem on PivoCloud's side, and nothing in your code caused it.
+```
+
+```text
+Nothing in your code needs to change. Redeploy once. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+PivoCloud could not hand your code to the build:
+
+```text
+docker build failed: failed to start docker build: PivoCloud could not start the build of your code. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+PivoCloud could not package your repository for the build:
+
+```text
+docker build failed: failed to create build context: PivoCloud could not package your repository for the build. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+A file in your repository changed while PivoCloud was packaging it:
+
+```text
+docker build failed: failed to create build context: A file in your repository changed while PivoCloud was packaging it for the build. Redeploy to try again.
+```
+
+The build lost its connection to the PivoCloud build service:
+
+```text
+docker build failed: The Docker build session failed during this build: The build lost its connection to the PivoCloud build service. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+The connection to the build was lost while its output was being read:
+
+```text
+docker build failed: failed to start docker build: The connection to the build was lost while its output was being read. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+PivoCloud could not open the connection it needs to fetch your base image:
 
 ```text
 docker build failed: Could not open the Docker build session, so the build cannot resolve its base image. Redeploy to try again. If the same message comes back, contact PivoCloud support.
 ```
 
-**Hidden details.** PivoCloud blanks your app's values (for example the values
-of your environment variables) out of everything it shows you about a deploy. When
-it could not load those values, it cannot tell which words to blank, so it hides
-the whole message instead. A failed deploy then shows this:
+**What to do:** redeploy once. If any of these messages comes back on the second
+try, contact PivoCloud support and give them the reference shown with the panel.
+
+**A deploy that a platform recovery interrupted.** Sometimes PivoCloud has to
+recover its own systems. A deploy that was in progress at that moment is set
+aside, and the panel cannot say how far it got:
+
+```text
+A platform recovery interrupted this deploy, and your code did not cause this.
+```
+
+```text
+Check your app's current state in the console, then deploy again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Look at the app in the console to see which version is running. If it is not the
+one you expect, deploy again. If that fails too, contact PivoCloud support with
+the reference.
+
+**A deploy whose details PivoCloud hid.** PivoCloud blanks your app's values (for
+example the values of your environment variables) out of everything it shows you
+about a deploy. When it could not load those values, it cannot tell which words
+to blank, so it hides the whole message instead. The panel then falls back to
+the first case above, a reason PivoCloud could not identify. PivoCloud records
+this sentence for the failed deploy:
 
 ```text
 This deploy failed, and its details are hidden because PivoCloud could not load this app's values to blank them. Deploy again to see the reason.
@@ -684,12 +1032,22 @@ A platform update interrupted this deploy. It starts again from the beginning (a
 ```
 
 **Only if the update interrupts the deploy a second time in a row does it stop.**
-The deploy then fails, and this sentence is its error message. You read it under
-`Deployment Failed` on the `Deployment logs` tab of your app page. If your app
-has no running version, the red panel at the top of the page also carries it in
-its technical details. If the version you had before is still running, your app
-stays running and no red panel appears. The sentence is not added to the log
-lines below it.
+The deploy then fails, and the red panel reads:
+
+```text
+A platform update interrupted the latest deploy twice, so it was stopped, and your code did not cause this.
+```
+
+```text
+Use Redeploy in the console to try again, because nothing in your code needs to change. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+The panel carries a reference, because the cause is on PivoCloud's side. If
+your app has no running version, the panel is at the top of the page. If the
+version you had before is still running, your app stays running and no red panel
+appears at the top of the page, and the same explanation is under
+`Deployment Failed` on the `Deployment logs` tab. PivoCloud also records this
+sentence for the deploy:
 
 ```text
 A platform update interrupted this deploy twice, so it was stopped. Your code did not cause this. Redeploy to try again.
@@ -697,11 +1055,8 @@ A platform update interrupted this deploy twice, so it was stopped. Your code di
 
 **Your code did not cause this, and there is nothing to fix in it.** Do not
 change your Dockerfile or your settings because of this message. Press
-`Redeploy` and the deploy starts fresh.
-
-The red panel does not offer a cause for this failure, and that is deliberate.
-The panels for a clone, a Dockerfile or a build problem describe something you
-can change, and none of them applies here.
+`Redeploy` and the deploy starts fresh. If it fails again, contact PivoCloud
+support and give them the reference.
 
 What this does to your credit is in the next section.
 

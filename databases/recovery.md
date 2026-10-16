@@ -1,7 +1,7 @@
 ---
 title: How do I get my data back
 description: "What PivoCloud keeps of your PostgreSQL database, how to take a backup or an export yourself, how to download and check an export, what a restore really produces and what it costs, how far back each plan lets you go, and what survives losing the machine."
-last_verified: 2026-10-14
+last_verified: 2026-10-15
 ---
 
 ## Backups, exports and restores
@@ -89,8 +89,18 @@ refused. Every restore produces a new database. If what you want is your
 original database back under its original name, restore into a new one, move
 your application to it, and delete the original once you are satisfied.
 
-Six answers you can get instead of a restore starting. All six leave your
+Seven answers you can get instead of a restore starting. All seven leave your
 source database exactly as it was.
+
+```text
+A restore always creates a new database from the backup, and your current database is not changed. Choose a name for the new database that differs from the name of the current one, and do not ask to restore over the existing database.
+```
+
+You meet this one when the name you give the new database is the same as the
+name of the database you restored from, in the restore dialog or in an API
+call, or when an API request asks to restore over the existing database.
+Nothing was taken from your wallet. Ask again with a different name for the
+new database.
 
 ```text
 Insufficient wallet balance.
