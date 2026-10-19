@@ -1,7 +1,7 @@
 ---
 title: How do I get my data back
 description: "What PivoCloud keeps of your PostgreSQL database, how to take a backup or an export yourself, how to download and check an export, what a restore really produces and what it costs, how far back each plan lets you go, and what survives losing the machine."
-last_verified: 2026-10-15
+last_verified: 2026-10-17
 ---
 
 ## Backups, exports and restores
@@ -76,9 +76,8 @@ appears in your list immediately and stays in a restoring state until it is
 ready to accept connections.
 
 If a platform recovery interrupts a restore before the new database is ready,
-the new database shows as failed with this message:
-
-> This database was interrupted by a platform recovery before it was ready. The charge was refunded to your wallet. Please start it again from your backup.
+the new database shows as failed, with the message explained under
+[a restore interrupted by a platform recovery](#database_restore_interrupted).
 
 The charge for that restore is returned to your wallet automatically, and you
 do not need to do anything to get it. To get the database, start the restore
@@ -227,8 +226,8 @@ self-serve restore restores from.
 
 **A nightly backup can be skipped to protect storage.** If the database
 server is short of storage when your nightly backup is due, that night's
-backup is not taken. Your backup history then shows it as failed, with this
-message: "Skipped to protect storage on the database server. Your most recent backup is kept."
+backup is not taken. Your backup history then shows it as failed, with the
+message explained under [a skipped backup](#backup_skipped_low_storage).
 Your most recent successful backup and every other kept backup stay as they
 were; nothing is deleted to make room. The next night's backup runs as usual.
 If you see this message two nights in a row, contact support.
@@ -265,3 +264,213 @@ moments a backup happened to be taken.
 The self-serve restore described above is a different thing. It restores a
 backup, so it takes you to the moment that backup was taken, and it is
 available on every plan.
+
+## When a database, a backup or an export fails
+
+When a database, a backup or an export does not complete, the console shows a
+red message. It says what did not complete, whether your data is safe, and what
+happens next. The sentences below are the ones the console shows, quoted
+exactly, one heading for each, so you can search this page for the sentence you
+see.
+
+A failed database is titled `Database failed` on its card and on its page. The
+`Contact support` button on it opens an email already addressed to us, whose
+subject names the database and carries the reference, for example
+`DBaaS database failed: orders (reference s-3f9a1c2e)`.
+
+### The reference
+
+Some messages end with a reference such as `s-3f9a1c2e`. The letter says what
+failed: `s-` is a database, `b-` is a backup and `e-` is an export. It is
+followed by 8 letters and digits. A reference is shown only when the cause is on
+PivoCloud's side or could not be identified. When you can fix the cause
+yourself, as with a suspended database below, there is no reference.
+
+If you write to us, send the reference, the name of the database and roughly
+when it happened. With those we find the exact failure without asking you
+anything else. Write to `contact@pivocloud.com`, or use the `Contact support`
+button on a failed database.
+
+### A backup did not complete {#backup_failed}
+
+```text
+Your backup did not complete. Your data is safe and your earlier backups are kept.
+```
+
+```text
+Our team has been notified. The next daily backup runs automatically. If backups are still failing tomorrow, contact PivoCloud support and give them the reference shown with this message.
+```
+
+```text
+Our team has been notified. Start a new backup, or wait for the next daily backup. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+A backup that fails does not remove or change the backups you already have.
+PivoCloud's team is told about it. The next daily backup runs by itself. For a
+backup you started yourself, the console also suggests starting a new one. The
+first next step above is for a scheduled backup and the second for a backup you
+started.
+
+### A backup was skipped to protect storage {#backup_skipped_low_storage}
+
+```text
+This backup was skipped to protect storage on the database server. Your most recent backup is kept.
+```
+
+```text
+Our team has been notified. The next daily backup runs automatically. If backups are still being skipped tomorrow, contact PivoCloud support and give them the reference shown with this message.
+```
+
+This backup did not run, because taking it could have filled the storage the
+databases share. Nothing is deleted to make room, and your most recent backup is
+kept. PivoCloud's team is told about it, and the next daily backup runs by
+itself. The backup history shows the skipped backup as failed, with this
+message.
+
+### A backup was interrupted by a platform recovery {#backup_interrupted}
+
+```text
+This backup was interrupted by a platform recovery and did not finish. Your data is safe and your earlier backups are kept.
+```
+
+```text
+The next daily backup runs automatically, or you can start a new backup now. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+A recovery of the platform stopped this backup before it finished. Your data is
+safe and your earlier backups are kept. The next daily backup runs by itself, or
+you can start one now. PivoCloud's team is not told automatically about an
+interrupted backup, so if the next one fails too, write to us with the
+reference.
+
+### A backup did not complete because the database was suspended {#backup_suspended}
+
+```text
+This backup did not complete because your database was suspended for a low wallet balance.
+```
+
+```text
+Top up your wallet to start your database again. A new backup starts automatically when it is running again.
+```
+
+A database is suspended when your wallet balance is too low to keep it
+running. A backup that was running when that happened stops. There is no
+reference, because you can fix this yourself: top up your wallet and the
+database starts again, and a new backup starts by itself once it is running.
+
+### An export did not complete {#export_failed}
+
+```text
+Your export did not complete. Your database was not changed.
+```
+
+```text
+Start a new export. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+An export only reads your database, so your database was not changed. Start a
+new export from the `Exports` section. PivoCloud's team is not told
+automatically when an export fails, so if it fails again, write to us with the
+reference.
+
+### An export was interrupted by a platform recovery {#export_interrupted}
+
+```text
+This export was interrupted by a platform recovery and did not finish. Your database was not changed.
+```
+
+```text
+Start a new export. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+A recovery of the platform stopped this export before it finished. An export
+only reads your database, so your database was not changed. Start a new export.
+PivoCloud's team is not told automatically about an interrupted export, so if it
+fails again, write to us with the reference.
+
+### PivoCloud could not finish setting up your database {#database_setup_failed}
+
+```text
+PivoCloud could not finish setting up your database.
+```
+
+```text
+Our team has been notified. If you need help sooner, contact PivoCloud support and give them the reference shown with this message.
+```
+
+The database was ordered but its setup did not finish. PivoCloud's team is
+told about it. If you were charged for this database, say so when you write to
+us, and give the reference.
+
+### PivoCloud could not finish deleting a database {#database_delete_failed}
+
+```text
+PivoCloud could not finish deleting this database. Its data is kept.
+```
+
+```text
+Our team has been notified. If you need help sooner, contact PivoCloud support and give them the reference shown with this message.
+```
+
+The deletion did not finish, and the data of the database is kept. PivoCloud's
+team is told about it.
+
+### A database could not be started again {#database_resume_failed}
+
+```text
+Your database could not be started again. Your data is safe.
+```
+
+```text
+Our team has been notified. If you need help sooner, contact PivoCloud support and give them the reference shown with this message.
+```
+
+This happens after you top up a suspended database and it does not start
+again. Your data is safe. PivoCloud's team is told about it.
+
+### A restore did not complete {#database_restore_failed}
+
+```text
+Your restore did not complete. Your original database and its backup were not changed, and the charge for this database was refunded to your wallet.
+```
+
+```text
+Our team has been notified. You can start the restore again from your backup. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+A restore writes only to the new database, so the database you restored from
+and its backup were not changed. The charge for the new database was returned to
+your wallet. PivoCloud's team is told about it. You can start the restore again
+from the same backup.
+
+### A restore was interrupted by a platform recovery {#database_restore_interrupted}
+
+```text
+This database was interrupted by a platform recovery before it was ready, and its charge was refunded to your wallet.
+```
+
+```text
+Start the restore again from your backup. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+A recovery of the platform stopped the restore before the new database was
+ready, and the charge for it was returned to your wallet automatically. Start
+the restore again from the same backup. PivoCloud's team is not told
+automatically about this one, so if it fails again, write to us with the
+reference.
+
+### A database stopped working for a reason PivoCloud could not identify {#database_failed}
+
+```text
+This database stopped working for a reason PivoCloud could not identify.
+```
+
+```text
+Contact PivoCloud support and give them the reference shown with this message.
+```
+
+PivoCloud has no recorded cause for this failure, so this message claims
+nothing about your data. Write to us with the reference. The `Try again` button
+is offered only for this failure: it creates a new database with the same name
+and plan, which is charged like any other database, so use it only if you want
+a second one.
