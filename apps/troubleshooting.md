@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-10-16
+last_verified: 2026-10-19
 ---
 
 ## What the red panel shows
@@ -30,6 +30,11 @@ The build log underneath is the build's own output. PivoCloud shows it in full
 and blanks only the values of your app's variables. It is the place to look for
 what your own Dockerfile did, and this page does not try to explain it line by
 line.
+
+Between the lines of your own build output, PivoCloud writes a few plain steps of
+its own: starting your app, checking that it answers on its port, and how the
+deploy ended. Internal details never appear in those lines. The steps are quoted
+under `What PivoCloud writes in your deploy log`, further down.
 
 Every sentence the panel can show is quoted below, word for word, under the
 failure it belongs to. Search this page for the sentence you were shown and it
@@ -61,8 +66,9 @@ There is no second set of sentences from the build to look for.
 
 **Failures that leave your app running but not reachable at its public
 address.** These do not fail the deploy at all. Your app is up; only its address
-is not configured yet. They appear in the app's public URL panel on the
-`Overview` tab, not in the deployment logs, and this page does not cover them.
+is not connected yet. They appear in the card titled `Public URL` on the app's
+`Domains` tab, not in the deployment logs. They are explained under
+`When your app is running but its address is not ready`.
 
 ## Before the build starts: Redeploy refused because of the repository
 
@@ -456,6 +462,158 @@ is not certain, and asking again later may give a better one. If PivoCloud
 recorded that your app had exited at the start check, the answer is
 [the app exited right after it started](#crashed_on_start) instead of this one.
 
+## What PivoCloud writes in your deploy log
+
+Between the lines of your own build output, the deploy log holds a few short lines
+that PivoCloud writes itself. They say what is happening to your app: it is
+starting, PivoCloud is checking that it answers, and how the deploy ended. They are
+plain on purpose. They never show PivoCloud's internal steps, and they never repeat
+or change your own build output.
+
+The examples below use port 3000, attempt 3 with 40 seconds left, HTTP status 500,
+the address `my-app.pivocloud.app` and 3 variables. Your log shows your own app's
+values in the same places.
+
+**The steps of a deploy.** PivoCloud starts your app, then checks that it answers
+on the port your Dockerfile declares with `EXPOSE`:
+
+```text
+Starting your app.
+```
+
+```text
+Checking that your app answers on port 3000.
+```
+
+```text
+Your app answers on port 3000.
+```
+
+When PivoCloud cannot tell which port that is, the two lines about the check read
+without a port:
+
+```text
+Checking that your app answers.
+```
+
+```text
+Your app answers.
+```
+
+**When your app has not answered yet.** PivoCloud checks again and again until the
+time it waits runs out. Each time your app has not given a successful answer, the
+log gets one of two lines. Each carries the number of the attempt and the seconds
+PivoCloud still waits, and your app's own port when PivoCloud can tell which port
+that is.
+
+The first means nothing answered on that port yet:
+
+```text
+Your app did not answer on port 3000 yet (attempt 3, 40 s left).
+```
+
+The second means your app did answer, but with a status that is not a success or a
+redirect, so a status outside the 200 to 399 range:
+
+```text
+Your app answered on port 3000 with HTTP status 500 instead of a success status (attempt 3, 40 s left).
+```
+
+When PivoCloud cannot tell which port that is, the same two lines read without a
+port:
+
+```text
+Your app did not answer yet (attempt 3, 40 s left).
+```
+
+```text
+Your app answered with HTTP status 500 instead of a success status (attempt 3, 40 s left).
+```
+
+These lines are normal while a slow app is still starting, so one of them alone is
+not a problem. If the last attempt fails too, the deploy fails with the answer under
+`The container started but your app did not answer`. The place to look is your
+app's own logs and its environment variables: a port that does not match the
+`EXPOSE` line, or a variable your app needs and does not have, are the usual
+causes.
+
+**When your variables could not be loaded.** If PivoCloud cannot read your app's
+environment variables at the moment of a deploy, it still starts your app, and says
+so:
+
+```text
+We could not load your environment variables, so your app started without them. Deploy again to retry.
+```
+
+Your variables are not lost. Deploy again, and PivoCloud reads them again.
+
+**How the deploy ended.** One of these three lines closes a deploy. Your app is
+running and its address is connected:
+
+```text
+Your app is live at https://my-app.pivocloud.app.
+```
+
+Your app is running, but its address is not connected yet. The Public URL card on
+the app's Domains tab says what happens next, and the section
+`When your app is running but its address is not ready` on this page explains it:
+
+```text
+Your app is running, but its public address is not ready yet. The Public URL card on the app's Domains tab says what happens next.
+```
+
+The deploy did not finish. The red panel at the top of the app page says what
+happened and what to do, and the section `What the red panel shows` at the top of
+this page explains the panel:
+
+```text
+This deploy did not finish. The red panel on the app page says what happened and what to do.
+```
+
+**When you change your environment variables.** Saving variables starts your app
+again with them. The log says how many it starts with, and then how it went:
+
+```text
+Starting your app again with 3 environment variables.
+```
+
+```text
+Starting your app again with 1 environment variable.
+```
+
+```text
+Your environment variables are applied and your app is running with them.
+```
+
+```text
+Your environment variables were not applied. The app page says what happened and what to do.
+```
+
+**When your app is started again without a change.** Starting an app that was
+stopped, resuming one that was suspended, and changing the plan all start your app
+again without touching its variables, so the log does not mention them:
+
+```text
+Starting your app again.
+```
+
+```text
+Your app is running again.
+```
+
+```text
+Your app could not be started again. The app page says what happened and what to do.
+```
+
+**When some of these lines are hidden.** Some deploys show one line in place of
+PivoCloud's own steps: deploys that were run before these plain lines existed, and
+deploys that ran while PivoCloud was being updated. Your own build output is never
+hidden by it:
+
+```text
+Some PivoCloud step messages for this deploy are hidden. Your own build output is not affected.
+```
+
 ## When another action on your app fails
 
 Saving variables, stopping or starting the app, changing its address, setting up
@@ -710,6 +868,61 @@ Check your app's current state in the console. If the console still offers this 
 
 Sometimes PivoCloud has to recover its own systems. An action that was in progress at that moment is set aside, and the message cannot say how far it got. Look at your app in the console to see where it stands, do the action again if the console still offers it, and if it fails again, give support the reference.
 
+## When your app is running but its address is not ready {#public_address}
+
+After a deploy, PivoCloud connects your app to its public address. Your app can be
+running while that step has not finished. The card titled `Public URL` on the
+app's Domains tab shows where this stands. It is a card on the Domains tab,
+not on the Overview tab.
+
+**A yellow message** means the address is still being set up. Your app is running and
+nothing is wrong. No reference is shown, because there is nothing for PivoCloud
+support to look up. The message reads:
+
+```text
+Your app is running. Its secure address is still being set up.
+```
+
+With this next step:
+
+```text
+No action is needed from you.
+```
+
+**When the yellow message goes away.** The message records how your last deploy left
+the address, and PivoCloud does not clear it by itself. It stays until your next
+successful deploy replaces it, even if the secure address starts working before
+then. If you want the message to show the current state, deploy your app again.
+
+**A red message** means PivoCloud could not connect your app to its public address.
+Your app is still running. The cause is on PivoCloud's side, not in your code, so
+nothing in your repository needs to change. PivoCloud tries again by itself. The
+message reads:
+
+```text
+Your app is running, but we could not connect it to its public address yet.
+```
+
+With this next step:
+
+```text
+This is on our side and we retry automatically. If it still fails in 10 minutes, contact PivoCloud support and give them the reference shown with this message.
+```
+
+**When the red message goes away.** Once your app is connected to its public address,
+PivoCloud notices on its own and the red message clears, usually within a minute. You
+do not need to do anything. There are two cases where it does not clear. One is a
+deploy that changed your app's address and could not update the connection while it
+ran. PivoCloud does not replace a connection that already exists, so it leaves that
+one as it is and the red message stays. The other is a deploy that changed your
+app's port while PivoCloud could not reach the part of its own system that holds
+your address, so it could neither update the connection nor remove the old one. In
+both cases, deploy your app again, and the deploy puts the connection right.
+
+**The reference** that starts with `a-` is shown with the red message only. It
+identifies your app for PivoCloud support, so give it to them when you write. It
+is not shown with the yellow message, because the yellow message needs no support.
+
 ## What your AI agent can tell you about an app
 
 If you connected an AI agent, you can ask it why an app is not working. It asks
@@ -837,12 +1050,18 @@ the answer is about the database instead, because it is the cause to fix first.
 
 ### PivoCloud recorded a problem with the app's address {#address_not_configured}
 
-The app is running and its health check shows no problem, but PivoCloud recorded a problem while setting up
-its public address, so visitors may not reach it. The answer gives the status
+The app is running and its health check shows no problem, but PivoCloud recorded that its public address is
+not ready: a problem for the red status, still being set up for the yellow one. Visitors may not reach it yet. The answer gives the status
 PivoCloud recorded, and never the detail of the problem.
 
-**What to do:** open the app in the console to check its address, then press
-`Redeploy` so PivoCloud sets the address up again.
+**What to do:** it depends on the status PivoCloud recorded. For the red status,
+PivoCloud retries the address automatically. If it is still not working after 10
+minutes, contact PivoCloud support. For the yellow status, no action is needed,
+and the answer says the address is still being set up. PivoCloud does not clear
+the yellow status by itself: if you want it to show the current state, deploy your
+app again, because the next successful deploy replaces it. What the address panel
+shows, and when its messages go away, is under
+`When your app is running but its address is not ready`.
 
 ### The database attached to the app is not running {#database_unavailable}
 
@@ -975,6 +1194,12 @@ PivoCloud could not open the connection it needs to fetch your base image:
 
 ```text
 docker build failed: Could not open the Docker build session, so the build cannot resolve its base image. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+PivoCloud could not set up the build of your code because of a fault on its side:
+
+```text
+docker build failed: failed to start docker build: PivoCloud could not set up the build of your code because of a fault on our side. Your Dockerfile is not the cause. Redeploy to try again. If the same message comes back, contact PivoCloud support.
 ```
 
 **What to do:** redeploy once. If any of these messages comes back on the second
