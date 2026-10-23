@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-10-07
+last_verified: 2026-10-21
 ---
 
 ## Deploy your first app
@@ -201,6 +201,15 @@ sentence, with everything you typed still in place:
 
 Press `Create App` again after a few minutes. If it keeps failing, contact
 support and quote that sentence.
+
+If PivoCloud has no capacity left for a new app when you press `Create App`, no
+app is created, nothing is charged, and the form shows this sentence, with
+everything you typed still in place:
+
+`PivoCloud is at capacity right now. Your app was not created and nothing was charged. Try again in a few hours, or contact PivoCloud support.`
+
+Try again in a few hours. If you need the app sooner, contact PivoCloud support
+and quote that sentence.
 
 ### Deploying without the GitHub App
 
