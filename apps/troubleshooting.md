@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-10-19
+last_verified: 2026-10-22
 ---
 
 ## What the red panel shows
@@ -605,6 +605,23 @@ Your app is running again.
 Your app could not be started again. The app page says what happened and what to do.
 ```
 
+When you return an app to an earlier version, the log shows three lines of its
+own. The first says the return has begun, the second says the app is running the
+version you chose, and the third says the app could not be returned and is still
+running as before:
+
+```text
+Returning your app to the version you chose.
+```
+
+```text
+Your app is running the version you chose.
+```
+
+```text
+Your app could not be returned to that version. It is still running as before, and the app page says what happened.
+```
+
 **When some of these lines are hidden.** Some deploys show one line in place of
 PivoCloud's own steps: deploys that were run before these plain lines existed, and
 deploys that ran while PivoCloud was being updated. Your own build output is never
@@ -815,6 +832,68 @@ Try Stop again. If it fails again, contact PivoCloud support and give them the r
 ```
 
 Try `Stop` again, and if it fails again, give support the reference.
+
+#### After you go back to an earlier version
+
+**The earlier version could not be restored.**
+
+```text
+PivoCloud could not return this app to that version.
+```
+
+```text
+Try again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Try the version again, and if it fails again, give support the reference.
+
+**The earlier version is no longer kept.**
+
+```text
+This version is no longer kept, so it could not be restored.
+```
+
+```text
+Your app was left as it was. Pick a version that is listed, or push or redeploy to run your code again.
+```
+
+PivoCloud keeps only a few recent versions of your app, and this one was removed. It will not be offered again. Pick another version from the list, or deploy your code again.
+
+**The earlier version could not be verified.**
+
+```text
+This version could not be verified, so your app was left as it was.
+```
+
+```text
+Try again. If it happens again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Your app is unchanged. Try again, and if it happens again, give support the reference.
+
+**PivoCloud could not read the app's version right now.**
+
+```text
+PivoCloud could not read this app's version right now.
+```
+
+```text
+Your app was left as it was. Try again in a minute. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+This says nothing about your code, so you do not need to deploy again. It can also appear after you save variables or start the app again. Wait a minute and try once more, and if it fails again, give support the reference.
+
+**The app has no version to start from.**
+
+```text
+Your app has no version to start from.
+```
+
+```text
+Deploy it again.
+```
+
+The app was never deployed successfully, or its built version was removed. Press `Deploy` to build it again.
 
 #### When the cause is on PivoCloud's side
 

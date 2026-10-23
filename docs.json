@@ -18,6 +18,7 @@
           "apps/symlinks",
           "apps/connect-github",
           "apps/deploy",
+          "apps/rollback",
           "apps/environment-variables",
           "apps/troubleshooting",
           "apps/manage",

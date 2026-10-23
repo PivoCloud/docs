@@ -283,6 +283,8 @@ It shows the 10 most recent. Its columns are `Status`, `Timestamp`, `Type`,
   example after a stop or a plan change. If that version is no longer on the
   server, PivoCloud rebuilds it from your repository instead. The row still says
   `Restarted`, and it shows the commit that rebuild used.
+- `Rollback` returned your app to an earlier version without rebuilding. See
+  [rolling back](/apps/rollback).
 - Any other row reads `Other`.
 - `Stopped` stopped your app.
 - `Domain configured` and `Subdomain configured` changed the address your app
@@ -301,6 +303,10 @@ your repository yet, on a deploy that failed before the clone finished (a wrong
 repository URL, for example), and on rows from before PivoCloud recorded commits.
 `No code change` marks a row that runs no code, such as a stop or a domain
 change.
+
+**Rolling back.** The row of the version before the live one carries a
+`Roll back to this` button. [Rolling back](/apps/rollback) says what it does and
+what it leaves alone.
 
 **Live and Latest.** `Live` marks the deployment your app serves right now.
 `Latest` marks the newest deploy, env var change or restart, but only when it is
