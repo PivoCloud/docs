@@ -1,7 +1,7 @@
 ---
 title: How do I connect my AI agent to PivoCloud?
 description: "Add PivoCloud to Claude Code, Codex or OpenCode, sign in through your browser with no key to copy, and choose which apps and databases your agent can see and what it can do."
-last_verified: 2026-10-12
+last_verified: 2026-10-17
 ---
 
 ## Connect your AI agent
@@ -148,7 +148,8 @@ app is not working, follow a deploy while it runs, and read the recent log lines
 app (see "Logs your agent can read"). It never sees an env var value through the env
 var tools.
 
-`Operate` lets the agent restart, stop and start the apps you chose, and nothing else.
+`Operate` lets the agent restart, stop and start the apps you chose, and set, change or
+remove their env vars without reading a value, and nothing else.
 It is off until you switch it on for the connection. See
 [What can an agent with Operate do?](/agents/operate).
 
@@ -277,7 +278,8 @@ bytes.`).
 Before a line reaches your agent, PivoCloud replaces each of these with
 `•••REDACTED•••`:
 
-- The values of the app's env vars that are 8 characters or longer. A value that
+- The values of the app's env vars that are 8 characters or longer, and the values those
+  env vars held before your last 20 changes. A value that
   spans several lines, such as a key file, is blanked line by line for each line of 8
   characters or more.
 - The password and the connection address of the database attached to the app, even
@@ -305,11 +307,23 @@ Blanking is not complete. Check this list before you give an agent access to an 
   as `.`, `@`, `!` or `:` is blanked only up to that character, and a name with a digit
   in it is not matched. An address without `scheme://` is not matched either.
 - **Other encodings of a value**, such as hex or compressed text.
-- **A value you changed or deleted, and a database password that was rotated.**
-  PivoCloud does not keep previous values, so an older line that still holds the old
-  value is not blanked. An app's recent runtime lines stay until newer lines push them
-  out, so do not count on a deploy to remove them. For stored build lines, they stay
-  readable by the agent as long as that deploy is among the app's 5 most recent.
+- **A value you changed or deleted a long time ago.** PivoCloud keeps the values of the
+  last 20 changes of an app's env vars and blanks them in what an agent reads. After more
+  than 20 changes, what an agent reads from the logs leaves out every line
+  older than the oldest change you can still undo, so a value replaced long ago does not
+  come back. The same happens if a kept earlier value cannot be read. Two cases are left:
+  - **A value replaced before PivoCloud kept change history.** If you replaced it with a
+    save made before this history existed, and the app has had 20 changes or fewer since,
+    PivoCloud does not know the old value. Recent lines that still hold it are not blanked.
+  - **An app still running on its old values.** While an update is still switching the app
+    to new values, or after updates failed their health check and the old container kept
+    serving, the app can print a secret you already replaced. If it does, that secret is not
+    blanked in those lines.
+- **A database password that was rotated.** PivoCloud does not keep previous database
+  passwords, so an older line that still holds the old password is not blanked. An app's
+  recent runtime lines stay until newer lines push them out, so do not count on a deploy
+  to remove them. For stored build lines, they stay readable by the agent as long as that
+  deploy is among the app's 5 most recent.
 - **The console's own log views.** The live log view in the console matches a
   multi-line value as a whole only, so it can still show single lines of such a value.
   The build log in the console can also still show a database password or address that
@@ -321,8 +335,9 @@ it, read the next section before you grant an app.
 ### Build lines
 
 Only the build lines of the app's 5 most recent deploys can be read. The reason is
-that a value you have replaced since is no longer known to PivoCloud, so it could not
-be blanked in an older deploy. Asking for an older deploy is refused with `Only the
+that PivoCloud keeps only the values of your last 20 env changes, so a value replaced
+longer ago than that could not be blanked in an older deploy. The two cases listed under
+[What PivoCloud cannot blank](#what-pivocloud-cannot-blank) apply to build lines too. Asking for an older deploy is refused with `Only the
 build lines of this app's 5 most recent deploys can be read.` An app that was never
 deployed answers `This app has not been deployed yet, so it has no build lines.`
 
@@ -379,6 +394,8 @@ are quoted here word for word.
 > No agent can delete an app, a database or a domain, and none of these tools does.
 >
 > With the Operate level, restart_app, stop_app and start_app act on one app and answer at once with a job; check progress with get_app. Do not send an accepted request again unless the connection dropped before the answer. When an answer tells you to try again, wait the time it gives. When it says do not retry, do not retry.
+>
+> With the Operate level, set_env_vars sets, changes or removes the env vars you name on one app. You never read a value back, and the customer can undo the change in the PivoCloud console.
 
 ## How long a connection lasts
 

@@ -1,7 +1,7 @@
 ---
 title: How do I set environment variables for my app?
-description: "Paste a .env file into the PivoCloud console, see which five key names are refused and why, what the console keeps from your file and what it drops, what saving actually changes, and how your running app reads the values."
-last_verified: 2026-10-14
+description: "Paste a .env file into the PivoCloud console, see which five key names are refused and why, what the console keeps from your file and what it drops, what saving actually changes, how to see who changed a variable and undo a change, and how your running app reads the values."
+last_verified: 2026-10-17
 ---
 
 ## Environment variables
@@ -87,8 +87,9 @@ The save button changes to `Review and replace…`.
 Nothing is deleted before you have seen the list. Pressing `Review and replace…`
 opens a dialog titled `Replace all variables?` that names every variable that
 would be permanently deleted and asks you to type a word to confirm, prompting
-`Type REPLACE to confirm`. Values are encrypted and kept without history, so a
-deletion cannot be undone afterwards.
+`Type REPLACE to confirm`. After you confirm, the deleted variables can be undone
+from `Recent changes`, as long as the replace is one of the 20 most recent
+changes and none of the deleted variables has been changed again since. See "Recent changes and undo" below.
 
 ### The five names the platform keeps
 
@@ -171,6 +172,44 @@ Two messages can come back instead of a save:
   else, or another tab of your own, saved while you were editing, so what is on
   your screen is out of date. Nothing of yours was written. Reload the page,
   look at the current set, and re-apply your change on top of it.
+
+### Recent changes and undo
+
+Below the editor, `Recent changes` lists what happened to the app's variables. There is
+one entry for each save you make, each change an agent makes, and each undo. An entry
+shows the names it touched, grouped as `Changed`, `Added` and `Removed`, the time, and who
+made it. A change you made reads `by you`. A change an AI agent made shows the agent's
+name and the connection it used. If you cut that connection off since, the entry says it
+was revoked. An entry never shows a value.
+
+`Undo` on an entry puts back only the variables that one change touched, as they were
+just before it. A click opens a preview titled `Undo this change?`. For each variable it
+says what will happen: it gets its previous value back, it is removed because that change
+added it, or it comes back because that change removed it. If a variable was changed
+again after that entry, by you or by an agent, it is left as it is and the preview says so. Undo that later
+change first. When every variable of an entry was changed again, the preview says the
+change cannot be undone now, and `Undo change` stays off.
+
+The preview keeps the focus on `Keep this change`, so pressing Enter by mistake undoes
+nothing. Confirm with `Undo change`.
+
+- **On a running app, one click applies it.** The app switches to the restored values the
+  same safe way as a save, and keeps serving while it does.
+- **On an app that is stopped, suspended or expired, an undo saves the values and starts
+  nothing.** The panel says
+  `Saved. Your app is not running, so they will be used when it next starts or is deployed.`
+  Before its first deploy, it says `Saved. They will be used at your first deploy.`
+- **An undo is a change too.** It appears as a new entry, `Undone by you`, and it can be
+  undone in turn.
+- **Only the 20 most recent changes can be undone, and not a variable that was changed
+  again later.** Older entries read `Too old to undo.`
+- **Undo is off while the editor has unsaved edits**, and while a change is being
+  applied. Save or discard your edits first.
+- **Only you can undo.** An agent has no way to undo a change, its own or yours.
+
+If an undo fails, or the page cannot confirm it, see
+[Why did my deploy fail?](/apps/troubleshooting#app_action_failed). To see what an
+agent with `Operate` can change, see [What can an agent with Operate do?](/agents/operate).
 
 ### How your running app reads them
 

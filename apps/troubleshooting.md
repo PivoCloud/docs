@@ -771,6 +771,64 @@ Contact PivoCloud support and give them the reference shown with this message.
 
 Give support the reference. It lets them find what happened without asking you to describe it.
 
+#### When undoing a change fails
+
+These come from `Undo` in `Recent changes`, below the variables editor. They are
+shown in the undo dialog, except the last one, which is a short notice on the page.
+Variables are only changed when the undo is confirmed, so none of these leaves
+the variables half changed.
+
+If the variables changed while the dialog was open, for example from another tab, the
+dialog does not fail. It reads the up-to-date list again and shows it with a notice. Check
+the list, then confirm again. Nothing was written by the first click.
+
+**A deploy or another change is running.**
+
+`A deploy or another change is running for this app. Try again when it finishes.`
+
+The app is busy with a deploy, a restart or another change to its variables, possibly
+one an agent made. Wait for it to finish, then undo again.
+
+**PivoCloud could not check what the undo would change.**
+
+`We could not check what this undo would change. Close this and try again.`
+
+The dialog could not read the preview, so it shows no list and `Undo change` stays off.
+Close it and open it again. Nothing was changed.
+
+**PivoCloud refused the undo.**
+
+`We could not undo this change. Nothing was changed. Try again.`
+
+The request reached PivoCloud and was refused, so your variables are as they were. Try
+again. If it fails again, reload the page and check the entry in `Recent changes`.
+
+**PivoCloud could not confirm the undo.**
+
+`We could not confirm the undo. Reload the page to see the current variables.`
+
+The request may have been applied, but the answer did not reach your browser, for example
+because your connection dropped. This message does not say that nothing changed, because
+that may not be true. Reload the page and read `Recent changes`: a new entry
+`Undone by you` means the undo happened. If there is none, undo again.
+
+**Your browser sent the undo from an address PivoCloud does not accept.**
+
+The undo dialog can say that your browser sent the request from an address PivoCloud does
+not accept, and that nothing changed. The exact sentence is on
+[How do I see, change and cut off my AI agents?](/agents/manage).
+
+Nothing was changed. Open the console from its normal address, reload the page, and
+undo again.
+
+**The change can no longer be undone.**
+
+`This change can no longer be undone.`
+
+The entry was among the 20 most recent changes when the page loaded, and newer changes
+have pushed it out since. The page reads the list again. Variables are not lost: only the
+way back to that older state is gone.
+
 #### Stopping, starting, moving or deleting the app
 
 **Deleting the app.**
@@ -946,6 +1004,18 @@ Check your app's current state in the console. If the console still offers this 
 ```
 
 Sometimes PivoCloud has to recover its own systems. An action that was in progress at that moment is set aside, and the message cannot say how far it got. Look at your app in the console to see where it stands, do the action again if the console still offers it, and if it fails again, give support the reference.
+
+**PivoCloud lost track of the action.**
+
+```text
+PivoCloud lost track of this action on your app and ended it, and your app did not cause this.
+```
+
+```text
+Check your app's current state in the console. If the console still offers this action, do it again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+PivoCloud waits a set time for an action to report back. When nothing arrives in that time, it ends the action so your app is no longer blocked and you can act on it again. It cannot say how far the action got before it went quiet, so look at your app in the console first, do the action again if the console still offers it, and if it fails again, give support the reference.
 
 ## When your app is running but its address is not ready {#public_address}
 
@@ -1290,6 +1360,22 @@ aside, and the panel cannot say how far it got:
 
 ```text
 A platform recovery interrupted this deploy, and your code did not cause this.
+```
+
+```text
+Check your app's current state in the console, then deploy again. If it fails again, contact PivoCloud support and give them the reference shown with this message.
+```
+
+Look at the app in the console to see which version is running. If it is not the
+one you expect, deploy again. If that fails too, contact PivoCloud support with
+the reference.
+
+**A deploy that PivoCloud lost track of.** PivoCloud waits a set time for a
+deploy to report back. When nothing arrives in that time, it ends the deploy so
+your app is no longer blocked, and the panel cannot say how far the deploy got:
+
+```text
+PivoCloud lost track of this deploy and ended it, and your code did not cause this.
 ```
 
 ```text
