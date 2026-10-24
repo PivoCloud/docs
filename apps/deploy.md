@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-10-21
+last_verified: 2026-10-23
 ---
 
 ## Deploy your first app
@@ -82,7 +82,8 @@ see [connecting GitHub](/apps/connect-github).
 
 **`Auto-deploy on push`.** A toggle, offered on the GitHub App path. Its helper
 reads `Deploys automatically when a push targets the deploy branch.` Leave it on
-unless you want every deploy to be a deliberate act.
+unless you want every deploy to be a deliberate act. A deploy from a push is billed
+exactly like the `Redeploy` button: free inside a month you already paid for.
 
 **`Advanced`.** A collapsed section, covered below. It folds itself away as soon
 as the form can read your repository through the App, so on the recommended path

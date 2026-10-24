@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-10-22
+last_verified: 2026-10-23
 ---
 
 ## What the red panel shows
@@ -1410,26 +1410,67 @@ repository.
 
 **What to do:** open your wallet, top it up, and press `Redeploy`.
 
-This can only happen **before the app's first successful charge**. Once an app
-has been charged, redeploying it takes no further payment, so a redeploy of a
-running app can never fail for lack of credit. If you are seeing this on an app
-that has already been billed, the cause is something else.
+This can only happen when the app has no paid month: before its first charge, or
+after a paid month has ended. Inside a paid month, redeploying takes no further
+payment, so a redeploy can never fail for lack of credit. If you are seeing this
+on an app that is inside a paid month, the cause is something else.
+
+A push to your repository follows the same rule. See
+[a push that was not deployed for lack of credit](#a-push-that-was-not-deployed-for-lack-of-credit).
+
+### A push that was not deployed for lack of credit
+
+A push to your connected repository can arrive when your wallet does not cover
+the app's monthly price. PivoCloud then deploys nothing. The deployment history
+shows one failed row for that push, and the console explains it with these two
+sentences:
+
+```text
+This push was not deployed because your credit did not cover this app's monthly price.
+```
+
+```text
+Add credit, then push again or deploy from the console.
+```
+
+What this means for you:
+
+- Your previous version keeps running. Nothing about the app changed.
+- Nothing was charged for this push.
+- Your billing history shows an insufficient balance row for the app.
+- PivoCloud does not send you an email about it.
+
+**What to do:** open your wallet and add credit. Then push again, or press
+`Redeploy` in the console.
 
 ## What happens to your credit when a deploy fails
 
-If a deploy fails **after** the charge has already gone through, PivoCloud
-refunds it automatically and in full. You do not have to ask for it and there is
-nothing to claim.
+Only the deploy that made a charge is refunded. It is refunded automatically and
+in full, you do not have to ask, and it happens only when no earlier version of
+your app is still running. In practice that is a first deploy that fails.
 
-One consequence is worth knowing before you read your wallet history, because it
-looks wrong and is not: **the next deploy that succeeds charges again.** The
-refund cancels the month you paid for, so the paid month starts when your app
-actually runs rather than when you first tried. A wallet showing a debit, then a
-credit, then a second debit for the same app is one month paid for, not two.
+A failed update keeps the month you already paid for. Two cases follow from that:
 
-**A deploy that a platform update interrupts twice follows the same rule, with
-one difference.** If your previous version is still running when the deploy
-stops, your app keeps running, and nothing is refunded and nothing is charged
-again. If nothing was running, the deploy counts as a failed deploy and the
-refund described above applies. The single automatic restart of an interrupted
-deploy never charges you a second time.
+- **A deploy that paid for a new month fails while an earlier version keeps
+  running.** You keep the month, because that earlier version is what you are
+  being served.
+- **A deploy fails inside a month you already paid.** Nothing is charged and
+  nothing is refunded.
+
+Your app shows `Running` when the previous version still serves, because the
+update stopped before replacing it. It shows `Failed` when the previous version
+was already stopped. Either way the month is kept. You can fix the problem and
+deploy again, or roll back, at no extra charge until the month ends.
+
+When a first deploy is refunded, **the next deploy that succeeds charges
+again.** The refund cancels the month you paid for, so the paid month starts when
+your app actually runs rather than when you first tried. A wallet showing a
+debit, then a credit, then a second debit for the same app is one month paid for,
+not two.
+
+**A deploy that a platform update interrupts twice follows the same rule.** If
+your previous version is still running when the deploy stops, your app keeps
+running, and nothing is refunded and nothing is charged again. If nothing was
+running, the deploy counts as a failed deploy and the refund described above
+applies. The single automatic restart of an interrupted deploy never charges you
+a second time.

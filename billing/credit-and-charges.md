@@ -1,7 +1,7 @@
 ---
 title: What does it cost, and when am I charged?
 description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, what every app plan and database tier costs, when a charge happens and how long a paid period runs, why your price stays fixed, and what happens if your balance runs out."
-last_verified: 2026-10-05
+last_verified: 2026-10-23
 ---
 
 ## Credit and charges
@@ -96,9 +96,21 @@ Two rules, and they are not the same rule.
 
 **An app is charged when it first deploys**, not when you create it. Creating an
 app takes nothing from your balance. The first deploy opens a paid period and
-takes that app's monthly price. Every deploy after that takes nothing at all:
-you can redeploy as often as you like inside a period you have already paid for.
-An app whose monthly price is zero is never charged.
+takes that app's monthly price. Every deploy after that takes nothing at all,
+whatever started it: you can redeploy as often as you like inside a period you
+have already paid for. An app whose monthly price is zero is never charged.
+
+**A deploy from a push is charged exactly like the deploy button.** If your
+wallet does not cover the charge, the push is not deployed, nothing is taken,
+and the failed attempt shows in the app's deployment history so you can see it.
+Your previous version keeps running.
+
+**A failed deploy is refunded only when it made the charge itself and no earlier
+version of your app is still running**, which in practice means a first deploy.
+When an earlier version keeps running, you keep the month, because that version
+is still being served to you. A failed update never refunds a month you already
+paid for and were using. An app that failed after its paid month ended pays a
+new month on its next deploy or rollback.
 
 **A database is charged when you create it.** There is no separate deploy step
 for a database, so the tier's monthly price leaves your balance at the moment

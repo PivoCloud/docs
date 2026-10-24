@@ -1,7 +1,7 @@
 ---
 title: What does each button on my app page do?
 description: "Every control on a deployed app in the PivoCloud console, in the order the console shows them, with what each one does and what each one does to your bill before you press it. Plus the two separate places your logs appear."
-last_verified: 2026-10-12
+last_verified: 2026-10-23
 ---
 
 ## Manage your app
@@ -35,7 +35,8 @@ until the new one is ready.
 
 **What it does to your bill:** nothing, on an app that has already been charged
 for the current period. No new charge, no refund, and the paid period runs on
-exactly as before. You can redeploy as often as you like.
+exactly as before. You can redeploy as often as you like. A deploy started by a
+push to your repository is billed the same way as this button.
 
 A first deploy is the exception, and it is the only one. An app with a monthly
 price is charged when it first deploys, not when you create it. If your wallet

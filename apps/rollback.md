@@ -1,7 +1,7 @@
 ---
 title: How do I roll my app back to the previous version?
 description: "Return your app to the version it ran before the current one from the deployment history, in one click and without a rebuild. What stays the same, what the next push does, when the button is missing, and what it costs."
-last_verified: 2026-10-22
+last_verified: 2026-10-23
 ---
 
 ## Rolling back to the previous version
@@ -89,13 +89,15 @@ to an earlier version.
 A rollback to a running app that has already paid for the current period costs
 nothing, the same as a redeploy.
 
-A paid app whose last deploy failed is different. A failed deploy refunds the
-charge it made, so that app is not inside a paid period. Rolling it back puts it
-back to running, and it is charged for the month like a redeploy would be. The
-dialog says so before you confirm: it tells you your wallet is charged, the same
-as for a new deploy. If your wallet cannot pay, the rollback is refused with a
-message asking you to top up, and your app is left as it was. If the rollback
-itself then fails, the charge is refunded, as it is for a failed deploy.
+A paid app whose last deploy failed usually keeps the month it already paid, so
+rolling it back inside that month costs nothing too.
+
+A rollback is charged like a redeploy only when the app has no paid month: either
+none was paid, or the month has ended. The dialog says so before you confirm: it
+tells you your wallet is charged, the same as for a new deploy. If your wallet
+cannot pay, the rollback is refused with a message asking you to top up, and
+your app is left as it was. If a rollback fails, it refunds only a charge it made
+itself, and only when nothing of your app is running.
 
 How charges work in general is on
 [credit and charges](/billing/credit-and-charges).
