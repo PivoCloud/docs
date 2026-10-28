@@ -42,8 +42,9 @@ email. While the offer is available, the same card carries `Claim Again`.
 
 ### Adding credit
 
-Credit is added by transfer to our CCP account, by BaridiMob or in person, and a
-person at PivoCloud approves it. No part of that approval is automatic.
+Credit is added by transfer to our CCP account, by BaridiMob or in person at a
+post office, and a person at PivoCloud approves it. No part of that approval is
+automatic.
 
 Three of the four steps are yours.
 
@@ -52,14 +53,14 @@ Three of the four steps are yours.
    `Custom amount (DA)`. The smallest amount you can ask for is 100 DA and the
    largest is 10,000,000 DA.
 2. Press `Request Top-Up`. The dialog moves to a second step titled
-   `BaridiMob Payment Instructions`, which shows you three things: the account
+   `Payment instructions`, which shows you three things: the account
    to pay, the `Amount` to send, and a `Payment Reference` to quote on the
    transfer. Send that exact amount and quote that reference. PivoCloud does not
    publish the account to pay anywhere, on this page or on any other: the one to
    use is the one this step shows you, and it is issued with your request.
 3. Your request now sits in the table below, under `Date`, `Amount`, `Status`
    and `Actions`. Press `Upload proof` on its row and attach a screenshot of the
-   transfer.
+   BaridiMob confirmation, or a photo of your post office receipt.
 
 Then comes the step that is not yours. Someone at PivoCloud reviews the request
 by hand, so the credit does not appear the moment you upload the proof.
@@ -89,6 +90,22 @@ refund a charge or to correct a mistake. Every such change appears on the
 `Balance adjustments`. Each row shows the `Date`, the `Amount` (a plus sign when
 credit was added) and a `Note` explaining the reason. The section only appears
 once there is at least one adjustment on your account.
+
+### When an action is refused for credit
+
+A deploy, a rollback, a new database or a restore that your wallet cannot cover
+is refused. The console shows `Your wallet balance is too low` beside the button
+you pressed, with the price of the action, your balance and the amount that is
+missing.
+
+Nothing was charged. Your app or database keeps the status it had: an app that
+was online stays online with its previous version.
+
+Press `Top up` in the notice. It opens the same top-up dialog as the `Wallet`
+page, with the missing amount filled in. When the missing amount is less than
+100 DA, the dialog fills in 100 DA, the smallest top-up you can ask for. Once
+the top-up is approved and credited, press the button again. Nothing retries on
+its own.
 
 ### When you are charged
 

@@ -102,10 +102,13 @@ Nothing was taken from your wallet. Ask again with a different name for the
 new database.
 
 ```text
-Insufficient wallet balance.
+Your wallet balance is too low for this action. Top up your wallet, then try again.
 ```
 
-Your wallet does not hold the source database's monthly price. Top it up, then
+Your wallet does not hold the source database's monthly price. Nothing was
+taken from the wallet. The console shows the price, your balance and the amount
+that is missing, with a Top up button that opens the top-up dialog with the
+missing amount already filled in. Top up, wait for the credit to arrive, then
 ask again. The console also disables the confirm button when it can already see
 the balance is short, so you may meet this as a button you cannot press rather
 than as a sentence.

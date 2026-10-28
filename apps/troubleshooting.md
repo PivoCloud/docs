@@ -1452,7 +1452,7 @@ What this does to your credit is in the next section.
 
 ## When Redeploy or the other buttons refuse
 
-Pressing `Redeploy` can come back seven different ways. **This is the list for
+Pressing `Redeploy` can come back eight different ways. **This is the list for
 that one button.** The other buttons on the app page have their own answers, and
 this is not every response the platform can give you.
 
@@ -1464,7 +1464,8 @@ this is not every response the platform can give you.
 | `App not found` | The app is gone, usually deleted in another tab. Reload the page. | Yes. |
 | `App is already deploying` | A deploy for this app is already running. | Yes, but you will not see it. |
 | `A deployment is in progress for this app, retry in a moment` | Another change to this app is in flight. Wait a few seconds and press again. | Yes. |
-| `Failed to trigger deployment` | The catch-all. Read the paragraph below before you assume it is a fault. | Yes. |
+| `Your wallet balance is too low` | Your wallet does not cover the charge for the action you pressed. The sentence beside the title tells you to top up, then try again. Nothing was charged. See [when an action is refused for credit](/billing/credit-and-charges#when-an-action-is-refused-for-credit). | Yes, as a notice with the missing amount and a Top up button. |
+| `Failed to trigger deployment` | The catch-all. It no longer stands in for an empty wallet. Read the section below before you assume it is a fault. | Yes. |
 
 **The already-deploying answer is swallowed, so pressing `Redeploy` during a
 deploy does nothing visible.** No message, no error, nothing changes on screen.
@@ -1482,24 +1483,25 @@ try again.
 is still running for the app. Wait for that job to finish (the `Deployments` tab
 shows a deploy), then press `Start` again.
 
-### A first deploy that fails with a trigger failure is usually about credit
+### An empty wallet now has its own message
 
 `Failed to trigger deployment` is the sentence PivoCloud falls back to when it
-has nothing more specific. One cause reaches it often enough to be worth naming,
-and the sentence gives you no hint of it: **not enough credit in your wallet.**
+has nothing more specific. It no longer means a credit problem. When your wallet
+does not cover the charge for a deploy, the console now says
+`Your wallet balance is too low`, beside the button, with the price, your
+balance and the amount that is missing.
 
 An app with a monthly price is charged when it is first deployed, not when it is
-created. If your wallet balance does not cover that charge, the deploy is
-refused, no money moves, and what you read is the catch-all sentence. It is
-about credit, not about your code, and there is nothing wrong with your
-repository.
+created, or when a paid month has ended and a new one starts. If the balance does
+not cover that charge the deploy is refused and no money moves. **What to do:**
+press `Top up` in the notice, then press the button again once the top-up is
+credited. The page
+[when an action is refused for credit](/billing/credit-and-charges#when-an-action-is-refused-for-credit)
+has the detail.
 
-**What to do:** open your wallet, top it up, and press `Redeploy`.
-
-This can only happen when the app has no paid month: before its first charge, or
-after a paid month has ended. Inside a paid month, redeploying takes no further
-payment, so a redeploy can never fail for lack of credit. If you are seeing this
-on an app that is inside a paid month, the cause is something else.
+If you still read `Failed to trigger deployment`, the cause is something else,
+not your wallet. Inside a paid month, redeploying takes no further payment, so a
+redeploy can never fail for lack of credit.
 
 A push to your repository follows the same rule. See
 [a push that was not deployed for lack of credit](#a-push-that-was-not-deployed-for-lack-of-credit).
