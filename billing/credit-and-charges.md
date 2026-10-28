@@ -1,14 +1,14 @@
 ---
 title: What does it cost, and when am I charged?
-description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, what every app plan and database tier costs, when a charge happens and how long a paid period runs, why your price stays fixed, and what happens if your balance runs out."
-last_verified: 2026-10-23
+description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, where to find the price of every app plan and database tier, when a charge happens and how long a paid period runs, what the 31 December 2026 promise covers, and what happens if your balance runs out."
+last_verified: 2026-10-28
 ---
 
 ## Credit and charges
 
 Everything on PivoCloud is paid for out of one balance, in Algerian dinars. This
-page covers what that balance is, how you add to it, what each thing costs, when
-the money actually leaves, and what happens if it runs out.
+page covers what that balance is, how you add to it, where to find what each
+thing costs, when the money actually leaves, and what happens if it runs out.
 
 ### Your credit, and what it is
 
@@ -42,8 +42,8 @@ email. While the offer is available, the same card carries `Claim Again`.
 
 ### Adding credit
 
-Credit is added by BaridiMob transfer, and a person at PivoCloud approves it. No
-part of that approval is automatic.
+Credit is added by transfer to our CCP account, by BaridiMob or in person, and a
+person at PivoCloud approves it. No part of that approval is automatic.
 
 Three of the four steps are yours.
 
@@ -116,6 +116,8 @@ new month on its next deploy or rollback.
 for a database, so the tier's monthly price leaves your balance at the moment
 the database is created.
 
+There is no setup fee and no bandwidth charge.
+
 A paid period is 30 days long in both cases. When it renews, the next period
 starts exactly where the last one ended, so there is no gap and no day is paid
 for twice. Your app's `Billing` tab shows its `Monthly price` and a
@@ -134,30 +136,16 @@ app does to your bill, control by control, is on
 charge when a deploy fails, including the part of your history that looks wrong
 and is not, is on [why did my deploy fail](/apps/troubleshooting).
 
-### What an app plan costs
+### What an app plan or a database tier costs
 
-Three plans you can buy today. The price is per app, per month.
+An app is bought on an app plan, and a database is bought on a database tier.
+The price is per app or per database, per month, in dinars. The current price,
+memory, processor and included storage of every plan and tier are on
+[the pricing page](https://pivocloud.com/pricing), and only there. This page does
+not repeat them, so it cannot disagree with the pricing page.
 
-| App plan | Price per month | Memory | Processor | Disk | Bandwidth | Apps | Custom domain |
-|---|---|---|---|---|---|---|---|
-| `Lite` | 1,200 DA | 512 MB | half a core | 5 GB | 10 GB | 1 | no |
-| `Starter` | 3,600 DA | 2 GB | 1 core | 10 GB | 50 GB | 3 | yes |
-| `Dev` | 7,500 DA | 4 GB | 2 cores | 20 GB | 100 GB | 5 | yes |
-
-The apps column is how many apps that plan lets you run at once. The custom
-domain column is whether you may put a name you own in front of an app on that
-plan, and [how do I put my own domain on my app](/apps/custom-domains) is the
-page for doing it.
-
-### What a database tier costs
-
-Three tiers. The price is per database, per month.
-
-| Database tier | Price per month | Storage | Backups | Backups kept | Service level |
-|---|---|---|---|---|---|
-| `Starter` | 1,200 DA | 5 GB | daily | 30 days | 99.00% |
-| `Growth` | 2,500 DA | 25 GB | daily | 30 days | 99.50% |
-| `Business` | 5,000 DA | 50 GB | every 6 hours | 30 days | 99.90% |
+What each limit means, what happens when you reach it, and how to move to a
+bigger plan or tier is on [what do my plan's limits mean](/plans-and-limits).
 
 The tiers differ in how far back you can go as well as in how much they hold.
 `Starter` brings a database back to one of its backups. `Growth` and `Business`
@@ -168,26 +156,28 @@ what it costs and how far each tier lets you go is on
 
 ### Two names that mean two things
 
-Read every price above together with the kind of thing it prices, because two
-names collide and so does one price. `Starter` is an app plan at 3,600 DA and,
-separately, a database tier at 1,200 DA: the same word, two different products,
-two different prices. And 1,200 DA is the price of the `Lite` app plan and also
-the price of the `Starter` database tier: the same price, two different
-products. An app plan never includes a database, and a database tier never
-includes an app, so what you pay each month is one line for every thing you
-created, read off whichever of the two tables it belongs to.
+`Starter` is the name of an app plan and, separately, of a database tier: the
+same word, two different products, with two different prices. An app plan never
+includes a database, and a database tier never includes an app, so what you pay
+each month is one line for every thing you created, at the price of the plan or
+tier it was created on.
 
 ### Your price does not change under you
 
-The price of an app or a database is fixed the moment you create it, and it
-stays at that figure for as long as that app or that database exists. If our
-published prices go up, yours does not.
+Apps and databases you buy before 31 December 2026 keep their price and
+resources as long as the subscription stays active.
 
-One thing changes it, and that thing is you. Changing an app's plan takes the
-new plan's price as it stands on the day you change it, and that becomes the
-app's fixed price from then on. Nothing else moves it. A database has no tier
-change at all, so a database keeps the price it was created at for its whole
-life.
+An app or database counts as bought when you chose its plan or tier before that
+date and your account had an approved real top-up before it. A top-up that is
+still waiting for review at that date does not count. Free credit alone does not
+count either. Anything bought after that date has no such promise, and its price
+may change later.
+
+When you change an app's plan, the app takes the new plan's resources as they
+stand on the day you change it, and its price from your next billing cycle. A
+database cannot change tier from the console. Contact support and we move it to
+the higher tier. That means a new database on that tier, with a new connection
+string and that tier's price.
 
 ### If your credit runs out
 

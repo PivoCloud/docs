@@ -9,7 +9,7 @@
     "groups": [
       {
         "group": "Get started",
-        "pages": ["index", "getting-help"]
+        "pages": ["index", "getting-help", "plans-and-limits"]
       },
       {
         "group": "Apps",

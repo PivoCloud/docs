@@ -179,6 +179,9 @@ As this rolls out, a new app gets an address under `pivocloud.app` instead. The
 form and the app page always show you which one you have, so read the address
 there rather than assuming it.
 
+Your app's address is served over HTTPS. PivoCloud gets its certificate for you
+on the first deploy, at no extra cost.
+
 An address under `pivocloud.app` follows four rules:
 
 - **The name is required.** There is no generated fallback. The field starts
