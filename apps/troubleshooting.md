@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-10-23
+last_verified: 2026-10-29
 ---
 
 ## What the red panel shows
@@ -952,6 +952,47 @@ Deploy it again.
 ```
 
 The app was never deployed successfully, or its built version was removed. Press `Deploy` to build it again.
+
+#### When your own deploy is queued {#deploy_queued}
+
+A deploy of your app can wait for a build slot and show `Queued`. It starts on its
+own, and nothing needs fixing. While it waits, the actions below are unavailable, and the
+console explains why with a sentence that starts `This app has a deploy queued.` and names what you tried.
+Every one means the same: the deploy runs by itself, and the action is available
+once it has run.
+
+Stopping the app.
+
+`This app has a deploy queued. You can stop it once that deploy has run.`
+
+Starting the app.
+
+`This app has a deploy queued. You can start it once that deploy has run.`
+
+Restarting the app.
+
+`This app has a deploy queued. You can restart it once that deploy has run.`
+
+Changing the app's plan.
+
+`This app has a deploy queued. You can change its plan once that deploy has run.`
+
+Rolling the app back.
+
+`This app has a deploy queued. You can roll it back once that deploy has run.`
+
+Returning to the version you rolled back from.
+
+`This app has a deploy queued. You can return to this version once that deploy has run.`
+
+Saving variables.
+
+`This app has a deploy queued. You can save its variables once that deploy has run.`
+
+The `More actions` menu carries the shorter form,
+`This app has a deploy queued. More actions are available once that deploy has run.`
+Nothing you typed is lost while you wait. Open the `Deployments` tab to watch the
+queued deploy start.
 
 #### When the cause is on PivoCloud's side
 

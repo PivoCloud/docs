@@ -1,7 +1,7 @@
 ---
 title: How do I roll my app back to the previous version?
 description: "Return your app to the version it ran before the current one from the deployment history, in one click and without a rebuild. What stays the same, what the next push does, when the button is missing, and what it costs."
-last_verified: 2026-10-23
+last_verified: 2026-10-29
 ---
 
 ## Rolling back to the previous version
@@ -57,14 +57,22 @@ without a rebuild.
 - A rollback is available for an app that is running, or for an app whose last
   deploy failed. It is not available for a stopped app.
 
+### While a deploy of this app is queued
+
+If a deploy of this app is queued, the rollback button is still shown, but it is
+greyed out and cannot be clicked. Pointing at it tells you why, and it works once
+that deploy has run. The sentence the console shows is on
+[why did my deploy fail](/apps/troubleshooting), under the heading about a queued
+deploy.
+
 ### When there is no button
 
 The button is absent in these cases, and each one is normal.
 
 - There is nothing to go back to: the app has had only one deploy, or the earlier
   versions are no longer kept.
-- A deploy, a restart or another change is in progress. Wait for it to finish and
-  the button returns.
+- A deploy, a restart or another change is in progress (other than a queued
+  deploy, described just above). Wait for it to finish and the button returns.
 - The app is stopped. Start it first.
 
 ### If a rollback fails

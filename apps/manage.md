@@ -1,7 +1,7 @@
 ---
 title: What does each button on my app page do?
 description: "Every control on a deployed app in the PivoCloud console, in the order the console shows them, with what each one does and what each one does to your bill before you press it. Plus the two separate places your logs appear."
-last_verified: 2026-10-23
+last_verified: 2026-10-29
 ---
 
 ## Manage your app
@@ -91,6 +91,19 @@ the dialog says the same thing where you press the button.
 What happens straight away is the resource limits. A running app restarts
 briefly to take up the new ones, so expect a few seconds of downtime. A stopped
 app records the new plan and takes up its limits the next time you start it.
+
+### While your deploy is queued
+
+When your app's own deploy shows `Queued` (see
+[reading the deployment history](/apps/deploy)), stop, start, restart, change plan,
+saving variables and rolling back are unavailable. The buttons are greyed out and
+each one says why when you point at it. They come back once that deploy has run.
+Your inputs on the `Environment` tab stay editable, only the save waits.
+
+If you press one before the page has caught up, the console refuses it with a
+sentence that names the action. Those sentences are listed on
+[why did my deploy fail](/apps/troubleshooting), under the heading about a queued
+deploy. A plan change is the one exception: it is accepted rather than refused.
 
 ### Delete
 

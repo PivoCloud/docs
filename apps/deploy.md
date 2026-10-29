@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-10-23
+last_verified: 2026-10-29
 ---
 
 ## Deploy your first app
@@ -330,6 +330,26 @@ problem and deploy again.
 Because the list shows only the 10 most recent deployments, a live deployment
 older than those has no `Live` row in the list. The card above the history still
 names the commit your app runs now.
+
+### When a deploy says Queued
+
+Sometimes a deploy does not start building the moment you press the button. Its
+status badge and its row in the history read `Queued`, and the build console
+shows one line:
+
+```
+Queued, waiting for a build slot. Your build starts automatically, and its time limit starts only then.
+```
+
+You do not need to do anything. The build starts on its own as soon as a build slot
+is free, and the build time limit counts from the moment the build starts, not from
+the moment you pressed the button. Waiting in the queue does not use any of it.
+The console gives no position and no estimate, because neither is promised.
+
+While your app's own deploy is queued, a few other buttons on the app are
+unavailable and say why. They come back once that deploy has run. See
+[what each button does](/apps/manage) and, for the messages,
+[why did my deploy fail](/apps/troubleshooting).
 
 ### If the first deploy fails
 
