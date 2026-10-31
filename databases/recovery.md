@@ -1,7 +1,7 @@
 ---
 title: How do I get my data back
 description: "What PivoCloud keeps of your PostgreSQL database, how to take a backup or an export yourself, how to download and check an export, what a restore really produces and what it costs, how far back each plan lets you go, and what survives losing the machine."
-last_verified: 2026-10-17
+last_verified: 2026-10-29
 ---
 
 ## Backups, exports and restores
@@ -267,6 +267,37 @@ moments a backup happened to be taken.
 The self-serve restore described above is a different thing. It restores a
 backup, so it takes you to the moment that backup was taken, and it is
 available on every plan.
+
+## The weekly restore drill {#weekly-restore-drill}
+
+PivoCloud tests its own restores, and pivocloud.com shows the result. This
+section says what the test does, what a pass shows and does not show, and what
+each state of the line on pivocloud.com means.
+
+### What the drill does
+
+The drill restores a database archive into a separate copy and checks that it
+replays to a chosen point. Each datacenter does this every day for a database
+that PivoCloud owns. That database uses the same backup path as customer
+databases. The drill also runs every week for customer databases on the plans
+that archive continuously.
+
+### What a pass shows, and what it does not
+
+A pass shows that the archive can be replayed.
+It does not mean your own database was restored, and it does not test switching
+your app over. To keep your own copy, take an export yourself, as described
+above.
+
+### What the line on pivocloud.com means
+
+- **Passed in both datacenters.** The latest result in each datacenter passed.
+  The date shown is the older of the two.
+- **Did not pass.** At least one latest result failed and the team has been
+  alerted. The date shown is the date of that failure, or the older failure when
+  both failed. It is never the date of a pass.
+- **No line.** The latest result is older than 10 days or could not be read. The
+  page never shows an older pass in its place.
 
 ## When a database, a backup or an export fails
 
