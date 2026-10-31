@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-10-29
+last_verified: 2026-10-30
 ---
 
 ## What the red panel shows
@@ -375,6 +375,51 @@ The other build messages, about starting the build or sending your code to it,
 are on PivoCloud's side, and the panel treats them that way. They are under
 `PivoCloud has no recorded cause`, with the advice to redeploy once.
 
+**If your app has no Dockerfile.** PivoCloud builds some apps without a Dockerfile.
+Only some machines do this for now, so you may never see what follows. On such a
+build, the first line of the build log reads `Building with Railpack`, then the
+version PivoCloud uses, then `, because this app has no Dockerfile in its root directory.`
+
+If the build log ends with one of these two sentences, PivoCloud could not tell how
+to build or start your app:
+
+```text
+PivoCloud could not tell what language or framework this app uses, so it cannot build it without a Dockerfile. Add a Dockerfile, or add a start command in a Procfile or in railpack.json. See https://docs.pivocloud.com/apps/deploy-without-a-dockerfile
+```
+
+```text
+PivoCloud recognised this app but could not find how to start it. Add a start command in a Procfile or in railpack.json, or add a Dockerfile. See https://docs.pivocloud.com/apps/deploy-without-a-dockerfile
+```
+
+A third sentence says your `railpack.json` asks for build secrets, which PivoCloud
+does not support:
+
+```text
+Your railpack.json lists build secrets, and PivoCloud does not support build secrets. Remove them from railpack.json, or add a Dockerfile, then redeploy.
+```
+
+For all three the red panel reads:
+
+```text
+PivoCloud could not build this app without a Dockerfile, because it could not tell how to build or start it.
+```
+
+```text
+Read the last line of the build logs. Add a Dockerfile, or a start command in a Procfile or in railpack.json, then use Redeploy.
+```
+
+Two more sentences are on PivoCloud's side, not yours, and your code does not need
+to change. Redeploy once. If the same sentence comes back, contact PivoCloud
+support:
+
+```text
+PivoCloud could not analyse your repository because of a temporary problem on its side. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
+```text
+PivoCloud cannot build an app without a Dockerfile on this machine right now. This is on PivoCloud's side. Redeploy to try again. If the same message comes back, contact PivoCloud support.
+```
+
 ### The build ran out of time {#build_timeout}
 
 The red panel names the limit your build was held to:
@@ -444,6 +489,67 @@ The container started but your app did not respond on its port. PivoCloud sets n
 The port PivoCloud probes is the one your Dockerfile declares with `EXPOSE`.
 Your container started and PivoCloud could not reach your app on that port.
 
+**What counts as started.** PivoCloud asks your app for its home page (`/`), using
+your app's own public address as the host name, and it does not follow redirects.
+Any answer below 500 counts as started: a page, a redirect, a login screen, even a
+404 or a 401. An answer of 500 or more, or no answer at all, does not. So a
+Django or Laravel app that refuses unknown host names is judged on the answer a
+visitor gets, and an app that redirects every request to `https` is judged on the
+redirect.
+
+**When the deploy goes live on a 4xx answer.** If your home page answers with a
+status from 400 to 499, PivoCloud puts the deploy live and writes one warning line
+in the deploy log, so a page that is missing is not silent. The numbers in the
+examples on this page are examples; your log shows your own app's values.
+
+```text
+Your app answered with HTTP 404 on its home page (/). PivoCloud put it live, because only an answer of 500 or more stops a deploy. Check that your app serves its pages.
+```
+
+If the 404 is not what you meant, check that your app serves a page at `/`, then
+redeploy.
+
+**When the deploy fails, the last line says why.** The build log ends with one of
+these sentences, each naming what PivoCloud saw. The first three are for every app.
+They carry numbers that are examples here.
+
+If your app answered with an error status, the app is running and listening, and
+the fix is in the app, not in its port:
+
+```text
+Your app answered with HTTP 500 on port 8080, so it is listening, but it returned an error. Open the app's logs to find the error, fix it, then redeploy.
+```
+
+If your app stopped before it answered, the problem is in how it starts:
+
+```text
+Your app stopped with exit code 137 before it answered, so the problem is in how it starts, not in its port. Open the app's logs to see why it stopped, then redeploy.
+```
+
+If your app is listening, but on a port other than the one PivoCloud asked on, the
+sentence names both. For an app built from a Dockerfile it points at the first
+`EXPOSE` line:
+
+```text
+Your app did not answer on port 8080, but it is listening on port 3000. Change the first EXPOSE line of your Dockerfile to 3000, or make your app listen on port 3000, then redeploy.
+```
+
+When PivoCloud saw no listening port at all for a Dockerfile app, you get the long
+sentence quoted above.
+
+**If you see a sentence about the Listen port or the PORT variable.** Only some
+machines build apps that have no Dockerfile, so you may never see these two. They
+are the same answers for such an app, which has a Listen port setting instead of an
+`EXPOSE` line:
+
+```text
+Your app did not answer on port 8080, but it is listening on port 3000. Set Listen port to 3000 in the app's settings, or make your app listen on the PORT variable, then redeploy.
+```
+
+```text
+Your app started but did not answer on port 8080. Make sure it listens on all interfaces (0.0.0.0), on the port in the PORT variable, then redeploy.
+```
+
 That is a contract with a few sharp edges: which `EXPOSE` line is read, what
 happens when there is no `EXPOSE` line at all, and why `ENV PORT` in the
 Dockerfile makes things worse. All of it is on
@@ -461,6 +567,40 @@ state of your app, for example on an attempt made before this was recorded.
 is not certain, and asking again later may give a better one. If PivoCloud
 recorded that your app had exited at the start check, the answer is
 [the app exited right after it started](#crashed_on_start) instead of this one.
+
+### If you see a line about APP_KEY in the deploy log of a Laravel app
+
+A Laravel app cannot start without an `APP_KEY` variable. When your Laravel app
+has none, PivoCloud makes one the first time the app is deployed and saves it in the
+app's variables, so you do not have to type it. The deploy log tells you what
+happened, in one of three lines.
+
+```text
+PivoCloud created an APP_KEY for this Laravel app and saved it in the app's variables. It will not change on later deploys.
+```
+
+This is the normal first deploy. You do not have to do anything. You can see the
+variable in the app's variables, and the history shows that PivoCloud wrote it.
+Laravel uses the key to encrypt sessions and other saved data, so keep it. If you
+want your own key, set `APP_KEY` yourself and PivoCloud will never replace it.
+
+```text
+This Laravel app has no APP_KEY. PivoCloud created one before and does not create a second, because a new key makes data saved with the old one unreadable. Add APP_KEY back in the app's variables.
+```
+
+Someone deleted the `APP_KEY` variable after PivoCloud made it. PivoCloud does not
+make a second key, because anything saved with the first one would stop working.
+Add `APP_KEY` back in the app's variables with the value you had, then redeploy.
+If you have no copy of it, set a new key yourself, knowing that sessions and data
+encrypted with the old key cannot be read again.
+
+```text
+PivoCloud could not create an APP_KEY for this Laravel app during this deploy. Add APP_KEY in the app's variables, or redeploy later.
+```
+
+PivoCloud could not make the key this time, and the deploy went on without it. A
+Laravel app with no key answers with an error, so the start check may fail after
+this line. Redeploy to try again, or add `APP_KEY` in the app's variables yourself.
 
 ## What PivoCloud writes in your deploy log
 
@@ -512,8 +652,8 @@ The first means nothing answered on that port yet:
 Your app did not answer on port 3000 yet (attempt 3, 40 s left).
 ```
 
-The second means your app did answer, but with a status that is not a success or a
-redirect, so a status outside the 200 to 399 range:
+The second means your app did answer, but with an error status, a status of 500 or
+more. Any answer below 500 counts as started:
 
 ```text
 Your app answered on port 3000 with HTTP status 500 instead of a success status (attempt 3, 40 s left).

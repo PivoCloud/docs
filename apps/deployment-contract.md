@@ -1,7 +1,7 @@
 ---
 title: What your repository needs
 description: "The six rules a repository must meet for PivoCloud to build and run it: a Dockerfile, the EXPOSE port contract, binding 0.0.0.0, one HTTP port per app, explicit migrations, and an ephemeral filesystem."
-last_verified: 2026-09-07
+last_verified: 2026-10-30
 ---
 
 ## The deployment contract
@@ -59,6 +59,13 @@ app.listen(port, "0.0.0.0");
 Do not hardcode a value that differs from `EXPOSE`, and do not set `ENV PORT`
 in the Dockerfile: a variable baked into the image is one more place for the
 two numbers to drift apart.
+
+**What PivoCloud counts as your app answering.** PivoCloud asks your app for its
+home page (`/`) on that port, with your app's own public address as the host name,
+and it does not follow redirects. Any answer below 500 counts as started, a 404 or
+a redirect included. An answer of 500 or more, or no answer, makes the deploy fail.
+If your app answers with a 4xx, the deploy goes live and the deploy log carries a
+warning line naming the status.
 
 Three consequences are worth knowing before your first deploy:
 

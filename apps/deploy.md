@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-10-29
+last_verified: 2026-10-30
 ---
 
 ## Deploy your first app
@@ -27,6 +27,13 @@ number is the portable way to write it, because other hosts do set the variable:
 const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0");
 ```
+
+**What counts as started.** After the container starts, PivoCloud asks your app
+for its home page (`/`) on that port, with your app's own public address as the
+host name, and it does not follow redirects. Any answer below 500 counts, a 404
+or a redirect included. An answer of 500 or more, or no answer, makes the deploy
+fail. If your app answers with a 4xx, the deploy goes live and the deploy log
+carries a warning that names the status.
 
 **Bind `0.0.0.0`, not `localhost`.** A server bound to `127.0.0.1` inside a
 container is reachable by nothing outside it.

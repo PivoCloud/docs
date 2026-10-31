@@ -1,7 +1,7 @@
 ---
 title: How do I set environment variables for my app?
 description: "Paste a .env file into the PivoCloud console, see which five key names are refused and why, what the console keeps from your file and what it drops, what saving actually changes, how to see who changed a variable and undo a change, and how your running app reads the values."
-last_verified: 2026-10-17
+last_verified: 2026-10-30
 ---
 
 ## Environment variables
@@ -111,10 +111,23 @@ breaks your app in a way that is hard to read from the outside: an entrypoint
 that cannot find its binaries, or a home directory that does not exist.
 
 `PORT` is the fifth, and it is the one that surprises people. **The name is
-reserved, and PivoCloud does not set a value for it.** Your app has to listen on
-the port your image declares with `EXPOSE`. That contract, and the one-line
-pattern that keeps the same image portable to other hosts, is on
+reserved, and PivoCloud does not set a value for an app built from a
+Dockerfile.** PivoCloud reads the first `EXPOSE` line in your Dockerfile and
+probes your app on that port, so that is the port your app has to listen on. The
+name stays reserved so that saving a variable can never move the port a running
+app is reached on. That contract, and the one-line pattern that keeps the same
+image portable to other hosts, is on
 [what your repository needs](/apps/deployment-contract).
+
+### A key can appear only once
+
+A duplicate key, the same key twice in one save, is refused. In `.env text` mode the console
+points at the second one, for example `API_KEY is already set on line 3.` In the
+`Editor`, and when the request is checked on PivoCloud's side, the message is
+`Each key may appear only once.` Keys are compared exactly, so `API_KEY` and
+`api_key` are different names (the second is refused for another reason, see
+below). Delete one of the two rows, or merge their values by hand, and save
+again.
 
 ### A lowercase key is refused for a different reason
 
