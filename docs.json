@@ -31,7 +31,7 @@
       },
       {
         "group": "Billing",
-        "pages": ["billing/credit-and-charges"]
+        "pages": ["billing/credit-and-charges", "billing/card-payment"]
       },
       {
         "group": "API",

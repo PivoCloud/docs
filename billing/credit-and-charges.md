@@ -1,7 +1,7 @@
 ---
 title: What does it cost, and when am I charged?
 description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, where to find the price of every app plan and database tier, when a charge happens and how long a paid period runs, what the 31 December 2026 promise covers, and what happens if your balance runs out."
-last_verified: 2026-10-28
+last_verified: 2026-11-01
 ---
 
 ## Credit and charges
@@ -42,17 +42,23 @@ email. While the offer is available, the same card carries `Claim Again`.
 
 ### Adding credit
 
-Credit is added by transfer to our CCP account, by BaridiMob or in person at a
-post office, and a person at PivoCloud approves it. No part of that approval is
-automatic.
+There are three ways to add credit: a transfer to our CCP account by BaridiMob,
+a transfer in person at a post office, and, when it is offered in your console,
+a card payment. The two transfers are approved by a person at PivoCloud. The
+card payment is not: the credit is added automatically as soon as the payment is
+confirmed. The card steps, and what to do when the result says still confirming
+or card payment is unavailable, are on
+[how do I pay by card](/billing/card-payment).
 
-Three of the four steps are yours.
+The rest of this section is about the transfer. Three of its four steps are
+yours.
 
 1. Open `Wallet` and press `Top Up`. The dialog is titled `Top Up Wallet`.
    Choose one of the `Quick amounts` or type your own figure into
    `Custom amount (DA)`. The smallest amount you can ask for is 100 DA and the
    largest is 10,000,000 DA.
-2. Press `Request Top-Up`. The dialog moves to a second step titled
+2. If the window shows `How do you want to pay?`, choose `Bank transfer to our
+   CCP account`. Then press `Request Top-Up`. The dialog moves to a second step titled
    `Payment instructions`, which shows you three things: the account
    to pay, the `Amount` to send, and a `Payment Reference` to quote on the
    transfer. Send that exact amount and quote that reference. PivoCloud does not
