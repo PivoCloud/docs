@@ -173,6 +173,10 @@ serving and your app never goes down. The swap takes seconds rather than the
 minutes an image build takes, so if you were watching for a build log, there
 will not be one.
 
+If your app showed `Failed` because its last deploy did not start, a save that
+brings the new container up and healthy shows the app as `Running` again, with
+its public address.
+
 **A save that changes nothing does nothing.** If your text matches what is
 already stored, the button reads `No changes to save` and no container is
 touched. Reopening the panel and saving again is safe.
