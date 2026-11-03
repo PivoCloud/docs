@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-10-30
+last_verified: 2026-11-02
 ---
 
 ## What the red panel shows
@@ -1706,7 +1706,7 @@ What this means for you:
 
 - Your previous version keeps running. Nothing about the app changed.
 - Nothing was charged for this push.
-- Your billing history shows an insufficient balance row for the app.
+- The `Billing` page shows a `Charge failed: not enough credit` row for the app.
 - PivoCloud does not send you an email about it.
 
 **What to do:** open your wallet and add credit. Then push again, or press

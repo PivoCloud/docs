@@ -1,7 +1,7 @@
 ---
 title: What does it cost, and when am I charged?
 description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, where to find the price of every app plan and database tier, when a charge happens and how long a paid period runs, what the 31 December 2026 promise covers, and what happens if your balance runs out."
-last_verified: 2026-11-01
+last_verified: 2026-11-02
 ---
 
 ## Credit and charges
@@ -158,6 +158,59 @@ app does to your bill, control by control, is on
 [what does each button on my app page do](/apps/manage). What happens to a
 charge when a deploy fails, including the part of your history that looks wrong
 and is not, is on [why did my deploy fail](/apps/troubleshooting).
+
+### Your billing history
+
+The `Billing` page lists every charge, refund and top-up on your account, newest
+first. At the top it shows your current balance, as it is today. Below it,
+`Charges and top-ups` holds the list, 50 rows to a page, with `Previous` and
+`Next` under it.
+
+Each row has a date, a description and an amount. Money in and money out are
+told apart three ways, so you never have to rely on colour alone: money in has a
+plus sign, an arrow pointing down and green text, and money out has a minus sign
+and an arrow pointing up. A row where no money moved shows `0 DA` with a dash
+icon and does not change your balance.
+
+| Row label | What it means |
+| --- | --- |
+| App charge, first 30 days | The first deploy of an app opened its first paid period. |
+| App renewal, 30 days | An app renewed for another 30 days. |
+| App refund | A deploy failed, so the charge it made was returned. |
+| Database charge, first 30 days | A database was created and its first paid period was charged. |
+| Database renewal, 30 days | A database renewed for another 30 days. |
+| Database refund | The charge for a database was returned. |
+| Top-up by transfer | Credit added by a transfer to our CCP account, once a person at PivoCloud approved it. |
+| Top-up by card payment | Credit added by a card payment. |
+| Top-up bonus | The bonus that came with a top-up. |
+| Free credit | Your starting credit claim was approved. |
+| Balance adjustment by PivoCloud | A correction made by PivoCloud, with the note we left for you. |
+| App charge, 30 days | An app was charged for a paid period that is neither its first nor a renewal of the one before. |
+| Database charge, 30 days | A database was charged for a paid period that is neither its first nor a renewal of the one before. |
+| Renewal failed: not enough credit | A renewal needed more than your balance. Nothing was taken. |
+| Charge failed: not enough credit | A charge, for example a deploy from a push, needed more than your balance. Nothing was taken. |
+| Renewal failed: a problem on our side | A renewal did not go through because of a problem on the PivoCloud side, not because of your balance. Nothing was taken. |
+| Charge failed: a problem on our side | A charge did not go through because of a problem on the PivoCloud side, not because of your balance. Nothing was taken. |
+| Account activity | An entry this page has no specific wording for. |
+
+Rows where no money moved carry a short label saying why: `Waiting for approval`
+for a top-up or a starting credit claim a person at PivoCloud has not reviewed
+yet, `Rejected` or `Not approved` for one that was turned down, and
+`Not charged` for a charge that did not go through. A top-up that is waiting
+shows `0 DA` because nothing has been added yet. When it is approved, the
+credited amount shows on its own row.
+
+A `Top-up bonus` row sits just under the top-up that earned it, indented, and
+says which top-up it came with.
+
+When an app or a database has been deleted, its rows stay in your history and
+keep the name it had, with a `Deleted` label beside it.
+
+The balance at the top is today's balance. The list does not show a running
+balance row by row, so it is not a statement you can read down and re-add to the
+dinar. In particular, database creation and restore charges appear in the
+history from November 2026, so a database created before then shows its
+renewals but not its creation charge.
 
 ### What an app plan or a database tier costs
 
