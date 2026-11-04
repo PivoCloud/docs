@@ -15,6 +15,7 @@
         "group": "Apps",
         "pages": [
           "apps/deployment-contract",
+          "apps/deploy-without-a-dockerfile",
           "apps/symlinks",
           "apps/connect-github",
           "apps/deploy",

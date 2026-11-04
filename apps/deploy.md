@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-10-30
+last_verified: 2026-11-04
 ---
 
 ## Deploy your first app
@@ -9,8 +9,14 @@ last_verified: 2026-10-30
 ### What the platform enforces
 
 PivoCloud builds the Dockerfile in your repository, reads the first `EXPOSE`
-line in it, and probes your app on that port. There is no build detection and no
+line in it, and probes your app on that port. With a Dockerfile there is no
 framework guessing: the runtime is whatever your base image pins.
+
+If the app's root directory has no Dockerfile and no Dockerfile path is set,
+PivoCloud detects a Laravel, Node, Python or Go app and builds it for you. For
+that app `PORT` is `8080`, or the `Listen port` you set. The details and the
+limits are in
+[Can I deploy without a Dockerfile](/apps/deploy-without-a-dockerfile).
 
 Three facts follow from that, and between them they account for almost every
 first deploy that fails.

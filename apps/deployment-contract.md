@@ -1,7 +1,7 @@
 ---
 title: What your repository needs
-description: "The six rules a repository must meet for PivoCloud to build and run it: a Dockerfile, the EXPOSE port contract, binding 0.0.0.0, one HTTP port per app, explicit migrations, and an ephemeral filesystem."
-last_verified: 2026-10-30
+description: "The six rules a repository must meet for PivoCloud to build and run it with a Dockerfile: a Dockerfile, the EXPOSE port contract, binding 0.0.0.0, one HTTP port per app, explicit migrations, and an ephemeral filesystem."
+last_verified: 2026-11-04
 ---
 
 ## The deployment contract
@@ -12,11 +12,15 @@ first two.
 
 ### 1. A Dockerfile
 
-PivoCloud builds from your Dockerfile. There is no build auto-detection, no
-buildpack, and no framework guessing.
+This page describes the Dockerfile path: PivoCloud builds from your Dockerfile
+and never guesses at it. A repository with no Dockerfile can also be built for
+you, for a Laravel, Node, Python or Go app. That way is described in
+[Can I deploy without a Dockerfile](/apps/deploy-without-a-dockerfile). A
+Dockerfile always wins: if one is there, it is the one that is built.
 
-This is deliberate, and it is the answer to "which Node/Python/Go versions do
-you support": **whichever your base image pins.** The runtime is yours to
+With a Dockerfile, this is deliberate, and it is the answer to "which
+Node/Python/Go versions do you support": **whichever your base image pins.** The
+runtime is yours to
 choose, not ours to bless, so nothing breaks under you when we upgrade.
 
 By default it builds a file named `Dockerfile` at the root of the repository.
@@ -45,6 +49,11 @@ wording, in both of the forms this failure takes.
 **PivoCloud does not set a `PORT` environment variable.** It reads the first
 `EXPOSE` line in the Dockerfile it builds, and probes your app on that port, so
 that is the port your process has to be listening on.
+
+An app built without a Dockerfile is different. For that app PivoCloud sets
+`PORT` to `8080`, or to the `Listen port` you set in the build settings, and the
+app must listen on it, on all interfaces. See
+[Can I deploy without a Dockerfile](/apps/deploy-without-a-dockerfile).
 
 Write it so the same image is correct everywhere. Read `PORT` if something set
 it, because Render, Railway and Heroku all do, and fall back to the value you

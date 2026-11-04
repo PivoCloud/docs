@@ -1,7 +1,7 @@
 ---
 title: Can my repository contain symlinks?
 description: "Yes. PivoCloud builds your repository the way docker build does on your own computer: symlinks stay links, special files are skipped, .dockerignore is applied, and files in the image belong to root unless you say otherwise."
-last_verified: 2026-10-15
+last_verified: 2026-11-04
 ---
 
 ## Can my repository contain symlinks?
@@ -21,7 +21,9 @@ the image with the same target you committed. PivoCloud does not open a link and
 does not copy what it points to into the build.
 
 Your Dockerfile can then use them like any other path, for example with
-`COPY . /app`.
+`COPY . /app`. The same holds when your repository has no Dockerfile and
+PivoCloud builds it for you: a link is never followed to a file outside your
+repository.
 
 ### A link that points outside your repository
 
