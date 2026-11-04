@@ -1,7 +1,7 @@
 ---
 title: How do I pay by card?
 description: "How to add credit to your PivoCloud balance with a CIB or Edahabia card: the steps in the Top Up window, what you see when you come back from the payment page, what to do when the result says still confirming, what to do when card payment is unavailable, and whether PivoCloud adds a fee."
-last_verified: 2026-11-01
+last_verified: 2026-11-04
 ---
 
 ## How do I pay by card?
@@ -48,6 +48,40 @@ you one of these things.
   section.
 - `We cannot find this payment`: the link does not match any card payment. If you
   paid, check the `Wallet` page, or contact support.
+
+### Your receipt
+
+When the payment is accepted and you are signed in, the result page shows a
+`Payment receipt` under the result. It has four blocks:
+
+- who issued it: PivoCloud's company name, address and tax identifiers
+- who it was received from: your name and the email address of your account
+- the payment: the order number, the payment reference, the date and time the
+  payment was confirmed in Algiers time, and the card line, which reads `CIB or
+  Edahabia` today. The payment reference reads `Not recorded` today, so
+  quote the order number when you contact us about a payment
+- the amounts: the amount paid by card, any bonus on its own line (it says
+  `Added by PivoCloud. Not charged to your card.`), and the credit added to your
+  wallet
+
+It ends with `This receipt is not an invoice.` Press `Print` to print the
+receipt alone, or `Download PDF` to save the same receipt as a file.
+
+We also send the receipt once by email, with the PDF attached, to the email
+address of the account that paid. Payments made before receipts were introduced
+have no receipt email. Reopening a receipt from your billing history is not
+available, so keep the email or the PDF.
+
+#### If the receipt email does not arrive
+
+The email usually arrives within a few minutes. If our mail is failing, we try
+again for up to about a day. There is no button to send it again. While the
+result page is still open, press `Download PDF` or `Print` to keep your copy.
+After you close it, contact support and give us the date, the time and the
+amount of the payment.
+
+If you are not signed in on that page, it does not show the receipt. It tells
+you the receipt was sent by email.
 
 ### If the result says still confirming
 
@@ -97,3 +131,5 @@ PivoCloud adds no fee. You are credited the full amount you paid, in DA.
 
 A test payment never adds credit. If a page tells you that a payment was a test
 payment, no money was taken and your balance did not change.
+A test payment's receipt says `TEST`, and its credit line reads `0 DA`. No credit
+was added.

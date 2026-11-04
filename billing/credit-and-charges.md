@@ -1,7 +1,7 @@
 ---
 title: What does it cost, and when am I charged?
 description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, where to find the price of every app plan and database tier, when a charge happens and how long a paid period runs, what the 31 December 2026 promise covers, and what happens if your balance runs out."
-last_verified: 2026-11-02
+last_verified: 2026-11-03
 ---
 
 ## Credit and charges
@@ -199,6 +199,22 @@ yet, `Rejected` or `Not approved` for one that was turned down, and
 `Not charged` for a charge that did not go through. A top-up that is waiting
 shows `0 DA` because nothing has been added yet. When it is approved, the
 credited amount shows on its own row.
+
+Every card payment you start is one row, labelled `Top-up by card payment`,
+including the ones that did not end in a payment. The outcome is shown as a tag
+on the row.
+
+| Tag | What it means |
+| --- | --- |
+| Accepted | The payment was confirmed and the credit was added. |
+| Refused | The card payment did not go through. The row may show the reason given by the payment partner. |
+| Cancelled | The payment was cancelled, or you left the payment page without paying. |
+| Still confirming | We do not have the result yet. |
+| TEST | A test payment. No money was taken. |
+
+Only an `Accepted` row moves money. The other rows show `0 DA` and are not
+counted in your balance. A `Still confirming` row changes to its result once the
+payment is confirmed.
 
 A `Top-up bonus` row sits just under the top-up that earned it, indented, and
 says which top-up it came with.
