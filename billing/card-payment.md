@@ -44,6 +44,9 @@ you one of these things.
   after a few minutes.
 - `Payment cancelled`: you left the payment page without paying. Your balance was
   not credited.
+- If you leave the payment page with its `Return to Merchant` link, you land on
+  the PivoCloud home page and your balance was not charged. Open `Wallet` to try
+  again.
 - `Confirming your payment`: we do not have the answer yet. See the next
   section.
 - `We cannot find this payment`: the link does not match any card payment. If you
