@@ -1,7 +1,7 @@
 ---
 title: How do I connect to my database
 description: "The connection string PivoCloud gives you for a PostgreSQL database, the setting each client library needs before it accepts that string, what those settings encrypt and what they do not verify, how to pin your database's certificate, and how to turn on pgvector."
-last_verified: 2026-09-09
+last_verified: 2026-11-05
 ---
 
 ## Connecting to your PostgreSQL database

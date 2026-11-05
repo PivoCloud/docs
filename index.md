@@ -1,7 +1,7 @@
 ---
 title: How do I start using PivoCloud?
-description: "Sign up, verify your email, complete your profile and claim the starting credit when it is offered, then follow three steps to a running app: check your repository, connect GitHub, deploy it."
-last_verified: 2026-09-26
+description: "Sign up, verify your email, complete your profile and claim the starting credit when it is offered, then follow three steps to a running app: check your repository, connect GitHub, deploy it. Or start with a database: create it, copy the connection string, connect."
+last_verified: 2026-11-05
 ---
 
 ## Get started
@@ -89,3 +89,23 @@ database URLs or any other configuration, set them as environment variables on
 the app before or after the first deploy; changing one replaces the container,
 so the new value is live within a deploy.
 See [deploying your first app](/apps/deploy).
+
+### Starting with a database instead
+
+If you came for a PostgreSQL database and not for an app, steps 1 to 3 above
+still apply: sign up, verify the email, and add credit to your wallet. A database
+is paid from the wallet, so it needs credit before it can be created.
+
+Then:
+
+1. Open `Databases` in the console and select `Create Database`. The first time,
+   the page offers `Create a Database` instead.
+2. Pick a tier. What each tier costs per month is on
+   [what does it cost, and when am I charged](/billing/credit-and-charges).
+3. Open the new database and find the `Connection` section. Under
+   `External connection string`, use `Reveal` and then `Copy`.
+4. Paste the string into your client. Some client libraries need one setting
+   changed before they accept it, so read
+   [how do I connect to my database](/databases/connect) for yours.
+
+Backups and restores are covered in [recovery](/databases/recovery).
