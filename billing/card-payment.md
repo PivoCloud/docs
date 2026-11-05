@@ -1,7 +1,7 @@
 ---
 title: How do I pay by card?
-description: "How to add credit to your PivoCloud balance with a CIB or Edahabia card: the steps in the Top Up window, what you see when you come back from the payment page, what to do when the result says still confirming, what to do when card payment is unavailable, and whether PivoCloud adds a fee."
-last_verified: 2026-11-04
+description: "How to add credit to your PivoCloud balance with a CIB or Edahabia card: the steps in the Top Up window, what you see when you come back from the payment page, what to do when the result says still confirming, how to cancel a card payment you did not finish, what to do when card payment is unavailable, and whether PivoCloud adds a fee."
+last_verified: 2026-11-05
 ---
 
 ## How do I pay by card?
@@ -45,8 +45,9 @@ you one of these things.
 - `Payment cancelled`: you left the payment page without paying. Your balance was
   not credited.
 - If you leave the payment page with its `Return to Merchant` link, you land on
-  the PivoCloud home page and your balance was not charged. Open `Wallet` to try
-  again.
+  the PivoCloud home page and your balance was not charged. Open `Wallet` and
+  press `Top Up`. If the window says you have a card payment in progress, press
+  `Cancel it and start again`, then pay again.
 - `Confirming your payment`: we do not have the answer yet. See the next
   section.
 - `We cannot find this payment`: the link does not match any card payment. If you
@@ -108,8 +109,7 @@ unavailable right now. Pay by BaridiMob instead, or try again later.`
 
 If you press `Pay by card` at the moment it stops working, you see `Nothing was
 charged. Pay by BaridiMob instead, or try again later. If the window then says
-you have a card payment in progress and gives no link, do not pay again. Pay by
-BaridiMob, or contact support.`
+you have a card payment in progress, you can cancel it and start again.`
 
 In both cases you can choose the bank transfer option in the same window and pay
 by BaridiMob. You can also try card again later.
@@ -121,10 +121,25 @@ card payments you can start per hour. Try again later, or pay by bank transfer.
 
 ### If the window says you have a card payment in progress
 
-This means a card payment was started and is not finished. If you still have its
-payment page, finish it there. If the window gives no link, do not pay again.
-Pay by BaridiMob, or contact support and give us the date, the time and the
-amount.
+This means a card payment was started and is not finished. For example, you left
+the payment page without paying. You can start only one card payment at a time.
+The window shows three buttons.
+
+- `Continue this payment`: opens the payment page again, so you can finish it.
+  This button is shown when the payment page is still available.
+- `Check again`: asks our payment partner for the latest result. Use it if you
+  think you already paid.
+- `Cancel it and start again`: gives up the unfinished payment. The message goes
+  away and you can pay again. Complete the robot check once more, then press
+  `Pay by card`.
+
+If you already paid, press `Cancel it and start again` anyway. We ask our
+payment partner first. When the payment went through, your balance is credited
+once and the window tells you so. We do not cancel a payment that was made.
+
+If you cancel a payment and our payment partner confirms it later, your balance
+is still credited once. You do not need to contact anyone. Each new card payment
+counts toward the hourly limit of card payments.
 
 ### Fees
 
