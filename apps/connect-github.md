@@ -1,7 +1,7 @@
 ---
 title: How do I connect GitHub to PivoCloud?
 description: "Install the PivoCloud GitHub App, see exactly which repositories PivoCloud can read and why, including private and organisation-owned ones, and change that set from GitHub whenever you need to."
-last_verified: 2026-09-23
+last_verified: 2026-11-06
 ---
 
 ## Connect GitHub
@@ -102,6 +102,11 @@ worth alarming anyone about. The practical reading is simple: if you expected to
 be connected and you are looking at that button, you are not connected. Install
 the App again from it.
 
+That is the create page. The edit page of an app that was connected is different:
+if the installation was removed or suspended, it shows `GitHub disconnected`
+and says to reconnect the GitHub App to redeploy. The app still saves with its
+stored connection, so you can change its settings without reconnecting first.
+
 ### Disconnecting
 
 `Disconnect` sits on the `GitHub App` card. The confirmation asks
@@ -113,6 +118,11 @@ So disconnecting is not a way to take an app down. Anything already deployed
 keeps serving traffic; what stops is PivoCloud's ability to read your code,
 which means no automatic deploy on push and no new build until you connect
 again.
+
+With GitHub disconnected, or access removed on the GitHub side, these still
+work: stop, start, restart, delete, environment variables, domains and rolling
+back to an earlier version. These do not: a new deploy and deploy on push. They
+need GitHub connected again, because they read your code.
 
 ### Where you actually pick the repository
 

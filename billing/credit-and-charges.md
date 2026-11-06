@@ -1,7 +1,7 @@
 ---
 title: What does it cost, and when am I charged?
 description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, where to find the price of every app plan and database tier, when a charge happens and how long a paid period runs, what the 31 December 2026 promise covers, and what happens if your balance runs out."
-last_verified: 2026-11-05
+last_verified: 2026-11-06
 ---
 
 ## Credit and charges
@@ -135,6 +135,11 @@ is still being served to you. A failed update never refunds a month you already
 paid for and were using. An app that failed after its paid month ended pays a
 new month on its next deploy or rollback.
 
+**A top-up that brings a suspended app back is refunded if the app then fails to
+start.** The top-up pays a new month for the app and starts it again. If the app
+cannot start and no version of it is running, the month it paid is returned to
+your balance. Your billing history shows an `App refund` row for it.
+
 **A database is charged when you create it.** There is no separate deploy step
 for a database, so the tier's monthly price leaves your balance at the moment
 the database is created.
@@ -183,7 +188,7 @@ icon and does not change your balance.
 | --- | --- |
 | App charge, first 30 days | The first deploy of an app opened its first paid period. |
 | App renewal, 30 days | An app renewed for another 30 days. |
-| App refund | A deploy failed, so the charge it made was returned. |
+| App refund | A deploy failed, or an app brought back by a top-up could not start, so the charge it made was returned. |
 | Database charge, first 30 days | A database was created and its first paid period was charged. |
 | Database renewal, 30 days | A database renewed for another 30 days. |
 | Database refund | The charge for a database was returned. |
