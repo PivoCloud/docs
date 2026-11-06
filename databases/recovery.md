@@ -1,7 +1,7 @@
 ---
 title: How do I get my data back
-description: "What PivoCloud keeps of your PostgreSQL database, how to take a backup or an export yourself, how to download and check an export, what a restore really produces and what it costs, how far back each plan lets you go, and what survives losing the machine."
-last_verified: 2026-10-29
+description: "What PivoCloud keeps of your PostgreSQL database, how to take a backup or an export yourself, how to download and check an export, what a restore really produces and what it costs, how far back each plan lets you go, and what happens to your databases if one of our datacenters is lost."
+last_verified: 2026-11-06
 ---
 
 ## Backups, exports and restores
@@ -239,21 +239,30 @@ Separately from both of those, a copy of your database is taken off the
 platform every 24 hours. What that copy protects is a different thing, and the
 next section is about it.
 
-### If the machine holding your database is lost
+### If one of our datacenters is lost {#datacenter-loss}
 
 The window above protects you against something that went wrong inside a
 database that is otherwise healthy: a bad migration, a delete without a where
 clause, an application writing nonsense for an hour. That is the common case
 and the window is the right answer to it.
 
-It is not what protects you against losing the machine your database runs on.
-The copy taken off the platform every 24 hours is what protects you against
-that, and in that situation it is the only thing that survives.
+Losing a whole datacenter is the other case. PivoCloud runs in two datacenters,
+and your databases come back in the other one. `Growth` and `Business`
+databases are archived continuously to our other datacenter and come back from
+that archive. On `Starter`, what we guarantee is the copy taken
+off the platform every 24 hours, so a datacenter loss can cost a `Starter`
+database at most those 24 hours. Continuous archiving to our other datacenter
+is what `Growth` and `Business` add.
 
-So your honest exposure to that second case is those 24 hours rather than the
-window your plan advertises. If you want it shorter than that for a particular
-moment, take your own export before you do anything risky and keep it
-somewhere else. That is the one lever you hold yourself.
+On every plan, that copy is also the outer limit: a datacenter loss never costs
+you more than those 24 hours.
+
+Your databases come back by themselves. An app that ran in the affected
+datacenter is not moved for you: deploy it again once its database is back.
+
+If you want your own exposure shorter than that for a particular moment, take
+your own export before you do anything risky and keep it somewhere else. That
+is the one lever you hold yourself.
 
 ### Restoring to a chosen moment
 
