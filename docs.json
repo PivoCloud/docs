@@ -40,7 +40,7 @@
       },
       {
         "group": "Agents",
-        "pages": ["agents/connect", "agents/manage", "agents/operate"]
+        "pages": ["agents/connect", "agents/manage", "agents/operate", "agents/orders"]
       },
       {
         "group": "API reference",

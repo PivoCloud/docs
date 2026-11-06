@@ -1,7 +1,7 @@
 ---
 title: What does it cost, and when am I charged?
 description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, where to find the price of every app plan and database tier, when a charge happens and how long a paid period runs, what the 31 December 2026 promise covers, and what happens if your balance runs out."
-last_verified: 2026-11-03
+last_verified: 2026-11-05
 ---
 
 ## Credit and charges
@@ -158,6 +158,13 @@ app does to your bill, control by control, is on
 [what does each button on my app page do](/apps/manage). What happens to a
 charge when a deploy fails, including the part of your history that looks wrong
 and is not, is on [why did my deploy fail](/apps/troubleshooting).
+
+**A database your AI agent ordered is charged only when you approve the order in
+the console with your password.** The charge is the tier's price at that moment,
+the same database charge as one you create yourself, and it appears in your
+billing history the same way. An agent never pays and cannot approve. A declined
+or expired order charges nothing. See
+[How does my AI agent order a database?](/agents/orders).
 
 ### Your billing history
 
