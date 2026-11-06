@@ -60,10 +60,11 @@ When the payment is accepted and you are signed in, the result page shows a
 
 - who issued it: PivoCloud's company name, address and tax identifiers
 - who it was received from: your name and the email address of your account
-- the payment: the order number, the payment reference, the date and time the
-  payment was confirmed in Algiers time, and the card line, which reads `CIB or
-  Edahabia` today. The payment reference reads `Not recorded` today, so
-  quote the order number when you contact us about a payment
+- the payment: the order number, the date and time the payment was confirmed in
+  Algiers time, and the card line, which reads `CIB or Edahabia` today. A
+  `Payment reference` line appears only when our payment partner sends a
+  reference of its own, which it does not today, so quote the order number when
+  you contact us about a payment
 - the amounts: the amount paid by card, any bonus on its own line (it says
   `Added by PivoCloud. Not charged to your card.`), and the credit added to your
   wallet
