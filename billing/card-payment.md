@@ -137,6 +137,10 @@ If you already paid, press `Cancel it and start again` anyway. We ask our
 payment partner first. When the payment went through, your balance is credited
 once and the window tells you so. We do not cancel a payment that was made.
 
+A card payment that you start and never finish closes by itself about a day after
+it was started. After that you can pay again. If our payment partner confirms the
+payment later, your balance is still credited once.
+
 If you cancel a payment and our payment partner confirms it later, your balance
 is still credited once. You do not need to contact anyone. Each new card payment
 counts toward the hourly limit of card payments.
