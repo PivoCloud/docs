@@ -4,9 +4,6 @@ description: "What an AI agent with the Operate level can restart, stop, start a
 last_verified: 2026-10-17
 ---
 
-{/* launch: remove this notice when restart, stop, start and env var changes for agents is deployed to production */}
-Restarting, stopping, starting and changing env vars from your agent is not open on PivoCloud yet. Your agent can already connect and read.
-
 ## What Operate allows
 
 An agent connected with the `Operate` level can do these things to an app you shared

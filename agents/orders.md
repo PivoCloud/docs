@@ -4,9 +4,6 @@ description: "How an AI agent orders a database for you with the Spend level: wh
 last_verified: 2026-11-05
 ---
 
-{/* launch: remove this notice when database orders for agents is deployed to production */}
-Ordering a database from your agent is not open on PivoCloud yet. Your agent can already connect and read.
-
 ## What an order is
 
 An order is a question your agent stores for you: "create this database, at this price".
