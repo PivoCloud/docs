@@ -1,7 +1,7 @@
 ---
 title: How do I roll my app back to the previous version?
 description: "Return your app to the version it ran before the current one from the deployment history, in one click and without a rebuild. What stays the same, what the next push does, when the button is missing, and what it costs."
-last_verified: 2026-10-29
+last_verified: 2026-11-07
 ---
 
 ## Rolling back to the previous version

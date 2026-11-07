@@ -1,7 +1,7 @@
 ---
 title: Can I deploy without a Dockerfile?
 description: "Deploy a Laravel, Node, Python or Go repository with no Dockerfile: when PivoCloud builds it for you, the port, start commands and language versions, how Laravel gets its key and database, and the limits you should know before you start."
-last_verified: 2026-11-04
+last_verified: 2026-11-07
 ---
 
 ## Deploy without a Dockerfile

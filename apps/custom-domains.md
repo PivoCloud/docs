@@ -1,7 +1,7 @@
 ---
 title: How do I put my own domain on my app?
 description: "Add your own domain to a PivoCloud app: the order that works, the CNAME case for a subdomain, the A record (and, for some apps, TXT record) case for the root of your domain, what each status means, and what to do when the check says your DNS is not pointing here yet."
-last_verified: 2026-10-13
+last_verified: 2026-11-07
 ---
 
 ## Your own domain on an app
