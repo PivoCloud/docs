@@ -31,7 +31,11 @@ running it reads `Deploying…` and cannot be pressed.
 
 Pressing it builds your repository again from your deploy branch and replaces
 the running container with the result. Your app keeps serving the old container
-until the new one is ready.
+while the new one builds, so a failed build changes nothing. Once the build
+succeeds, the old container is replaced and the new one is started. If the new
+version does not start, your app is down until you fix and redeploy, or press
+`Roll back to this` on the previous version in the `Deployments` tab (see
+[Roll back an app](/apps/rollback)).
 
 **What it does to your bill:** nothing, on an app that has already been charged
 for the current period. No new charge, no refund, and the paid period runs on
