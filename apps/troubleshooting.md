@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-11-02
+last_verified: 2026-11-08
 ---
 
 ## What the red panel shows
@@ -415,6 +415,8 @@ support:
 ```text
 PivoCloud could not analyse your repository because of a temporary problem on its side. Redeploy to try again. If the same message comes back, contact PivoCloud support.
 ```
+
+For this sentence, the build log lines under "The repository analysis printed this before it stopped:" say what stopped the analysis. Read them before you redeploy, and include them if you write to support.
 
 ```text
 PivoCloud cannot build an app without a Dockerfile on this machine right now. This is on PivoCloud's side. Redeploy to try again. If the same message comes back, contact PivoCloud support.

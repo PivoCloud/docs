@@ -1,7 +1,7 @@
 ---
 title: Can I deploy without a Dockerfile?
 description: "Deploy a Laravel, Node, Python or Go repository with no Dockerfile: when PivoCloud builds it for you, the port, start commands and language versions, how Laravel gets its key and database, and the limits you should know before you start."
-last_verified: 2026-11-07
+last_verified: 2026-11-08
 ---
 
 ## Deploy without a Dockerfile
@@ -150,8 +150,11 @@ Know these before you choose this way:
 log can show, and what each one means. The cases specific to this way of building:
 
 - **PivoCloud cannot build without a Dockerfile right now, or cannot analyse your
-  repository.** This is on PivoCloud's side, not your code. Redeploy, then write
-  to support if it repeats.
+  repository.** This is usually on PivoCloud's side, not your code. The build log
+  now shows the last lines the analysis wrote before it stopped
+  ([Why did my deploy fail](/apps/troubleshooting) shows where). Read them first, because they can point at your
+  repository (for example a tool version in its configuration). If they do not,
+  redeploy, then write to support if it repeats and include those lines.
 - **Your app does not answer on the port PivoCloud probes, but listens on
   another one.** Set `Listen port` to the port your app uses, or make your app
   listen on the `PORT` variable. Then deploy again.

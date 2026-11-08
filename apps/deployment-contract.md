@@ -1,7 +1,7 @@
 ---
 title: What your repository needs
 description: "The six rules a repository must meet for PivoCloud to build and run it with a Dockerfile: a Dockerfile, the EXPOSE port contract, binding 0.0.0.0, one HTTP port per app, explicit migrations, and an ephemeral filesystem."
-last_verified: 2026-11-04
+last_verified: 2026-11-08
 ---
 
 ## The deployment contract
@@ -126,9 +126,12 @@ that must scale independently.
 
 ### 5. Nothing runs your migrations
 
-No release phase, no automatic `migrate` step. If your schema needs migrating,
-do it explicitly, and make it opt-in so a container restart cannot surprise
-you:
+For an app built from a Dockerfile there is no release phase and no automatic
+`migrate` step. The one exception is a Laravel app built without a Dockerfile
+that has a PivoCloud database: it runs its migrations each time it starts, as
+[Deploy without a Dockerfile](/apps/deploy-without-a-dockerfile) explains. For a
+Dockerfile app, if your schema needs migrating, do it explicitly, and make it
+opt-in so a container restart cannot surprise you:
 
 ```sh
 if [ "$RUN_MIGRATIONS" = "true" ]; then

@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-11-07
+last_verified: 2026-11-08
 ---
 
 ## Deploy your first app
@@ -50,7 +50,9 @@ build settings.
 
 The other three rules, the Dockerfile itself, your migrations and the ephemeral
 filesystem, are on [what your repository needs](/apps/deployment-contract) with
-worked examples. Read that page once before you create anything.
+worked examples. Read that page once before you create anything. Migrations are
+yours to run, except for a Laravel app with a database that you build
+[without a Dockerfile](/apps/deploy-without-a-dockerfile).
 
 ### The list the form shows you
 
@@ -253,10 +255,14 @@ connection shows one more line next to a `Remove token` button:
 
 ### Migrations
 
-Nothing runs your migrations. There is no release phase and no automatic
-migration step, so a schema change is yours to trigger explicitly. The
-entrypoint pattern that makes it opt-in, so a container restart cannot surprise
-you, is on [what your repository needs](/apps/deployment-contract).
+For an app built from a Dockerfile, nothing runs your migrations. There is no
+release phase and no automatic migration step, so a schema change is yours to
+trigger explicitly. The entrypoint pattern that makes it opt-in, so a container
+restart cannot surprise you, is on
+[what your repository needs](/apps/deployment-contract). A Laravel app built
+without a Dockerfile that has a PivoCloud database is the exception: it runs its
+migrations each time it starts, see
+[Deploy without a Dockerfile](/apps/deploy-without-a-dockerfile).
 
 ### Watch the build, then reach your app
 
