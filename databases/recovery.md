@@ -1,7 +1,7 @@
 ---
 title: How do I get my data back
 description: "What PivoCloud keeps of your PostgreSQL database, how to take a backup or an export yourself, how to download and check an export, what a restore really produces and what it costs, how far back each plan lets you go, and what happens to your databases if one of our datacenters is lost."
-last_verified: 2026-11-06
+last_verified: 2026-11-09
 ---
 
 ## Backups, exports and restores
@@ -256,6 +256,10 @@ is what `Growth` and `Business` add.
 
 On every plan, that copy is also the outer limit: a datacenter loss never costs
 you more than those 24 hours.
+
+We simulated the loss of one of our datacenters on purpose, on a copy of our platform built the same way, and timed the recovery.
+In our test of 7 November 2026, `Growth` and `Business` databases lost at most 5 minutes of data, and both test databases were back in our other datacenter within 90 minutes.
+We run this test on a copy of our platform, never on your data.
 
 Your databases come back by themselves. An app that ran in the affected
 datacenter is not moved for you: deploy it again once its database is back.
