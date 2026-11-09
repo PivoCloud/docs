@@ -1,7 +1,7 @@
 ---
 title: Where your data lives
 description: "What PivoCloud holds in Algeria, which services are outside Algeria or run by a company outside it, what each receives, and where to read the official text of Law 18-07."
-last_verified: 2026-11-08
+last_verified: 2026-11-09
 ---
 
 ## Where your data lives
@@ -66,9 +66,9 @@ No. The addresses of your apps and databases point straight at our datacenters i
 
 Where you keep it, for example on GitHub. When you deploy, we fetch a copy, build it and run it in Algeria.
 
-### Can I get a data processing agreement?
+### Can you sign a contract, an attestation or a data processing agreement?
 
-Yes, on request. Write to us from the contact page.
+Yes, on request: a service contract, a written attestation that your databases, apps and backups are hosted in Algeria, and a data processing agreement. Write to us from the contact page.
 
 [Contact us](https://pivocloud.com/contact)
 
