@@ -37,12 +37,14 @@ Laravel (PHP), Node, Python and Go. PivoCloud finds out which one you use from
 the files in your repository, such as `composer.json`, `package.json`,
 `requirements.txt` or `go.mod`.
 
-If PivoCloud cannot tell which language your app uses, the deploy fails. If it
-knows the language but cannot find how to start your app, the deploy fails too.
-[Why did my deploy fail](/apps/troubleshooting) shows the exact message for each
-case.
+If PivoCloud cannot tell which language your app uses, or cannot install the
+version your app asks for, the deploy fails. If it knows the language but cannot
+find how to start your app, the deploy fails too. The build log shows what the
+analysis found, just above the error. [Why did my deploy fail](/apps/troubleshooting)
+shows the exact message for each case.
 
-In both cases the fix is a start command, or a Dockerfile.
+The fix is to change what the build log names (a start command, or a version
+PivoCloud supports), or to add a Dockerfile.
 
 ### The port
 
@@ -79,6 +81,12 @@ PivoCloud reads the version your repository asks for:
 - PHP: `composer.json`.
 - Python: `.python-version`.
 - Go: `go.mod`.
+
+**PHP needs version 8.2 or newer.** PivoCloud cannot install PHP 8.1 or older
+without a Dockerfile. If `composer.json` asks for `"php": "^8.1"` or `"^8.0"`,
+the deploy fails with "no version available for php 8.1" in the build log. Change
+it to `"^8.2"` (or newer) if your app runs on PHP 8.2, or deploy with a Dockerfile
+that installs the version you need.
 
 If your app needs one exact version, set it in your repository, in the file listed
 above for your language. When you do not set one, PivoCloud uses a default, and

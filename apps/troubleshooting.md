@@ -384,7 +384,7 @@ If the build log ends with one of these two sentences, PivoCloud could not tell 
 to build or start your app:
 
 ```text
-PivoCloud could not tell what language or framework this app uses, so it cannot build it without a Dockerfile. Add a Dockerfile, or add a start command in a Procfile or in railpack.json. See https://docs.pivocloud.com/apps/deploy-without-a-dockerfile
+PivoCloud could not work out how to build this app without a Dockerfile. The build log above shows why, for example a language it does not recognise or a language version it cannot install. Fix what it names, add a start command in a Procfile or in railpack.json, or add a Dockerfile. See https://docs.pivocloud.com/apps/deploy-without-a-dockerfile
 ```
 
 ```text
