@@ -16,6 +16,8 @@ This applies to every account.
 - **Your apps**: We build and run them in Algeria: the built image, the running app, its settings, its environment variables and its logs.
 - **Database backups**: They are kept in our two datacenters in Algeria.
 
+An app's runtime logs are kept for about 7 days on the server that runs the app (older lines are erased within a few hours after day 7), and erased when the app is deleted. See [how long are my app's logs kept](/apps/logs).
+
 ## Outside Algeria
 
 These services are outside Algeria or are run by a company outside Algeria. Each is named by kind, with what it receives.

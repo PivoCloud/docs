@@ -113,7 +113,8 @@ deploy. A plan change is the one exception: it is accepted rather than refused.
 
 Last in the `More actions` menu, on its own below a divider. It opens a
 confirmation naming your app and warning that the action cannot be undone. Your
-container, your image, your deployment logs and the app's own record all go.
+container, your image, your deployment logs, the app's log history and the app's
+own record all go. The log history is erased before the delete is reported done.
 
 **What it does to your bill, and the confirmation now says so:** billing ends
 immediately, and the paid remainder of the current period is **not** refunded.
@@ -146,9 +147,12 @@ contains the other.
   PivoCloud cloned your repository and built your image, and the panel beneath
   the sub-tab is headed `Deployment Logs`. If a deploy never produced a running
   container, the reason is here.
-- `Runtime logs` is your app talking, live, once it is running. It is what your
+- `Runtime logs` is your app talking, once it is running. It is what your
   process writes while it serves traffic. If your app started and then crashed,
-  the reason is here.
+  the reason is here. It has a `Live` view and a `History` view. `History` keeps
+  7 days of lines, with a range and a search box. How it works, and what it
+  blanks and never keeps, is on
+  [how long are my app's logs kept](/apps/logs).
 
 Looking for one in the other is the most common way to conclude there is nothing
 to see. A crash on startup is in `Runtime logs`, not in the build output. A

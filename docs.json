@@ -23,6 +23,7 @@
           "apps/environment-variables",
           "apps/troubleshooting",
           "apps/manage",
+          "apps/logs",
           "apps/custom-domains"
         ]
       },
