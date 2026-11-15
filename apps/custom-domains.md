@@ -1,7 +1,7 @@
 ---
 title: How do I put my own domain on my app?
 description: "Add your own domain to a PivoCloud app: the order that works, the CNAME case for a subdomain, the A record (and, for some apps, TXT record) case for the root of your domain, what each status means, and what to do when the check says your DNS is not pointing here yet."
-last_verified: 2026-11-07
+last_verified: 2026-11-12
 ---
 
 ## Your own domain on an app
@@ -108,10 +108,21 @@ a subdomain such as `www.example.com`. Use a subdomain and, if you want the root
 to reach it too, use whatever redirect your DNS provider offers at the root.
 
 A root domain points at the server your app runs on. A subdomain with a `CNAME`
-record never needs changing, so `CNAME` is the record we recommend whenever you
-have the choice. If you use an `A` record, the value the `Domains` tab shows is
+record only needs changing once, when we give your app a new address (see
+[your new addresses](/new-addresses)), so `CNAME` is the record we recommend
+whenever you have the choice. If you use an `A` record, the value the `Domains` tab shows is
 the current one, so copy it from there again rather than trusting a value you
 saved earlier.
+
+#### If your root domain already points at our address
+
+If you set up the root of your domain with an A record some time ago, your
+app is getting a new address and the root moves to a different setup: point
+`www` at the app's new address by `CNAME`, and set a redirect from the root to
+`www` at your registrar. The email we send you says whether `www` is missing from
+your app. The steps and the date the old address stops are on the
+[new addresses page](/new-addresses). For a domain you are adding now, the A
+record case above is still the way.
 
 ### What happens next, and what you will see
 

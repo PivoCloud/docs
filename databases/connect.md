@@ -1,7 +1,7 @@
 ---
 title: How do I connect to my database
 description: "The connection string PivoCloud gives you for a PostgreSQL database, the setting each client library needs before it accepts that string, what those settings encrypt and what they do not verify, how to pin your database's certificate, and how to turn on pgvector."
-last_verified: 2026-11-05
+last_verified: 2026-11-11
 ---
 
 ## Connecting to your PostgreSQL database
@@ -394,7 +394,7 @@ want a verified connection from Prisma, use the `PrismaPg` driver adapter with
 the node-postgres pin above, which was tested and does refuse the wrong
 certificate.
 
-### Two things break a pin
+### Three things break a pin
 
 **Your database being rebuilt or moved.** If PivoCloud has to recreate or move your database
 somewhere else, your hostname is kept and the certificate is generated again, so
@@ -409,6 +409,14 @@ credentials and its own certificate, and it leaves your original untouched. A
 pin made against the original does not carry over to it: take the new connection
 string from the console and pin the new certificate the same way. The
 [recovery page](/databases/recovery) covers restoring itself.
+
+**A new address.** When PivoCloud gives your database a new address, its
+certificate is issued again so that it carries both the old name and the new
+one, and your database answers on both. The new certificate has a new
+fingerprint, so a pinned client stops connecting until you save the certificate
+again, once: read it and replace your saved `server.crt` as in step 1 and step 3.
+Everything about the change, including the date the old address stops, is on the
+[new addresses page](/new-addresses).
 
 ## pgvector
 
