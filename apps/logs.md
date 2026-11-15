@@ -15,8 +15,8 @@ crash or a redeploy.
 Open your app, then the `Deployments` tab, then `Runtime logs`. The panel has two
 views, `Live` and `History`. `Live` shows what your app prints now. `History`
 shows what was kept. The panel opens on `Live`, except when the app is stopped,
-suspended, expired, failed or unhealthy, which includes a crash loop. Then it opens
-on `History`.
+suspended, expired, failed or unhealthy, which includes an app that keeps
+crashing. Then it opens on `History`.
 
 Reading history costs nothing and changes nothing about your app.
 
@@ -95,6 +95,10 @@ sentences, in the order the console lists them, each with an example time:
 App stopped: it exited with code 1 · Nov 10, 14:02 CET
 App stopped unexpectedly · Nov 10, 14:02 CET
 App restarted after a crash (exit code 1) · Nov 10, 14:02 CET
+App stopped because it ran out of memory (... on its plan) · Nov 10, 14:02 CET
+App stopped because it ran out of memory · Nov 10, 14:02 CET
+A process inside your app was stopped because the app reached its ... of memory · Nov 10, 14:02 CET
+A process inside your app was stopped because the app reached its memory limit · Nov 10, 14:02 CET
 App redeployed · Nov 10, 14:02 CET
 Environment variables changed, app restarted · Nov 10, 14:02 CET
 App restarted · Nov 10, 14:02 CET
@@ -112,6 +116,11 @@ Some lines from Nov 10, 14:02 CET to Nov 10, 14:09 CET may be missing: log colle
 The second sentence is the one shown when no exit code is known. The same goes
 for the restart after a crash: when no code is known, it reads `exit code unknown`
 in place of the number.
+
+In the memory sentences, `...` stands for the memory your app's plan gave it when
+that happened, which the console shows. The shorter line is shown when that was
+not recorded. The first line takes the place of `App stopped` for that crash. The
+process line means your app kept running.
 
 ## Restarts, crashes and redeploys
 

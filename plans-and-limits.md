@@ -1,7 +1,7 @@
 ---
 title: What do my plan's limits mean?
 description: "What the memory, processor and included storage of an app plan or database tier mean, what happens when your app or database goes past them, how to move to a bigger plan or tier, and how a change to our plans reaches existing apps and databases."
-last_verified: 2026-10-28
+last_verified: 2026-11-11
 ---
 
 Every app plan and database tier comes with a set of resources. The current
@@ -17,10 +17,14 @@ and everything it starts share that amount.
 **When you reach it.** If your app uses more memory than its plan includes, it
 may slow down first. Then the system stops one of the processes in your app,
 usually the one using the most memory. If it stops your app's main process, your
-app restarts by itself. If it stops another process, your app keeps running
-without it. When your app restarts like this, the health history in the console
-shows `Container exited unexpectedly`, then `Container recovered` once it is
-back. PivoCloud does not send you a message before the limit is reached.
+app restarts by itself. The health history in the console then shows
+`Stopped because it ran out of memory.` followed by the memory your app's plan
+gives it, and `Container recovered` once the app is back. If this keeps happening, the
+badge on your app reads `Keeps crashing`. If it stops another process,
+your app keeps running without it. Its log history gets a line for each
+process the system stops. If your app stops for any other reason, the
+health history shows `Container exited unexpectedly`, then `Container recovered`.
+PivoCloud does not send you a message before the limit is reached.
 
 **How to move up.** Change the app to a plan with more memory. See
 [Moving up](#moving-up).

@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-11-08
+last_verified: 2026-11-11
 ---
 
 ## What the red panel shows
@@ -1351,13 +1351,43 @@ that your app has everything it needs to boot, then press `Redeploy`. An exit
 code of 1 usually means your app raised an error. 137 usually means it was
 stopped for using too much memory.
 
-### The app keeps stopping and restarting {#crash_loop}
+### The app keeps crashing {#crash_loop}
 
-PivoCloud recorded that your app stops and starts again, repeatedly. It is up
-for a moment and then gone, so a single look at it can show it as running.
+The status badge reads `Keeps crashing`. PivoCloud shows it when your app
+crashed and was started again several times within a few minutes. The app is up
+for a moment and then gone, so a single look at it can show it as running. The
+badge stays until the app has run for a while without crashing.
 
-**What to do:** open the app's logs in the console and find what makes it stop.
-The cause is inside your app, so fix it there and press `Redeploy`.
+A redeploy, a plan change or a restart you ask for starts the count fresh. Your
+own stop, restart or redeploy never counts as a crash.
+
+If the health history shows that the app runs out of memory, read the next entry,
+[The app ran out of memory](#out_of_memory), because memory is then the cause.
+
+**What to do:** open the app's log history (the History view) and read the last
+lines before each crash. The cause is inside your app, so fix it there and press
+`Redeploy`.
+
+### The app ran out of memory {#out_of_memory}
+
+The health history shows `Stopped because it ran out of memory.` when your app
+used more memory than its plan gives it, and PivoCloud stopped it. It shows `It
+runs out of memory each time it starts.` when this happens again and again. The
+message names the memory your app's plan gave it at that moment. An older entry
+keeps the figure of its time, so it can differ from your plan today.
+
+The badge may read `Keeps crashing` at the same time. An app that runs out of
+memory each time it starts is also an app that keeps crashing.
+
+Sometimes only a process inside your app is stopped, not the app itself. The log
+history then shows `A process inside your app was stopped because the app reached its ... of memory`
+(or `A process inside your app was stopped because the app reached its memory limit`
+when no figure was recorded). The app keeps running in that case.
+
+**What to do:** reduce the memory your app uses, or change to a plan with more
+memory. Press the `Change plan` button on the message, or open `More actions`
+and then `Change plan`. If your app is already on the plan with the most memory,
+reduce its memory use.
 
 ### PivoCloud recorded the app as unhealthy {#app_down}
 
@@ -1367,6 +1397,8 @@ does not say why the container is gone. A crash in your app can cause it, and so
 can something outside your code, such as the container being stopped or a
 restart of the machine it ran on. The answer gives the time of that check. It is
 the last recorded check, not a call made at the moment you asked.
+
+If your app ran out of memory, the health history shows the out-of-memory sentence instead of Container exited unexpectedly, and [that entry](#out_of_memory) explains it.
 
 A crash your app recovers from by itself is recorded too. When your app's process
 exits and PivoCloud starts it again straight away, the app's health history
