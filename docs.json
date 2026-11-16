@@ -24,6 +24,7 @@
           "apps/troubleshooting",
           "apps/manage",
           "apps/logs",
+          "apps/usage",
           "apps/custom-domains"
         ]
       },
