@@ -1,7 +1,7 @@
 ---
 title: Why did my app or database get a new address?
 description: "Your app or database now has a second, permanent address. What changed, the date the old address stops, and what to change for a database, an app, and your own domain."
-last_verified: 2026-11-12
+last_verified: 2026-11-15
 ---
 
 ## Your app or database has a new address
@@ -19,7 +19,8 @@ client refuses to connect until you save the certificate again.
 
 The old address stops answering **14 days after our email to you**. The exact
 date is in that email, and on the notice shown on your app or database page in
-the console. Everyone gets their own date, counted from their own email.
+the console. Everyone gets their own date, counted from their own email. If we
+agree to give you more time, the console shows the new date.
 
 If you have not found the email, read the notice on the page of the app or the
 database. It carries the same date.
@@ -47,7 +48,8 @@ console shows the new connection string on the database page.
 Update the places that use the old address of your app: links, webhooks you
 registered with other services, settings in other tools, and the address you
 gave to people. Your app answers on both addresses until the date, then only on
-the new one.
+the new one. Until the date, a browser that visits the old address is sent to the
+new one, but a script or a webhook is not, so change those yourself.
 
 ## If you use your own domain
 
@@ -71,8 +73,22 @@ The [custom domains page](/apps/custom-domains) explains each record in detail.
 
 ## What happens on the date
 
-The old address stops answering. Anything that still uses it fails to connect or
-fails to load. The new address keeps working and is not affected.
+The old address stops answering on the date in our email. It can stop earlier: if you
+tell us you have moved off the old address and nothing has used it for two days, we
+remove it without waiting for the date.
 
-If something still uses the old address near the date and you need more time,
-write to us before the date through [getting help](/getting-help).
+Until then, the old address of an app keeps working in two ways:
+
+- **A browser visiting the old address is sent to the new one.** The page opens on the
+  new address, and you may need to sign in again there.
+- **Everything else keeps working on the old address.** Scripts, webhooks and other
+  servers that call the old address are served as before until the date. They are not
+  redirected, so change them to the new address before the date.
+
+When the old address stops, anything that still uses it fails to connect or fails to
+load. The new address keeps working and is not affected.
+
+If something used the old address in the last two days before the date, or we cannot
+tell whether it is used, we do not remove it. We keep it until it has been looked at. If
+you need more time, or we removed the address too early and you want it back, write to us
+through [getting help](/getting-help).
