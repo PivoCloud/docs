@@ -1,7 +1,7 @@
 ---
 title: What does it cost, and when am I charged?
 description: "How PivoCloud credit works in Algerian dinars: adding credit and who approves it, a starting credit claim that is waiting for review, where to find the price of every app plan and database tier, when a charge happens and how long a paid period runs, what the 31 December 2026 promise covers, and what happens if your balance runs out."
-last_verified: 2026-11-06
+last_verified: 2026-11-18
 ---
 
 ## Credit and charges
@@ -288,7 +288,9 @@ string and that tier's price.
 Nothing is taken away without warning. Four steps, in this order.
 
 1. **A low-balance warning, 5 days ahead.** When a charge is coming that your
-   balance cannot cover, an email reaches you 5 days before it is due.
+   balance cannot cover, one email lists every app and database renewing in the
+   next 5 days, each with its renewal date and price, then the total, your
+   balance and the amount missing.
 2. **Suspension, when the charge fails.** The app or the database stops serving.
    Nothing is deleted and nothing is lost at this step.
 3. **A notice 7 days before deletion, naming the date.** One email per suspended
@@ -298,10 +300,11 @@ Nothing is taken away without warning. Four steps, in this order.
 
 Three things worth knowing about that ladder.
 
-**The low-balance warning is one per account, not one per app or database.** If
-you are short on two things at once you get one email rather than two, so read
-it as a warning about your balance and not as a warning about the one thing it
-happens to name.
+**The low-balance warning is one email per account, and it lists everything due
+in the next 5 days.** You get it again if the amount missing grows, if a renewal
+it did not list becomes due in those 5 days, or 5 days after the last one if your
+balance is still too low. An app with renewal turned off is not listed, because
+it stops at the end of its period and takes no money.
 
 **The date you are told is the date that is used.** The notice names a day, and
 that is the day the deletion runs.
