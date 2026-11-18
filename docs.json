@@ -30,7 +30,7 @@
       },
       {
         "group": "Databases",
-        "pages": ["databases/connect", "databases/recovery"]
+        "pages": ["databases/connect", "databases/recovery", "databases/usage"]
       },
       {
         "group": "Billing",
