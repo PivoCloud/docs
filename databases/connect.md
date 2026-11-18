@@ -1,7 +1,7 @@
 ---
 title: How do I connect to my database
 description: "The connection string PivoCloud gives you for a PostgreSQL database, the setting each client library needs before it accepts that string, what those settings encrypt and what they do not verify, how to pin your database's certificate, and how to turn on pgvector."
-last_verified: 2026-11-11
+last_verified: 2026-11-16
 ---
 
 ## Connecting to your PostgreSQL database
@@ -396,9 +396,10 @@ certificate.
 
 ### Three things break a pin
 
-**Your database being rebuilt or moved.** If PivoCloud has to recreate or move your database
-somewhere else, your hostname is kept and the certificate is generated again, so
-the fingerprint changes and a pinned client stops connecting. The fix is step 1
+**Your database being rebuilt.** If PivoCloud has to recreate your database from
+a backup, your hostname is kept and the certificate is generated again, so
+the fingerprint changes and a pinned client stops connecting. A planned move keeps
+the certificate: see the section on moves further down this page. The fix is step 1
 and step 3 again: read the certificate and replace your saved `server.crt`. It
 is worth knowing this in advance for an unhappy reason. The moment it happens is
 the moment your database has just been recovered, which is already a bad enough
@@ -417,6 +418,26 @@ fingerprint, so a pinned client stops connecting until you save the certificate
 again, once: read it and replace your saved `server.crt` as in step 1 and step 3.
 Everything about the change, including the date the old address stops, is on the
 [new addresses page](/new-addresses).
+
+## When we move your database
+
+Sometimes we move a database to another of our servers. This is what stays the same
+and what you will see.
+
+- **The connection string does not change.** Your hostname, your user, your password
+  and the database name are the same before and after.
+- **The certificate does not change.** The database keeps the certificate it had, so
+  a certificate you pinned (see above) keeps working and nothing needs to be saved
+  again.
+- **The console shows "Maintenance in progress".** While the move runs, backups,
+  restores, exports and deletion wait. If you start one, the console tells you the
+  database is under maintenance and to try again in a few minutes.
+- **Open connections are closed once.** Your application needs to reconnect. Most
+  drivers and connection pools do this on their own; the address section above says
+  what to check if your application looks the address up only at startup.
+
+We do not state how long a move takes, because we have not yet measured it on a
+database like yours. We will add the figure to this page when we have.
 
 ## pgvector
 
