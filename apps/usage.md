@@ -1,7 +1,7 @@
 ---
 title: How much memory and processor is my app using?
 description: "The Usage tab of your app shows its memory and processor use against its plan for the last hour, 24 hours or 7 days, when it was slowed down or stopped, and what happened to it: restarts, redeploys, crashes, running out of memory, plan changes."
-last_verified: 2026-11-16
+last_verified: 2026-11-18
 ---
 
 ## How much memory and processor is my app using?
@@ -207,6 +207,10 @@ Only you can see the usage of your app. Someone else asking for your app's usage
 gets the same answer as for an app that does not exist or is being deleted.
 
 ## What to do when your app stays near its limit
+
+When your app has stayed near a limit for a long time, or ran out of memory, a
+message above the tabs says so. It is computed from the same readings these graphs draw. See
+[the near-limit message](/plans-and-limits#near-limit-hint).
 
 When the memory line stays close to the `Plan limit` line, or red marks say your
 app ran out of memory, choose a plan with more memory. When the amber band shows

@@ -1,7 +1,7 @@
 ---
 title: How much memory, processor, storage and connections is my database using?
 description: "The Usage tab of your database shows its memory, processor, storage and connections against its tier for the last hour, 24 hours or 7 days, what is left out of each figure, and what it shows while the database is stopped."
-last_verified: 2026-11-16
+last_verified: 2026-11-18
 ---
 
 ## How much is my database using?
@@ -51,7 +51,7 @@ When no processor share applies to your database, `100%` is one processor, and t
 title line says so:
 
 ```log
-Now 0% · Average 1% of one processor
+Now 0% · Average 0% of one processor
 ```
 
 Hover over the graph to see the average and the highest value of a point. A point
@@ -77,6 +77,12 @@ check. Included storage is the amount that is part of your price. It is not a
 limit that blocks you: the figure above is past the included amount, and nothing stops. See
 [what a plan's limits mean](/plans-and-limits#included-storage). The dashed line
 is labelled `Included storage`.
+
+When your database has stayed near a limit for a long time, or has grown past its
+included storage, a message above the tabs says so. It is computed from the same
+readings these graphs draw. See
+[the near-limit message](/plans-and-limits#near-limit-hint). To move to a higher
+tier, write to us.
 
 ## Connections
 

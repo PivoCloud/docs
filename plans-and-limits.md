@@ -1,7 +1,7 @@
 ---
 title: What do my plan's limits mean?
 description: "What the memory, processor and included storage of an app plan or database tier mean, what happens when your app or database goes past them, how to move to a bigger plan or tier, and how a change to our plans reaches existing apps and databases."
-last_verified: 2026-11-11
+last_verified: 2026-11-18
 ---
 
 Every app plan and database tier comes with a set of resources. The current
@@ -46,11 +46,56 @@ amount that is included in the price. It is not a limit that blocks you.
 
 **When you reach it.** Nothing happens automatically. PivoCloud measures the
 size of each running database. If a database grows past its included storage, we
-contact you before anything changes. Your database is not blocked, and you are not
+contact you before anything changes. Your database page also shows a message
+when the database grows past its included storage. See
+[When your app or database stays near a limit](#near-limit-hint). Your database is not blocked, and you are not
 charged anything extra without talking to us first.
 
 **How to move up.** Write to us and we move the database to a higher tier. See
 [Moving up](#moving-up).
+
+## When your app or database stays near a limit {#near-limit-hint}
+
+A message shows at the top of the app page or the database page, above the
+tabs, so you see it on every tab. Memory, processor share and connections show
+only after a long stretch near a limit. One short peak never shows them. Ran out
+of memory shows after a single stop, and storage past included shows as soon as
+a measurement is above the included amount. The message is on the page only.
+PivoCloud does not send you an email or any other message about it.
+
+The message has one of these kinds. When several are true, the page shows the
+first one in this list.
+
+- **Ran out of memory.** An app only. The system stopped your app's processes
+  because of memory at any time in the last 7 days.
+- **Memory.** For an app, the memory used stays at or above 85% of the plan's memory for at least 67% of the last 3 days. For a
+  database, the memory used stays at or above 90% of the tier's memory for at least 67% of the last 3 days. The message
+  goes away when it falls below 55%.
+- **Processor share.** The app or database is slowed because it asks for more
+  than its share. A stretch of time counts when it was held back at least 25% of the time while using at least 80% of its share. The message shows when that holds
+  for at least 50% of the last 3 days, and goes away when it falls below 35%.
+- **Connections.** A database only. The connections in use stay at or above
+  80% of the maximum connections for at least 67% of the last 3 days. The message
+  goes away when it falls below 55%.
+- **Storage past included.** A database only. It shows as soon as the latest measurement is above the included storage.
+
+**What to do.** For an app, choose `Change plan` on the message, or open the app,
+choose `More actions`, then `Change plan`. For a database, write to us and we
+move it to a higher tier. How to reach us is on
+[how do I get help](/getting-help). The link `See usage` on the message opens the
+Usage tab with the graphs the message is computed from.
+
+**When it does not show.** It never shows for the plan or tier with the most
+resources, because there is nothing bigger to move to. The one exception is
+storage past included on a database, which still shows. It never shows for a
+stopped app or a stopped database. For an app, the memory banner on the app
+page comes first, and then the message does not show. For a database, a storage
+message needs a measurement from the last 6 hours, so a database that stopped
+reporting shows none. A plan or tier change restarts the count, so the message
+waits for new readings.
+
+**Hiding it.** `Hide for 7 days` hides that kind of message in this browser for 7
+days. A different kind of message still shows.
 
 ## Moving up
 
