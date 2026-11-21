@@ -528,6 +528,8 @@ If your app stopped before it answered, the problem is in how it starts:
 Your app stopped with exit code 137 before it answered, so the problem is in how it starts, not in its port. Open the app's logs to see why it stopped, then redeploy.
 ```
 
+This sentence also covers an app that starts, crashes and is started again while PivoCloud is checking it. When a deploy fails this check, PivoCloud stops the new app instead of letting it restart over and over, and keeps it so its logs stay readable. Fix the cause, then deploy again.
+
 If your app is listening, but on a port other than the one PivoCloud asked on, the
 sentence names both. For an app built from a Dockerfile it points at the first
 `EXPOSE` line:
