@@ -1,7 +1,7 @@
 ---
 title: How do I put my own domain on my app?
 description: "Add your own domain to a PivoCloud app: the order that works, the CNAME case for a subdomain, the A record (and, for some apps, TXT record) case for the root of your domain, what each status means, and what to do when the check says your DNS is not pointing here yet."
-last_verified: 2026-11-12
+last_verified: 2026-11-21
 ---
 
 ## Your own domain on an app
@@ -240,3 +240,24 @@ in place.
 
 Deleting the DNS record at your provider is worth doing too, so the name stops
 pointing somewhere it is no longer served.
+
+## When we move your app
+
+Sometimes we move an app to another of our servers. This is what it means for your
+own domain.
+
+- **A domain pointed at your app's platform name keeps working.** If your domain
+  reaches the app through a `CNAME` record to your app's own address, nothing
+  changes for you. The domain keeps the same certificate and the same
+  address, and you do nothing. A visitor may notice a brief interruption while the
+  move switches over, which we measure, but we do not promise there will be none.
+- **A root domain on an `A` record to an address we gave you has to change first.**
+  An `A` record points at one fixed address, and the move changes where the app
+  runs. Until the record points through your app's platform name, we cannot move
+  the app. Point `www` at your app's address by `CNAME` and set a redirect from the
+  root to `www` at your registrar, as written in
+  [the root case](#if-your-root-domain-already-points-at-our-address) above. We
+  tell you before we need it.
+- **You cannot add or remove a domain while the move runs.** The console shows
+  "Maintenance in progress" and asks you to try again in a few minutes. See
+  [what each button does](/apps/manage).

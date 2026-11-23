@@ -1,7 +1,7 @@
 ---
 title: How long are my app's logs kept, and can I search them?
 description: "Runtime logs keep your app's lines for 7 days on every plan, kept in Algeria, searchable by range and text, across restarts, crashes and redeploys. What is blanked, the daily allowance, and what happens when you delete the app."
-last_verified: 2026-11-11
+last_verified: 2026-11-21
 ---
 
 ## How long are my app's logs kept, and can I search them?
@@ -211,3 +211,11 @@ read them for 7 days. We erase them within a few hours after that, and we erase
 them when you delete the app. We process them only to show them to you. This page
 states facts and is not legal advice. The official texts of the law are linked
 from [where your data lives](/where-your-data-lives).
+
+## When we move your app
+
+Sometimes we move an app to another of our servers. The history you can read here
+moves with it. After a move you still read the same 7 days of lines, including the
+last minutes before the move, and the search and the time range work as before. Your
+app's lines are still kept in Algeria. See [what a move changes](/apps/manage) for
+the rest.

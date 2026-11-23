@@ -1,7 +1,7 @@
 ---
 title: How do I roll my app back to the previous version?
 description: "Return your app to the version it ran before the current one from the deployment history, in one click and without a rebuild. What stays the same, what the next push does, when the button is missing, and what it costs."
-last_verified: 2026-11-07
+last_verified: 2026-11-21
 ---
 
 ## Rolling back to the previous version
@@ -109,6 +109,13 @@ itself, and only when nothing of your app is running.
 
 How charges work in general is on
 [credit and charges](/billing/credit-and-charges).
+
+### After we move your app
+
+Sometimes we move an app to another of our servers. The version your app runs and
+the version before it both move with the app, so `Roll back` keeps working after a
+move exactly as before, with no rebuild. While the move runs the button is refused
+with a message that the app is under maintenance. Try again in a few minutes.
 
 ### Related pages
 

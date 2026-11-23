@@ -1,7 +1,7 @@
 ---
 title: What does each button on my app page do?
 description: "Every control on a deployed app in the PivoCloud console, in the order the console shows them, with what each one does and what each one does to your bill before you press it. Plus the two separate places your logs appear."
-last_verified: 2026-10-29
+last_verified: 2026-11-21
 ---
 
 ## Manage your app
@@ -205,6 +205,34 @@ to redeploy yet. There are no logs: `Deployment logs` has no build to show and
 `Stop` is absent, because an app that is not running cannot be stopped.
 
 All of that resolves itself the moment your first deploy runs.
+
+### When we move your app
+
+Sometimes we move an app to another of our servers. While the move runs, the status
+of the app reads "Maintenance in progress". This is what to expect.
+
+- **Actions that change your app are refused until the move ends.** A move
+  usually takes a few minutes, but it can take longer, and a move that needs us to
+  step in stays in maintenance until we finish it. The refused actions are Deploy,
+  Roll back, Restart, Start, Stop, change plan, change the address, change the
+  repository settings (branch and access token), change or undo environment
+  variables, attach or detach a database, add or remove a custom domain, and
+  Delete. Each one answers with this sentence: "This app is under maintenance. Try
+  again in a few minutes." Nothing is wrong with your app. The page refreshes by
+  itself, and the status goes back to what it really is when the move ends. You do
+  not need to do anything.
+- **The app keeps its state.** A running app stays running, a stopped app stays
+  stopped and a suspended app stays suspended.
+- **Your address, your domains and your history stay the same.** See
+  [custom domains](/apps/custom-domains) and [logs](/apps/logs).
+- **A move is never charged.** It changes nothing on your bill.
+- **Visitors may notice a brief interruption.** We keep the old copy of your app
+  serving while the new one starts, so a visitor should not notice anything, but we
+  do not promise there will be no gap. We measure any interruption we cause.
+- **A scheduled task inside your app may run twice.** For a short time two copies
+  of your app run side by side. A background job or a scheduled task that you run
+  inside the app can therefore run twice in that time. If it must run once, make
+  it safe to repeat.
 
 ### When a message needs explaining
 
