@@ -572,6 +572,63 @@ is not certain, and asking again later may give a better one. If PivoCloud
 recorded that your app had exited at the start check, the answer is
 [the app exited right after it started](#crashed_on_start) instead of this one.
 
+### We could not load your app's settings {#settings_unavailable}
+
+The red panel reads:
+
+```text
+We could not load your app's settings, so your new version was not started.
+```
+
+```text
+Wait a few minutes, then deploy once more. If it keeps happening, contact PivoCloud support and give them the reference shown with this message.
+```
+
+The deploy log ends with a longer sentence:
+
+```text
+We could not load your app's settings, so your new version was not started. Deploy again in a few minutes.
+```
+
+Before a deploy starts your new version, PivoCloud reads your app's settings: its
+variables and the variables of a database linked to it. This time it could not read
+them, so it stopped. Nothing was started and nothing was stopped: the version that
+was running before the deploy is still running, with the settings it had.
+
+**What to do:** wait a few minutes and deploy again. A database that is stopped or
+still starting can cause this until it runs again, so if the first try fails, open
+the database in the console and check that it runs. If the deploy keeps failing
+after that, contact PivoCloud support and give them the reference shown with the
+message.
+
+### The server is busy right now {#no_room}
+
+The red panel reads:
+
+```text
+The server is busy right now, so your new version could not start.
+```
+
+```text
+Your app is still running its current version. Try again in a few minutes.
+```
+
+The deploy log or the app page can carry a longer sentence:
+
+```text
+The server is busy right now, so your new version could not start. Your app keeps running. Try again in a few minutes.
+```
+
+PivoCloud starts your new version next to the one that is serving, and only then
+switches traffic to it. For a short time both run together, so the machine needs
+room for both. This time it did not have it. Nothing about your app changed and
+the version that was serving is still serving.
+
+This can follow a deploy, a change to your variables, a restart or a return to an
+earlier version. **What to do:** wait a few minutes and try the same action again.
+If it keeps failing, contact PivoCloud support and give them the reference shown
+with the message.
+
 ### If you see a line about APP_KEY in the deploy log of a Laravel app
 
 A Laravel app cannot start without an `APP_KEY` variable. When your Laravel app
@@ -681,15 +738,26 @@ app's own logs and its environment variables: a port that does not match the
 `EXPOSE` line, or a variable your app needs and does not have, are the usual
 causes.
 
-**When your variables could not be loaded.** If PivoCloud cannot read your app's
-environment variables at the moment of a deploy, it still starts your app, and says
-so:
+**When your settings could not be loaded.** If PivoCloud cannot read your app's
+settings at the moment of a deploy, the deploy stops before it touches the version
+that is running, and the log ends with this line. The section
+`We could not load your app's settings` on this page explains it:
 
 ```text
-We could not load your environment variables, so your app started without them. Deploy again to retry.
+We could not load your app's settings, so your new version was not started. Deploy again in a few minutes.
 ```
 
-Your variables are not lost. Deploy again, and PivoCloud reads them again.
+**When the database linked to your app was deleted.** If the database an app was
+linked to has been deleted, the deploy goes on with the app's other settings, and
+the log says why the database's variables are not there:
+
+```text
+The database linked to this app was deleted, so its variables are not set.
+```
+
+The app starts without the database's variables, so it may fail its start check
+if it needs them. Detach the deleted database from the app, or attach another one,
+and deploy again.
 
 **How the deploy ended.** One of these three lines closes a deploy. Your app is
 running and its address is connected:
@@ -1438,8 +1506,8 @@ to fix first.
 
 **What to do:** open the database in the console and see why it is not running.
 Do not redeploy the app until the database runs, because a deploy made while the
-database is stopped starts your app without the database's variables, and it
-would fail again.
+database is stopped fails before it touches the running app, with the message
+under `We could not load your app's settings`, and would fail again.
 
 When a database is not running, your agent's list of env var names does not
 include the names that database would add. They are listed again once it runs.

@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-11-08
+last_verified: 2026-11-23
 ---
 
 ## Deploy your first app
@@ -264,6 +264,19 @@ without a Dockerfile that has a PivoCloud database is the exception: it runs its
 migrations each time it starts, see
 [Deploy without a Dockerfile](/apps/deploy-without-a-dockerfile).
 
+When you redeploy a running app, the new version and the old one both run for up
+to 5 minutes, while the new one is checked. A migration the new version runs when
+it starts therefore happens while the old version still serves, and it is not
+undone if the new version then fails to start. Write migrations that the previous
+version tolerates.
+
+### When you redeploy a running app
+
+A redeploy starts the new version next to the one that is running, and your app
+switches to it only after it answers. If it does not start, the previous version
+keeps running and the app page says so. The new version gets up to 5 minutes to
+start. [What each button does](/apps/manage) has the details.
+
 ### Watch the build, then reach your app
 
 Creating the app takes you to its page, which is organised as five tabs:
@@ -371,6 +384,9 @@ unavailable and say why. They come back once that deploy has run. See
 [why did my deploy fail](/apps/troubleshooting).
 
 ### If the first deploy fails
+
+A first deploy has no previous version to keep running, so an app whose first
+deploy fails shows `Failed`.
 
 Two messages account for most first failures, and both are worth reading
 literally.

@@ -1,7 +1,7 @@
 ---
 title: How do I roll my app back to the previous version?
 description: "Return your app to the version it ran before the current one from the deployment history, in one click and without a rebuild. What stays the same, what the next push does, when the button is missing, and what it costs."
-last_verified: 2026-11-21
+last_verified: 2026-11-23
 ---
 
 ## Rolling back to the previous version
@@ -77,9 +77,15 @@ The button is absent in these cases, and each one is normal.
 
 ### If a rollback fails
 
-Your app keeps running as it did before. A failed rollback does not leave you with
-a half-changed app. The console shows a sentence saying why:
+Your app keeps running as it did before: the version that was running keeps
+running. A failed rollback does not leave you with a half-changed app. A rollback
+gets the same 5 minutes to start as a redeploy, a restart or a change to your
+variables. The console shows a sentence saying why:
 
+- If the server has no room to start a second copy of your app, the rollback is
+  refused before anything changes. Try again in a few minutes. A redeploy, a
+  restart and a change to your variables can be refused the same way, see
+  [the server is busy right now](/apps/troubleshooting#no_room).
 - A version that is no longer kept cannot be restored. Pick a version that is
   still listed, or deploy your code again.
 - If PivoCloud could not check or read the version right now, try again in a

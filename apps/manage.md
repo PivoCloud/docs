@@ -1,7 +1,7 @@
 ---
 title: What does each button on my app page do?
 description: "Every control on a deployed app in the PivoCloud console, in the order the console shows them, with what each one does and what each one does to your bill before you press it. Plus the two separate places your logs appear."
-last_verified: 2026-11-21
+last_verified: 2026-11-23
 ---
 
 ## Manage your app
@@ -29,13 +29,26 @@ The first button in the header. On an app that has never deployed it reads
 `Deploy`. Once a deployment exists it reads `Redeploy`, and while a build is
 running it reads `Deploying…` and cannot be pressed.
 
-Pressing it builds your repository again from your deploy branch and replaces
-the running container with the result. Your app keeps serving the old container
-while the new one builds, so a failed build changes nothing. Once the build
-succeeds, the old container is replaced and the new one is started. If the new
-version does not start, your app is down until you fix and redeploy, or press
-`Roll back to this` on the previous version in the `Deployments` tab (see
-[Roll back an app](/apps/rollback)).
+Pressing it builds your repository again from your deploy branch and starts the
+result as a new version. Your app keeps serving the old version while the new one
+builds, so a failed build changes nothing. Once the build succeeds, the new
+version starts next to the one that is running and takes over only after it
+answers. Your app keeps answering the whole time. The new version gets up to 5
+minutes to start.
+
+While a redeploy runs, the status stays as it is and a small
+`New version deploying` label shows beside it.
+
+If the new version does not start, the previous version keeps running. The
+`Deployments` tab shows the failed deploy with the reason, and one line at the
+top of the app page says `Your last deploy failed:` with the reason, then
+`The previous version is still running.` The line stays until your next
+successful deploy. Your AI agent sees the same through `get_app`. Fix the cause and press
+`Redeploy` again, or press `Roll back to this` on a version in the `Deployments`
+tab (see [Roll back an app](/apps/rollback)). If the reason is that the server is
+busy, see [the server is busy right now](/apps/troubleshooting#no_room). If
+PivoCloud could not load your settings, see
+[we could not load your app's settings](/apps/troubleshooting#settings_unavailable).
 
 **What it does to your bill:** nothing, on an app that has already been charged
 for the current period. No new charge, no refund, and the paid period runs on
