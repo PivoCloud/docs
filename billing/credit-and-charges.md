@@ -151,6 +151,10 @@ starts exactly where the last one ended, so there is no gap and no day is paid
 for twice. Your app's `Billing` tab shows its `Monthly price` and a
 `Next charge` line carrying the amount and the date it falls on.
 
+**An app that has never run is never renewed.** If none of an app's deploys
+ever started successfully, the monthly renewal takes nothing for it and the
+low-balance warning does not list it.
+
 That tab also carries the `Auto-renewal` switch, and this is the page that
 covers it. Turn it off and the app stops renewing: at the end of the period you
 have already paid for, it expires instead of opening another one. You can turn
