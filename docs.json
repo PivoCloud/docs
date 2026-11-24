@@ -33,6 +33,10 @@
         "pages": ["databases/connect", "databases/recovery", "databases/usage"]
       },
       {
+        "group": "Pivobase",
+        "pages": ["pivobase/index", "pivobase/connect", "pivobase/keys"]
+      },
+      {
         "group": "Billing",
         "pages": ["billing/credit-and-charges", "billing/card-payment"]
       },
