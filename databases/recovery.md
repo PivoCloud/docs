@@ -143,6 +143,13 @@ This one needs us. Email `contact@pivocloud.com` with the database's name, and
 the restore will work once it is linked.
 
 ```text
+Restoring to a new database is paused while planned maintenance moves this database. If this lasts more than a few days, contact support.
+```
+
+We are moving databases off a server for planned maintenance, and a restore needs
+that server. Nothing was charged. The pause does not have the same end date for every database, so if it lasts more than a few days, email `contact@pivocloud.com`.
+
+```text
 the platform could not reserve capacity on the server that runs this database, so a restore would have started somewhere else. Nothing was changed and no credit was taken. Please try again in a few minutes, and contact support if it keeps happening
 ```
 
