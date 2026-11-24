@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-11-23
+last_verified: 2026-11-24
 ---
 
 ## Deploy your first app
@@ -99,6 +99,8 @@ see [connecting GitHub](/apps/connect-github).
 reads `Deploys automatically when a push targets the deploy branch.` Leave it on
 unless you want every deploy to be a deliberate act. A deploy from a push is billed
 exactly like the `Redeploy` button: free inside a month you already paid for.
+What happens when you push while a deploy is still running is in
+[when you push while a deploy is running](#when-you-push-while-a-deploy-is-running).
 
 **`Advanced`.** A collapsed section, covered below. It folds itself away as soon
 as the form can read your repository through the App, so on the recommended path
@@ -323,8 +325,15 @@ It shows the 10 most recent. Its columns are `Status`, `Timestamp`, `Type`,
   [rolling back](/apps/rollback).
 - Any other row reads `Other`.
 - `Stopped` stopped your app.
+- `Replaced` marks a deploy that never started because a newer push took its
+  place. It is not a failure. See
+  [when you push while a deploy is running](#when-you-push-while-a-deploy-is-running).
 - `Domain configured` and `Subdomain configured` changed the address your app
   answers on.
+
+**Waiting.** While a push waits for the current deploy to end, one `Waiting` row
+shows at the top of the list. It is not a deploy yet: it turns into a normal row
+when the build starts.
 
 **Commit.** For a deploy, the row shows the short commit, its message and its
 branch. Clicking the short commit opens it on GitHub. The link is built from the
@@ -382,6 +391,41 @@ While your app's own deploy is queued, a few other buttons on the app are
 unavailable and say why. They come back once that deploy has run. See
 [what each button does](/apps/manage) and, for the messages,
 [why did my deploy fail](/apps/troubleshooting).
+
+### When you push while a deploy is running
+
+You can push as often as you like. PivoCloud never builds two at once, and it
+keeps the latest commit you pushed unless a case below says it is dropped.
+
+**An earlier deploy has not started building.** Your new push replaces it. The
+old row reads `Replaced` and says `Replaced by a newer push`. That row is grey,
+not red, and nothing went wrong.
+
+If that waiting deploy is the one that opened your paid month, it is kept and
+builds your latest commit. No `Replaced` row appears.
+
+**A deploy, a settings change, a restart or a rollback is running, or your app
+is being moved to another machine.** Your push
+waits. One row reads `Waiting` and says `Builds your latest push when the current deploy ends.`
+As soon as the running work ends, the build of your push starts by itself,
+whether that work succeeded or failed. You press nothing.
+
+**Several pushes while one deploy runs.** They become one build of the latest
+commit. The commits in between are not built.
+
+**When a waiting push is dropped.** It is dropped when you turn auto-deploy off,
+when the app is stopped, deleted, expired or suspended, or when a deploy you
+started yourself already builds your latest commit. If the latest commit
+was already built, the push builds nothing.
+
+**Cost.** A waiting push costs nothing. When it starts, it is charged like
+`Redeploy`: free inside a month you already paid for. If your credit is not
+enough at that moment, the push reads `Not deployed` with the reason, as a push
+does today.
+
+`Waiting` is not `Queued`. A `Queued` deploy waits for a
+build slot, then starts by itself. A `Waiting` push waits for
+your app's current work to end.
 
 ### If the first deploy fails
 

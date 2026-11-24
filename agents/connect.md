@@ -216,7 +216,11 @@ all three only read.
 - `get_deployment` follows one deploy, the newest one unless the agent names another.
   It tells the agent which stage the deploy is in, how long it has run against its
   time limit, and when to ask again. When the deploy failed, it gives the same reason
-  the console shows, with the matching answer and link.
+  the console shows, with the matching answer and link. A deploy that a newer push
+  replaced is reported as replaced by a newer push, not as a failure.
+
+`get_app` also tells the agent when a push waits to be built after the current
+deploy ends. It says nothing about a waiting push when there is none.
 
 The time limit of a deploy covers the whole deploy: getting your code, the build, and
 the start check. It is not only the length of the build.

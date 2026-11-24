@@ -23,8 +23,8 @@ because support has nothing to add to what the panel already tells you.
 
 The same explanation appears wherever the console reports the failure: on the
 `Deployment logs` tab under `Deployment Failed`, and in the message under your
-variables after a save that failed. A deploy that a newer push replaced is
-cancelled rather than failed, and shows no red panel.
+variables after a save that failed. A deploy that a newer push replaced reads
+`Replaced` rather than failed, and shows no red panel.
 
 The build log underneath is the build's own output. PivoCloud shows it in full
 and blanks only the values of your app's variables. It is the place to look for

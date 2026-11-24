@@ -11,7 +11,8 @@ you choose which repositories it may read, and every app you create afterwards
 picks from that set.
 
 Private repositories work through this connection. So does deploying on every
-push.
+push. What happens when you push while a deploy is still running is in
+[when you push while a deploy is running](/apps/deploy#when-you-push-while-a-deploy-is-running).
 
 ### Install the App
 
