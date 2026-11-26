@@ -1,7 +1,7 @@
 ---
 title: How much memory, processor, storage and connections is my database using?
 description: "The Usage tab of your database shows its memory, processor, storage and connections against its tier for the last hour, 24 hours or 7 days, what is left out of each figure, and what it shows while the database is stopped."
-last_verified: 2026-11-18
+last_verified: 2026-11-25
 ---
 
 ## How much is my database using?
@@ -125,6 +125,8 @@ the line, never drawn as zero. When you hover over a gap, the panel says:
 ```log
 No figures recorded at this time.
 ```
+
+An app that uses a stopped database cannot deploy, restart or save its variables until the database runs again. What the app shows, and how to detach the database from it, is under [when the attached database is stopped or deleted](/apps/environment-variables#when-the-attached-database-is-stopped-or-deleted).
 
 ## Now and refresh
 

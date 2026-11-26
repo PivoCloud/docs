@@ -1,7 +1,7 @@
 ---
 title: How do I set environment variables for my app?
 description: "Paste a .env file into the PivoCloud console, see which five key names are refused and why, what the console keeps from your file and what it drops, what saving actually changes, how to see who changed a variable and undo a change, and how your running app reads the values."
-last_verified: 2026-10-30
+last_verified: 2026-11-25
 ---
 
 ## Environment variables
@@ -244,3 +244,40 @@ The same shape works in any language, because this is the language's own
 environment lookup and nothing of ours. Read the variable, fall back to
 something harmless, and the one image runs on your laptop and on PivoCloud
 without a branch.
+
+### When the attached database is stopped or deleted
+
+An app that has a database attached gets that database's variables with its own.
+If the database is not running, PivoCloud does not start your app without them and
+does not store changes that would leave it half set up.
+
+- **Saving while the database is stopped or still starting is refused.** Nothing
+  is saved. The yellow message above the editor names the database and says what
+  to do. A stopped database needs you to open it in the console. A database that
+  is still starting needs about a minute. The exact words are under
+  [the database attached to the app is not running](/apps/troubleshooting#database_unavailable).
+- **A deploy, restart, start, plan change or rollback while the database is
+  stopped fails before your running app is touched.** The app keeps running with
+  the settings it has now. The deploy log and the failed deploy say which database
+  is the cause.
+- **While the database is still starting, a deploy or restart waits up to 2
+  minutes.** It goes on by itself as soon as the database runs. If the database
+  is still not running after 2 minutes, it stops with a message, and your running
+  app is still untouched.
+
+**To run the app without the database, detach it.** On the app's `Environment`
+tab, the linked database has a `Detach Database` button. A confirmation opens with
+`Keep Link` and `Detach Database`. The database's variables leave the app at its
+next deploy, restart or settings change. Your other variables are not changed.
+The same tab offers `Apply now` if you do not want to wait.
+
+**Deleting a database detaches it from every app that uses it.** The
+`Delete Database` dialog lists those apps before you confirm, and `Keep Database`
+leaves everything as it was. When you delete, each app loses the link in the same
+step and keeps its other variables. The database variables are removed at each
+app's next deploy, restart or settings change.
+
+**An app that still points at a database deleted earlier.** Its `Environment` tab
+shows a `Linked database` block with a `Deleted` badge and a `Detach Database`
+button. The app starts without the database's variables until you detach it. You
+can attach another database without detaching first.

@@ -1,7 +1,7 @@
 ---
 title: Why did my deploy fail?
 description: "The messages PivoCloud shows when a deploy does not work, what each one really means, and what to change. Search this page for the exact sentence you were shown and it will take you to that failure."
-last_verified: 2026-11-11
+last_verified: 2026-11-25
 ---
 
 ## What the red panel shows
@@ -595,9 +595,9 @@ variables and the variables of a database linked to it. This time it could not r
 them, so it stopped. Nothing was started and nothing was stopped: the version that
 was running before the deploy is still running, with the settings it had.
 
-**What to do:** wait a few minutes and deploy again. A database that is stopped or
-still starting can cause this until it runs again, so if the first try fails, open
-the database in the console and check that it runs. If the deploy keeps failing
+**What to do:** wait a few minutes and deploy again. A stopped database does not
+cause this message: it has its own, under
+[the database attached to the app is not running](#database_unavailable). If the deploy keeps failing
 after that, contact PivoCloud support and give them the reference shown with the
 message.
 
@@ -758,6 +758,47 @@ The database linked to this app was deleted, so its variables are not set.
 The app starts without the database's variables, so it may fail its start check
 if it needs them. Detach the deleted database from the app, or attach another one,
 and deploy again.
+
+**When the database attached to your app is not running.** A deploy, restart or
+variable change made while the database is not running stops before your running
+app is touched. The log and the failed deploy say which database:
+
+```text
+Your app was not changed because the database shop-db attached to it is not running: open the database in the console to see why, or detach it from the app, then try again.
+```
+
+When the name cannot be shown, the sentence reads:
+
+```text
+Your app was not changed because the database attached to it is not running: open the database in the console to see why, or detach it from the app, then try again.
+```
+
+**When the database attached to your app is still starting.** After a top-up or a
+resume, the database can take a moment to come up. The log says so once, then the
+deploy waits and goes on by itself as soon as the database runs:
+
+```text
+Waiting up to 2 minutes for the database shop-db to start.
+```
+
+When the name cannot be shown, the line reads:
+
+```text
+Waiting up to 2 minutes for the database attached to this app to start.
+```
+
+If the database is still not running after the wait, the deploy stops before your
+running app is touched, and the failed deploy says:
+
+```text
+Your app was not changed because the database shop-db attached to it was still starting after 2 minutes: wait until the console shows the database as running, then try again.
+```
+
+When the name cannot be shown, the sentence reads:
+
+```text
+Your app was not changed because the database attached to it was still starting after 2 minutes: wait until the console shows the database as running, then try again.
+```
 
 **How the deploy ended.** One of these three lines closes a deploy. Your app is
 running and its address is connected:
@@ -1504,10 +1545,72 @@ suspended when the wallet could not pay. An app that cannot reach its database
 often looks unhealthy or restarts over and over, and the database is the cause
 to fix first.
 
-**What to do:** open the database in the console and see why it is not running.
-Do not redeploy the app until the database runs, because a deploy made while the
-database is stopped fails before it touches the running app, with the message
-under `We could not load your app's settings`, and would fail again.
+**What you see.** It depends on where you were when you asked.
+
+- **Saving environment variables** while the database is not running: the yellow
+  message above the editor says nothing was saved. It names the database:
+
+```text
+Nothing was saved because the database shop-db attached to this app is not running: open the database in the console to see why, or detach it from the app, then try again.
+```
+
+```text
+Nothing was saved because the database attached to this app is not running: open the database in the console to see why, or detach it from the app, then try again.
+```
+
+- **Saving environment variables** while the database is still starting: the same
+  place, and it asks you to wait a minute:
+
+```text
+Nothing was saved because the database shop-db attached to this app is still starting: wait a minute, then try again.
+```
+
+- **Restart, Start, Change plan, Deploy or Rollback** while the database is not
+  running: the console refuses at once and shows the sentence that the deploy log
+  carries, which is quoted under the heading for the deploy log lines above. A
+  deploy or restart that was already on its way when the database stopped ends
+  in the red panel below, and its log shows the same sentences.
+- **Deploy or restart while the database is still starting:** it is not refused.
+  It waits up to 2 minutes for the database, writes a line in the deploy log to
+  say so, and then goes on, or stops with the sentence for a database that was
+  still starting after 2 minutes.
+
+**What to do:** open the database in the console and see why it is not running. A
+database that was suspended because the wallet could not pay runs again once you
+top up your wallet. If the app should run without that database, open the app,
+go to its Environment tab and use **Detach Database**. Then try again. Do not
+redeploy while the database is stopped, because the deploy would fail again
+before it touches the running app, which keeps running with the settings it has.
+The red panel names the database:
+
+```text
+Your app was not changed because the database shop-db attached to it is not running.
+```
+
+```text
+Open the database in the console to see why, or detach it from the app, then try again.
+```
+
+When the database was still starting, PivoCloud waited up to 2 minutes for it
+before it gave up, and the red panel says so:
+
+```text
+Your app was not changed because the database shop-db attached to it was still starting after 2 minutes.
+```
+
+```text
+Wait until the console shows the database as running, then try again.
+```
+
+When the name of the database cannot be shown, the first sentence leaves it out:
+
+```text
+Your app was not changed because the database attached to it is not running.
+```
+
+```text
+Your app was not changed because the database attached to it was still starting after 2 minutes.
+```
 
 When a database is not running, your agent's list of env var names does not
 include the names that database would add. They are listed again once it runs.
