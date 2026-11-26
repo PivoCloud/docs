@@ -39,6 +39,10 @@ accounts step by step, and we say so on the What's new page when that changes.
 When it is ready, the page shows your URL, your two keys and a box with the code
 to connect your app.
 
+When the platform is very busy, setting up can take a couple of minutes longer.
+If it still cannot start your backend, the page shows `Failed`. Create a new
+backend a few minutes later.
+
 ### What works now
 
 - Creating a backend and reading its URL and keys.
@@ -58,6 +62,13 @@ to connect your app.
   account yet. Plan for that in your app.
 - **Deleting a backend is not in the console yet.** Contact support if you need
   one removed.
+
+### Sleep and wake
+
+A backend that gets no request for 15 minutes sleeps, and the next request wakes
+it by itself after a few seconds. The page on why a backend sleeps and how it
+wakes says what keeps it awake, what does not run while it sleeps and what to do
+with a `503` answer: [Why my backend sleeps and how it wakes](/pivobase/sleep-and-wake).
 
 ### Login limits
 
