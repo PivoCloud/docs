@@ -1,7 +1,7 @@
 ---
 title: How do I deploy my first app?
 description: "Fill every field on the PivoCloud create-app form without guessing: name, subdomain, plan, repository, branch and build settings. Plus the port rule the platform really enforces, and the two messages a failed first deploy prints."
-last_verified: 2026-11-24
+last_verified: 2026-11-26
 ---
 
 ## Deploy your first app
@@ -99,6 +99,13 @@ see [connecting GitHub](/apps/connect-github).
 reads `Deploys automatically when a push targets the deploy branch.` Leave it on
 unless you want every deploy to be a deliberate act. A deploy from a push is billed
 exactly like the `Redeploy` button: free inside a month you already paid for.
+GitHub sometimes does not manage to tell PivoCloud about a push. PivoCloud also checks
+your deploy branch itself every few minutes, so that push is still built, a few
+minutes later, and it shows in your deployment history like any other push. A push
+to an app that is stopped, expired or suspended is not built: start the app, then
+push again or press `Redeploy`. After you change the repository or the branch, or
+turn auto-deploy back on, only your next push is built, not the commits that were
+already there.
 What happens when you push while a deploy is still running is in
 [when you push while a deploy is running](#when-you-push-while-a-deploy-is-running).
 
@@ -415,8 +422,10 @@ commit. The commits in between are not built.
 
 **When a waiting push is dropped.** It is dropped when you turn auto-deploy off,
 when the app is stopped, deleted, expired or suspended, or when a deploy you
-started yourself already builds your latest commit. If the latest commit
-was already built, the push builds nothing.
+started yourself already builds your latest commit. A push to an app that is
+stopped, deleted, expired or suspended is not built at all, whether GitHub told
+PivoCloud about it or not. If the latest commit was already built, the push builds
+nothing.
 
 **Cost.** A waiting push costs nothing. When it starts, it is charged like
 `Redeploy`: free inside a month you already paid for. If your credit is not
