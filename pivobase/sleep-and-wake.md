@@ -1,7 +1,7 @@
 ---
 title: Why my backend sleeps and how it wakes
 description: "A Pivobase backend sleeps after 15 minutes with no request and wakes by itself on the next one. This page says what keeps a backend awake, what does not run while it sleeps, what Active and Sleeping mean on the backend page, and what to do when you get a 503 with Retry-After."
-last_verified: 2026-11-25
+last_verified: 2026-11-26
 ---
 
 ## What sleeping is
@@ -38,8 +38,14 @@ people use it. These keep it awake:
 
 - any request, including the one that woke it
 - a request that is still running: a long request is never cut off by sleep
-- work we are doing on the backend for you, for example while we regenerate its
-  keys
+- work we are doing on the backend for you that you asked for, for example while
+  we regenerate its keys
+
+Backups and upgrades do not keep a backend awake. A sleeping backend that has not
+been used since its last backup is left asleep. If it was used since, we start it
+briefly for the backup or the upgrade. This does not restart its 15 minutes and
+does not count as use, so you are not billed for it. A backend that nobody uses
+still sleeps on schedule.
 
 When the last activity is over, the 15 minutes start again.
 

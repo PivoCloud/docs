@@ -34,7 +34,7 @@
       },
       {
         "group": "Pivobase",
-        "pages": ["pivobase/index", "pivobase/connect", "pivobase/keys", "pivobase/sleep-and-wake"]
+        "pages": ["pivobase/index", "pivobase/connect", "pivobase/keys", "pivobase/sleep-and-wake", "pivobase/backups"]
       },
       {
         "group": "Billing",

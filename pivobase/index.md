@@ -1,7 +1,7 @@
 ---
 title: What is a Pivobase backend
 description: "A Pivobase backend gives your supabase-js or Lovable app a database, sign-up and login, and an API. It is available by invitation today. This page says what works now, what does not work yet, and what to expect from sign-ups and logins."
-last_verified: 2026-11-22
+last_verified: 2026-11-26
 ---
 
 ## What a Pivobase backend is
@@ -51,6 +51,8 @@ backend a few minutes later.
 - Regenerating both keys when one has leaked.
 - Sign-up with an email address and a password, and login with the same.
 - The REST API and the database, from `supabase-js` or from plain HTTP.
+- A daily backup of every backend, kept for 7 days, that you can download from
+  the backend page: [Backups: what is kept and how to restore](/pivobase/backups).
 
 ### What does not work yet
 
